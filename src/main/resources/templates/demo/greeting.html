@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Salesforce Marketing Cloud</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="../webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+</head>
+<body>
+
+
+<div class="row">
+    <div class="col-md-6">
+        <h2 class="bg-primary">Title</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <p class="lead" th:text="'Hello, ' + ${name} + '!'" />
+    </div>
+    <div class="col-md-6">
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <form lpformnum="8">
+            <select class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </form>
+    </div>
+</div>
+</body>
+</html>
