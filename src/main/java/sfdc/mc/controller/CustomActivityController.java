@@ -1,7 +1,5 @@
 package sfdc.mc.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,10 +19,9 @@ import javax.json.JsonObject;
 @RequestMapping("/ca")
 public class CustomActivityController {
 
-    public static Logger logger = LoggerFactory.getLogger(CustomActivityController.class);
-
     /**
      * Custom Activity UI
+     * Endpoint for the UI displayed to marketers while configuring this activity.
      * @param model
      * @return
      */
@@ -38,63 +35,64 @@ public class CustomActivityController {
     }
 
     /**
-     *
+     * execute - The API calls this method for each contact processed by the journey.
      * @param json
      * @return
      */
     @RequestMapping(value = "/execute", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity execute(@RequestBody String json) {
-        if (logger.isDebugEnabled())
-            logger.debug("json: " + json);
+        System.out.println("*** execute: " + json);
         return new ResponseEntity("OK", HttpStatus.OK);
     }
 
     /**
-     *
+     * save - Notification is sent to this endpoint when a user saves the interaction (optional).
      * @param json
      * @return
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity save(@RequestBody String json) {
-        if (logger.isDebugEnabled())
-            logger.debug("save:");
+        System.out.println("*** save: " + json);
         return new ResponseEntity("OK",HttpStatus.OK);
     }
 
     /**
-     *
+     * publish - Notification is sent to this endpoint when a user publishes the interaction.
      * @return
      */
     @RequestMapping(value = "/publish", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity publish() {
-        if (logger.isDebugEnabled())
-            logger.debug("publish:");
+        System.out.println("*** publish ***");
         return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
-     *
+     * validate - Notification is sent to this endpoint when a user performs some validation
+     * as part of the publishing process (optional).
      * @return
      */
     @RequestMapping(value = "/validate", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity validate() {
+        System.out.println("*** validate ***");
         // TODO validation
         return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
-     *
+     * stop - Notification is sent to this endpoint when a user stops any active version of the interaction.
+     * The notification will be for that particular version’s activity (optional).
      * @return
      */
     @RequestMapping(value = "/stop", method = RequestMethod.POST, headers = "Accept=application/json")
-    public String stop() {
-        if (logger.isDebugEnabled())
-            logger.debug("stop:");
-        return "ca";
+    public ResponseEntity stop() {
+        System.out.println("*** stop ***");
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
-     *
+     * Creation of config.json
+     * Every custom Journey Builder activity must include a config.json in the root of its endpoint.
+     * https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/creating-activities.htm
      * @return
      */
     @RequestMapping(value = "/config.json")
@@ -113,16 +111,21 @@ public class CustomActivityController {
 
         JsonObject value = Json.createObjectBuilder()
                 .add("workflowApiVersion", "1.1")
+                // metaData - Object that provides meta-information about this custom activity to Journey Builder.
+                // Third party sources may pass any additional properties as desired. This object contains UI-only data.
                 .add("metaData", Json.createObjectBuilder()
                         .add("icon", caImage40)
                         .add("iconSmall", caImage15)
                         .add("category", "message")
                         .add("isConfigured", true))
+                // type - String property representing the type of activity. This value must include one of the Marketing Cloud-provided types
                 .add("type", "REST")
+                // lang - Used to define i18n (internationalization) strings, such as the name and description as used within the application.
                 .add("lang", Json.createObjectBuilder()
                         .add("en-US", Json.createObjectBuilder()
                                 .add("name", caName)
                                 .add("description", caName)))
+                // arguments - Contains information sent to the activity upon each execution.
                 .add("arguments", Json.createObjectBuilder()
                         .add("execute", Json.createObjectBuilder()
                                 .add("inArguments", Json.createArrayBuilder())
@@ -133,6 +136,8 @@ public class CustomActivityController {
                                 .add("format", "json")
                                 .add("useJwt", false)
                                 .add("timeout",10000)))
+                // configurationArguments - Contains information that relates to the configuration of the instance of this activity.
+                // All configuration arguments except publish are optional.
                 .add("configurationArguments", Json.createObjectBuilder()
                         .add("applicationExtensionKey", caKey)
                         .add("save", Json.createObjectBuilder()
@@ -141,6 +146,8 @@ public class CustomActivityController {
                                 .add("url", caEndPointUrl + "/publish"))
                         .add("validate", Json.createObjectBuilder()
                                 .add("url", caEndPointUrl + "/validate")))
+                // wizardSteps - Contains an array of objects that define the steps that the user may navigate through when configuring the custom activity.
+                // Each object should follow the format: { "label": "Step 1", "key": "step1", "active": true }
                 .add("wizardSteps", Json.createArrayBuilder()
                         .add(Json.createObjectBuilder()
                                 .add("label", "Step 1")
@@ -148,10 +155,13 @@ public class CustomActivityController {
                         .add(Json.createObjectBuilder()
                                 .add("label", "Step 2")
                                 .add("key", "step2")))
-                .add("edit", Json.createObjectBuilder()
-                        .add("url", caEditUrl)
-                        .add("height",Integer.valueOf(caEditHeight))
-                        .add("width", Integer.valueOf(caEditWidth)))
+                // userInterfaces - Contains endpoints and UI configurations for the user interfaces for the activity
+                // (configuration modal, running mode hover, running mode details modal).
+                .add("userInterfaces", Json.createObjectBuilder()
+                        .add("configModal", Json.createObjectBuilder()
+                                .add("height",Integer.valueOf(caEditHeight))
+                                .add("width",Integer.valueOf(caEditWidth))
+                                .add("url", caEditUrl)))
                 .build();
         String result = value.toString();
         System.out.println("*** config.json: " + result);
