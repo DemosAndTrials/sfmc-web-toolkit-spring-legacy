@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create config</title>
+    <link rel="icon" href="/images/fav.ico" type="image/x-icon"/>
+
+    <link rel='stylesheet prefetch'
+          href='/styles/slds/styles/salesforce-lightning-design-system.min.css'/>
+    <style>
+    </style>
+</head>
+<body>
+
+<section class="stage slds-grid slds-grid--vertical slds-nowrap">
+
+    <div class="slds-shrink-none">
+        <div class="slds-page-header">Salesforce Marketing Cloud Examples</div>
+    </div>
+
+    <!-- Stage Main -->
+    <div class="slds-m-around_small">
+        <h2 class="slds-text-heading--large slds-m-bottom_medium">List of saved configs</h2>
+        <table class="slds-table slds-table_bordered slds-table_striped">
+            <thead>
+            <tr class="slds-text-title_caps" >
+                <th scope="col" class="">
+                    <div class="slds-truncate" title="Id">Id</div>
+                </th>
+                <th scope="col" class="">
+                    <div class="slds-truncate" title="Name">Name</div>
+                </th>
+                <th scope="col" class="">
+                    <div class="slds-truncate" title="Description">Description</div>
+                </th>
+                <th scope="col" class="">
+                    <div class="slds-truncate" title="KEy">Key</div>
+                </th>
+                <th scope="col" class="">
+                    <div class="slds-truncate" title="Number of steps">Number of steps</div>
+                </th>
+                <th scope="col" class="">
+                    <div class="slds-truncate" title="EditUrl">Edit Url</div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="config : ${configs}">
+                <th scope="row" data-label="Opportunity Name" class="">
+                    <div class="slds-truncate" title="Id"><a th:href="@{'/ca/create/' + ${config.Id}}" th:text="${config.Id}">Id</a></div>
+                </th>
+                <td data-label="Name" class="">
+                    <div class="slds-truncate" title="Name"><a th:href="@{'/ca/create/' + ${config.Id}}" th th:text="${config.Name}">Activity Name</a></div>
+                </td>
+                <td data-label="Description" class="">
+                    <div class="slds-truncate" th:text="${config.Description}">Description</div>
+                </td>
+                <td data-label="Key" class="">
+                    <div class="slds-truncate" th:text="${config.Key}">Key</div>
+                </td>
+                <td data-label="NumSteps" class="">
+                    <div class="slds-truncate" th:text="${config.NumSteps}">1</div>
+                </td>
+                <td data-label="Confidence" class="">
+                    <div class="slds-truncate" title="Name"><a th:href="${config.EditUrl}" target="_blank">Open</a></div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+
+</section>
+
+<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+</script>
+</body>
+</html>

@@ -3,7 +3,10 @@ package sfdc.mc.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sfdc.mc.model.ConfigType;
+import sfdc.mc.model.CustomActivityConfig;
 import sfdc.mc.repository.CustomActivityRepository;
+
+import java.util.List;
 
 /**
  * Custom Activity Service
@@ -19,7 +22,7 @@ public class CustomActivityService {
      * @return
      * @throws Exception
      */
-    public String getConfig(String type) throws Exception {
+    public String getConfigByType(String type) throws Exception {
         try {
             ConfigType cType = ConfigType.valueOf(type.toUpperCase());
             switch (cType) {
@@ -55,6 +58,35 @@ public class CustomActivityService {
             e.printStackTrace();
         }
         throw new Exception("Unknown type: " + type);
+    }
+
+    /**
+     * Save config into db
+     * @param config
+     * @return config
+     */
+    public CustomActivityConfig createConfig(CustomActivityConfig config){
+        CustomActivityConfig savedConfig = customActivityRepository.save(config);
+        return savedConfig;
+    }
+
+    /**
+     * Get all configs
+     * @return
+     */
+    public Iterable<CustomActivityConfig> getConfigs(){
+        Iterable<CustomActivityConfig> list = customActivityRepository.findAll();
+        return list;
+    }
+
+    /**
+     * Get config by id
+     * @param idStr
+     * @return
+     */
+    public CustomActivityConfig getConfigById(String idStr){
+        int id = Integer.parseInt(idStr);
+        return customActivityRepository.findOne(id);
     }
 
 }

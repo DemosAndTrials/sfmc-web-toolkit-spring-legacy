@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Custom Activity Demo</title>
-    <link rel="icon" href="../images/fav.ico" type="image/x-icon"/>
+    <link rel="icon" href="/images/fav.ico" type="image/x-icon"/>
     <script data-main="js/main.js" src="js/require.js"></script>
     <link rel='stylesheet prefetch'
-          href='../webjars/salesforce-lightning-design-system/2.1.4/assets/styles/salesforce-lightning-design-system.min.css'/>
+          href='/webjars/salesforce-lightning-design-system/2.1.4/assets/styles/salesforce-lightning-design-system.min.css'/>
     <style>
     </style>
 </head>
@@ -14,10 +14,8 @@
 
 <section class="stage slds-grid slds-grid--vertical slds-nowrap">
 
-    <div class="slds-shrink-none">
-        <div class="slds-page-header">Custom Activity Header <span th:text="'(Number of steps: ' + ${numSteps} + ')'"/>
-        </div>
-    </div>
+    +-
+    +-0.
 
     <input type="hidden" id="numSteps" th:value="${numSteps}">
 
@@ -87,7 +85,7 @@
     </form>
 </section>
 
-<script src="../webjars/jquery/1.9.1/jquery.min.js"></script>
+<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
 <script>
 
 </script>

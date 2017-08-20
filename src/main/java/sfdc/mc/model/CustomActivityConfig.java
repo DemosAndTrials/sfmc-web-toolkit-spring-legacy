@@ -1,6 +1,10 @@
 package sfdc.mc.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 /**
  * Custom Activity Config object
@@ -13,13 +17,15 @@ public class CustomActivityConfig {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Integer Id;
 
-    @Column(length = 25)
+    @NotEmpty
+    @Column(length = 100)
     String Key;
 
     @Column(length = 25)
     String Type;
 
-    @Column(length = 25)
+    @NotEmpty
+    @Column(length = 100)
     String Name;
 
     String Description;
@@ -28,14 +34,19 @@ public class CustomActivityConfig {
 
     String BigImageUrl;
 
+    @NotNull
     Integer NumSteps;
 
+    @NotEmpty
     String EditUrl;
 
+    @NotNull
     Integer EditHeight;
 
+    @NotNull
     Integer EditWidth;
 
+    @NotEmpty
     String EndpointUrl;
 
     public Integer getId() {
@@ -134,9 +145,17 @@ public class CustomActivityConfig {
         EndpointUrl = endpointUrl;
     }
 
+    public CustomActivityConfig() {
+        this.setName("My Custom Activity");
+        this.setKey(UUID.randomUUID().toString());
+        this.setEditHeight(600);
+        this.setEditWidth(800);
+        this.setNumSteps(1);
+    }
+
     @Override
     public String toString() {
-        return "PHXClient{" +
+        return "Config{" +
                 "Id=" + Id +
                 ", Key='" + Key + '\'' +
                 ", Name='" + Name + '\'' +
