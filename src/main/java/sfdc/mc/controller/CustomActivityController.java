@@ -106,17 +106,34 @@ public class CustomActivityController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    /**
+     * Creation of config.json
+     * Every custom Journey Builder activity must include a config.json in the root of its endpoint.
+     * https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/creating-activities.htm
+     *
+     * @return
+     */
+    @RequestMapping(value = "/{id}/config.json")
+    public ResponseEntity getConfig(@PathVariable String id) {
+        try {
+            String result = customActivityService.getConfigByType(id);
+            System.out.println("*** config.json: " + result);
+            return new ResponseEntity(result, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    /*
+    * Config CRUD operations
+    */
+
     @GetMapping(value = "/create")
     public String createConfig(Model model) {
         System.out.println("*** create Config: ");
         model.addAttribute("config", new CustomActivityConfig());
-        return "ca/create";
-    }
-    @GetMapping(value = "/create/{id}")
-    public String createConfig(@PathVariable String id, Model model) {
-        System.out.println("*** create Config: ");
-        CustomActivityConfig config = customActivityService.getConfigById(id);
-        model.addAttribute("config", config);
         return "ca/create";
     }
 
@@ -132,39 +149,20 @@ public class CustomActivityController {
         return "redirect:/ca/list";
     }
 
+    @GetMapping(value = "/create/{id}")
+    public String createConfig(@PathVariable String id, Model model) {
+        System.out.println("*** create Config: ");
+        CustomActivityConfig config = customActivityService.getConfigById(id);
+        model.addAttribute("config", config != null ? config : new CustomActivityConfig());
+        return "ca/create";
+    }
+
     @GetMapping(value = "/list")
     public String list(Model model) {
         System.out.println("*** list ");
         Iterable<CustomActivityConfig> list = customActivityService.getConfigs();
         model.addAttribute("configs", list);
         return "ca/list";
-    }
-
-    @GetMapping(value = "/view/{id}")
-    public String view(Model model,@PathVariable String id) {
-        System.out.println("*** create Config: ");
-        model.addAttribute("config", new CustomActivityConfig());
-        return "ca/view";
-    }
-
-    /**
-     * Creation of config.json
-     * Every custom Journey Builder activity must include a config.json in the root of its endpoint.
-     * https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/creating-activities.htm
-     *
-     * @return
-     */
-    @RequestMapping(value = "/{type}/config.json")
-    public ResponseEntity getConfig(@PathVariable String type) {
-        try {
-            String result = customActivityService.getConfigByType(type);
-            System.out.println("*** config.json: " + result);
-            return new ResponseEntity(result, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
 }

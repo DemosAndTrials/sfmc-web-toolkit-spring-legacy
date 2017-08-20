@@ -14,8 +14,10 @@
 
 <section class="stage slds-grid slds-grid--vertical slds-nowrap">
 
-    +-
-    +-0.
+    <div class="slds-shrink-none">
+        <div class="slds-page-header">Custom Activity Header <span th:text="'(Number of steps: ' + ${numSteps} + ')'"/>
+        </div>
+    </div>
 
     <input type="hidden" id="numSteps" th:value="${numSteps}">
 

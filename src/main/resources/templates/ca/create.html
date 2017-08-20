@@ -29,11 +29,12 @@
                 <div class="slds-form slds-form_compound">
                     <fieldset class="slds-form-element">
                         <div class="slds-form-element__group">
+                            <input type="hidden" id="input-00" th:field="*{Id}">
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-1">
                                     <label class="slds-form-element__label" for="input-03">Key</label>
                                     <input type="text" id="input-01" th:field="*{Key}" class="slds-input">
-                                    <div class="slds-text-color_error" th:if="${#fields.hasErrors('Key')}"
+                                    <div class="slds-text-color_error" th:if="${#fields.hasErrors('Id')}"
                                          th:errors="*{Key}">Name Error
                                     </div>
                                 </div>

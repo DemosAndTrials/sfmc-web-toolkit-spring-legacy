@@ -18,25 +18,30 @@ public class CustomActivityService {
     CustomActivityRepository customActivityRepository;
 
     /**
-     * @param type
+     * @param id
      * @return
      * @throws Exception
      */
-    public String getConfigByType(String type) throws Exception {
+    public String getConfigByType(String id) throws Exception {
         try {
-            ConfigType cType = ConfigType.valueOf(type.toUpperCase());
-            switch (cType) {
-                case REST:
-                    return customActivityRepository.getRestConfig();
-                case RESTDECISION:
-                    return customActivityRepository.getSplitConfig();
-                default:
-                    throw new Exception("Unknown type: " + type);
+
+            CustomActivityConfig config = getConfigById(id);
+            if (config != null) {
+
+                ConfigType cType = ConfigType.valueOf(config.getType().toUpperCase());
+                switch (cType) {
+                    case REST:
+                        return customActivityRepository.getRestConfig();
+                    case RESTDECISION:
+                        return customActivityRepository.getSplitConfig();
+                    default:
+                        throw new Exception("Unknown type: " + config.getType());
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        throw new Exception("Unknown type: " + type);
+        throw new Exception("Unknown config: " + id);
     }
 
     /**
@@ -62,29 +67,32 @@ public class CustomActivityService {
 
     /**
      * Save config into db
+     *
      * @param config
      * @return config
      */
-    public CustomActivityConfig createConfig(CustomActivityConfig config){
+    public CustomActivityConfig createConfig(CustomActivityConfig config) {
         CustomActivityConfig savedConfig = customActivityRepository.save(config);
         return savedConfig;
     }
 
     /**
      * Get all configs
+     *
      * @return
      */
-    public Iterable<CustomActivityConfig> getConfigs(){
+    public Iterable<CustomActivityConfig> getConfigs() {
         Iterable<CustomActivityConfig> list = customActivityRepository.findAll();
         return list;
     }
 
     /**
      * Get config by id
+     *
      * @param idStr
      * @return
      */
-    public CustomActivityConfig getConfigById(String idStr){
+    public CustomActivityConfig getConfigById(String idStr) {
         int id = Integer.parseInt(idStr);
         return customActivityRepository.findOne(id);
     }
