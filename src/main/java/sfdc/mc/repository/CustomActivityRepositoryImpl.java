@@ -1,5 +1,6 @@
 package sfdc.mc.repository;
 
+import sfdc.mc.model.CustomActivityConfig;
 import sfdc.mc.util.ConfigConstants;
 
 import javax.json.Json;
@@ -16,11 +17,11 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
      * @return
      */
     @Override
-    public String getRestConfig() {
+    public String getRestConfig(CustomActivityConfig config) {
         try {
 
             // get heroku config variables
-            String caName = System.getenv(ConfigConstants.CA_NAME) != null ? System.getenv(ConfigConstants.CA_NAME) : "Demo Custom Activity";
+            /*String caName = System.getenv(ConfigConstants.CA_NAME) != null ? System.getenv(ConfigConstants.CA_NAME) : "Demo Custom Activity";
             String caEditUrl = System.getenv(ConfigConstants.CA_EDIT_URL) != null ? System.getenv(ConfigConstants.CA_EDIT_URL) : "edit.html";
             String caImage15 = System.getenv(ConfigConstants.CA_IMG_15) != null ? System.getenv(ConfigConstants.CA_IMG_15) : "https://s25.postimg.org/hxtt8fj2n/angry-bird-icon-15.png";
             String caImage40 = System.getenv(ConfigConstants.CA_IMG_40) != null ? System.getenv(ConfigConstants.CA_IMG_40) : "https://s25.postimg.org/u9wplx6xb/angry-bird-icon-40.png";
@@ -28,7 +29,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
             String caEditHeight = System.getenv(ConfigConstants.CA_EDIT_HEIGHT) != null ? System.getenv(ConfigConstants.CA_EDIT_HEIGHT) : "600";
             String caEditWidth = System.getenv(ConfigConstants.CA_EDIT_WIDTH) != null ? System.getenv(ConfigConstants.CA_EDIT_WIDTH) : "800";
             String caEndPointUrl = System.getenv(ConfigConstants.CA_ENDPOINT_URL) != null ? System.getenv(ConfigConstants.CA_ENDPOINT_URL) : "index.html";
-            String caKey = System.getenv(ConfigConstants.CA_KEY) != null ? System.getenv(ConfigConstants.CA_KEY) : "9ccde4db-7cc2-4aa9-9227-5bb10673ac6d";
+            String caKey = System.getenv(ConfigConstants.CA_KEY) != null ? System.getenv(ConfigConstants.CA_KEY) : "9ccde4db-7cc2-4aa9-9227-5bb10673ac6d";*/
 
             // create json
             JsonObject value = Json.createObjectBuilder()
@@ -36,8 +37,8 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                     // metaData - Object that provides meta-information about this custom activity to Journey Builder.
                     // Third party sources may pass any additional properties as desired. This object contains UI-only data.
                     .add("metaData", Json.createObjectBuilder()
-                            .add("icon", caImage40)
-                            .add("iconSmall", caImage15)
+                            .add("icon", config.getBigImageUrl())
+                            .add("iconSmall", config.getSmallImageUrl())
                             .add("category", "message")
                             .add("isConfigured", true))
                     // type - String property representing the type of activity. This value must include one of the Marketing Cloud-provided types
@@ -45,13 +46,13 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                     // lang - Used to define i18n (internationalization) strings, such as the name and description as used within the application.
                     .add("lang", Json.createObjectBuilder()
                             .add("en-US", Json.createObjectBuilder()
-                                    .add("name", caName)
-                                    .add("description", caName)))
+                                    .add("name", config.getName())
+                                    .add("description", config.getDescription())))
                     // arguments - Contains information sent to the activity upon each execution.
                     .add("arguments", Json.createObjectBuilder()
                             .add("execute", Json.createObjectBuilder()
                                     .add("inArguments", Json.createArrayBuilder())
-                                    .add("url", caEditUrl)
+                                    .add("url", config.getEditUrl())
                                     .add("verb", "POST")
                                     .add("body", "")
                                     .add("header", "")
@@ -61,13 +62,13 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                     // configurationArguments - Contains information that relates to the configuration of the instance of this activity.
                     // All configuration arguments except publish are optional.
                     .add("configurationArguments", Json.createObjectBuilder()
-                            .add("applicationExtensionKey", caKey)
+                            .add("applicationExtensionKey", config.getKey())
                             .add("save", Json.createObjectBuilder()
-                                    .add("url", caEndPointUrl + "/save"))
+                                    .add("url", config.getEndpointUrl() + "/save"))
                             .add("publish", Json.createObjectBuilder()
-                                    .add("url", caEndPointUrl + "/publish"))
+                                    .add("url", config.getEndpointUrl() + "/publish"))
                             .add("validate", Json.createObjectBuilder()
-                                    .add("url", caEndPointUrl + "/validate")))
+                                    .add("url", config.getEndpointUrl() + "/validate")))
                     // wizardSteps - Contains an array of objects that define the steps that the user may navigate through when configuring the custom activity.
                     // Each object should follow the format: { "label": "Step 1", "key": "step1", "active": true }
                     .add("wizardSteps", Json.createArrayBuilder()
@@ -81,9 +82,9 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                     // (configuration modal, running mode hover, running mode details modal).
                     .add("userInterfaces", Json.createObjectBuilder()
                             .add("configModal", Json.createObjectBuilder()
-                                    .add("height", Integer.valueOf(caEditHeight))
-                                    .add("width", Integer.valueOf(caEditWidth))
-                                    .add("url", caEditUrl)))
+                                    .add("height", config.getEditHeight())
+                                    .add("width", config.getEditWidth())
+                                    .add("url", config.getEditUrl())))
                     .build();
 
             String result = value.toString();
@@ -104,11 +105,11 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
      * @return
      */
     @Override
-    public String getSplitConfig() {
+    public String getSplitConfig(CustomActivityConfig config) {
         try {
 
             // get heroku config variables
-            String caName = System.getenv(ConfigConstants.CA_NAME) != null ? System.getenv(ConfigConstants.CA_NAME) : "Demo Custom Split Activity";
+            /*String caName = System.getenv(ConfigConstants.CA_NAME) != null ? System.getenv(ConfigConstants.CA_NAME) : "Demo Custom Split Activity";
             String caEditUrl = System.getenv(ConfigConstants.CA_EDIT_URL) != null ? System.getenv(ConfigConstants.CA_EDIT_URL) : "edit.html";
             String caImage15 = System.getenv(ConfigConstants.CA_IMG_15) != null ? System.getenv(ConfigConstants.CA_IMG_15) : "https://s25.postimg.org/7ptejywr3/angry-bird-yellow-icon-15.png";
             String caImage40 = System.getenv(ConfigConstants.CA_IMG_40) != null ? System.getenv(ConfigConstants.CA_IMG_40) : "https://s25.postimg.org/5mizcawy7/angry-bird-yellow-icon-40.png";
@@ -116,7 +117,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
             String caEditHeight = System.getenv(ConfigConstants.CA_EDIT_HEIGHT) != null ? System.getenv(ConfigConstants.CA_EDIT_HEIGHT) : "600";
             String caEditWidth = System.getenv(ConfigConstants.CA_EDIT_WIDTH) != null ? System.getenv(ConfigConstants.CA_EDIT_WIDTH) : "800";
             String caEndPointUrl = System.getenv(ConfigConstants.CA_ENDPOINT_URL) != null ? System.getenv(ConfigConstants.CA_ENDPOINT_URL) : "index.html";
-            String caKey = System.getenv(ConfigConstants.CA_KEY) != null ? System.getenv(ConfigConstants.CA_KEY) : "f763f8e7-1c1e-481e-817d-ae1c4761ec62";
+            String caKey = System.getenv(ConfigConstants.CA_KEY) != null ? System.getenv(ConfigConstants.CA_KEY) : "f763f8e7-1c1e-481e-817d-ae1c4761ec62";*/
 
             // create json
             JsonObject value = Json.createObjectBuilder()
@@ -124,8 +125,8 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                     // metaData - Object that provides meta-information about this custom activity to Journey Builder.
                     // Third party sources may pass any additional properties as desired. This object contains UI-only data.
                     .add("metaData", Json.createObjectBuilder()
-                            .add("icon", caImage40)
-                            .add("iconSmall", caImage15)
+                            .add("icon", config.getBigImageUrl())
+                            .add("iconSmall", config.getSmallImageUrl())
                             .add("category", "message")
                             .add("isConfigured", true))
                     // type - String property representing the type of activity. This value must include one of the Marketing Cloud-provided types
@@ -133,13 +134,13 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                     // lang - Used to define i18n (internationalization) strings, such as the name and description as used within the application.
                     .add("lang", Json.createObjectBuilder()
                             .add("en-US", Json.createObjectBuilder()
-                                    .add("name", caName)
-                                    .add("description", caName)))
+                                    .add("name", config.getName())
+                                    .add("description", config.getDescription())))
                     // arguments - Contains information sent to the activity upon each execution.
                     .add("arguments", Json.createObjectBuilder()
                             .add("execute", Json.createObjectBuilder()
                                     .add("inArguments", Json.createArrayBuilder())
-                                    .add("url", caEditUrl)
+                                    .add("url", config.getEditUrl())
                                     .add("verb", "POST")
                                     .add("body", "")
                                     .add("header", "")
@@ -149,13 +150,13 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                     // configurationArguments - Contains information that relates to the configuration of the instance of this activity.
                     // All configuration arguments except publish are optional.
                     .add("configurationArguments", Json.createObjectBuilder()
-                            .add("applicationExtensionKey", caKey)
+                            .add("applicationExtensionKey", config.getKey())
                             .add("save", Json.createObjectBuilder()
-                                    .add("url", caEndPointUrl + "/save"))
+                                    .add("url", config.getEndpointUrl() + "/save"))
                             .add("publish", Json.createObjectBuilder()
-                                    .add("url", caEndPointUrl + "/publish"))
+                                    .add("url", config.getEndpointUrl() + "/publish"))
                             .add("validate", Json.createObjectBuilder()
-                                    .add("url", caEndPointUrl + "/validate")))
+                                    .add("url", config.getEndpointUrl() + "/validate")))
                     // wizardSteps - Contains an array of objects that define the steps that the user may navigate through when configuring the custom activity.
                     // Each object should follow the format: { "label": "Step 1", "key": "step1", "active": true }
                     .add("wizardSteps", Json.createArrayBuilder()
@@ -185,9 +186,9 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                     // (configuration modal, running mode hover, running mode details modal).
                     .add("userInterfaces", Json.createObjectBuilder()
                             .add("configModal", Json.createObjectBuilder()
-                                    .add("height", Integer.valueOf(caEditHeight))
-                                    .add("width", Integer.valueOf(caEditWidth))
-                                    .add("url", caEditUrl))
+                                    .add("height", config.getEditHeight())
+                                    .add("width", config.getEditWidth())
+                                    .add("url", config.getEditUrl()))
                             .add("runningModal", Json.createObjectBuilder()
                                     .add("url", "runningModal.html"))
                             .add("runningHover", Json.createObjectBuilder()
@@ -204,7 +205,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
     }
 
     /**
-     *
+     * TODO do some logic for split decision
      * @return
      */
     @Override

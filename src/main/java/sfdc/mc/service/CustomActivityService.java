@@ -31,9 +31,9 @@ public class CustomActivityService {
                 ConfigType cType = ConfigType.valueOf(config.getType().toUpperCase());
                 switch (cType) {
                     case REST:
-                        return customActivityRepository.getRestConfig();
+                        return customActivityRepository.getRestConfig(config);
                     case RESTDECISION:
-                        return customActivityRepository.getSplitConfig();
+                        return customActivityRepository.getSplitConfig(config);
                     default:
                         throw new Exception("Unknown type: " + config.getType());
                 }
