@@ -24,10 +24,11 @@
                 <h2 class="slds-text-heading--large slds-m-bottom_medium">List of saved configs</h2>
             </div>
             <div class="slds-col slds-m-left_small">
-                <a class="slds-icon_container slds-icon-custom-custom5 slds-icon_small slds-text-align_right" href="/ca/create" title="Create">
+                <a class="slds-icon_container slds-icon-custom-custom5 slds-icon_small slds-text-align_right"
+                   href="/ca/create" title="Create">
                     <svg class="slds-icon slds-icon_small" aria-hidden="true">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#new"></use>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                             xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#new"></use>
                     </svg>
                     <span class="slds-assistive-text">Description of icon</span>
                 </a>
@@ -40,6 +41,9 @@
             <tr class="slds-text-title_caps">
                 <th scope="col" class="">
                     <div class="slds-truncate" title="Id">Id</div>
+                </th>
+                <th scope="col" class="">
+                    <div class="slds-truncate" title="Id">Icon</div>
                 </th>
                 <th scope="col" class="">
                     <div class="slds-truncate" title="Name">Name</div>
@@ -57,6 +61,9 @@
                     <div class="slds-truncate" title="EditUrl">Edit Url</div>
                 </th>
                 <th scope="col" class="">
+                    <div class="slds-truncate" title="EditUrl">json</div>
+                </th>
+                <th scope="col" class="">
                 </th>
             </tr>
             </thead>
@@ -68,7 +75,15 @@
                                                              th:text="${config.Id}">Id</a></div>
                 </th>
                 <td data-label="Name" class="">
-                    <div class="slds-truncate" title="Name"><a th:href="@{'/ca/create/' + ${config.Id}}" th
+                    <div class="slds-truncate" title="Icon">
+                    <span class="slds-icon_container slds-icon-custom-custom9" title="Description of icon when needed">
+                         <image th:src="${config.BigImageUrl}"></image>
+                         <span class="slds-assistive-text">Description of icon</span>
+                    </span>
+                    </div>
+                </td>
+                <td data-label="Name" class="">
+                    <div class="slds-truncate" title="Name"><a th:href="@{'/ca/create/' + ${config.Id}}"
                                                                th:text="${config.Name}">Activity Name</a></div>
                 </td>
                 <td data-label="Description" class="">
@@ -82,6 +97,11 @@
                 </td>
                 <td data-label="EditUrl" class="">
                     <div class="slds-truncate" title="Name"><a th:href="${config.EditUrl}" target="_blank">Open</a>
+                    </div>
+                </td>
+                <td data-label="EditUrl" class="">
+                    <div class="slds-truncate" title="Name">
+                        <a th:id="@{'jsonBtn_' + ${config.Id}}" href="#" th:name="${config.Id}">View</a>
                     </div>
                 </td>
                 <td data-label="Delete" class="">
@@ -106,8 +126,8 @@
 
 </section>
 
-<div class="demo-only">
-    <section id="modal" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+<div name="delete-modal">
+    <section id="modalDelete" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
              aria-describedby="modal-content-id-1" class="slds-modal">
         <div class="slds-modal__container">
             <header class="slds-modal__header">
@@ -130,7 +150,35 @@
             </footer>
         </div>
     </section>
-    <div id="backdrop" class="slds-backdrop"></div>
+    <div id="backdropDelete" class="slds-backdrop"></div>
+</div>
+
+<div class="json-modal">
+    <section id="modalJson" role="alertdialog" tabindex="-1" aria-labelledby="prompt-heading-id"
+             aria-describedby="prompt-message-wrapper" class="slds-modal slds-modal_prompt slds-modal_large">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header slds-theme_info slds-theme_alert-texture">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                        onclick="closeModal()">
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                             xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 class="slds-text-heading_medium" id="prompt-heading-id">json.config preview</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium">
+                <p id="modalContentJson">
+
+                </p>
+            </div>
+            <footer class="slds-modal__footer slds-theme_default">
+                <button class="slds-button slds-button_neutral" onclick="closeModal()">Okay</button>
+            </footer>
+        </div>
+    </section>
+    <div id="backdropJson" class="slds-backdrop"></div>
 </div>
 
 <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
@@ -141,21 +189,30 @@
 
     //Modal Open
     j$('[id^=deleteBtn_]').click(function () {
-        j$('#backdrop').addClass('slds-backdrop_open');
-        j$('#modal').addClass('slds-fade-in-open');
+        j$('#backdropDelete').addClass('slds-backdrop_open');
+        j$('#modalDelete').addClass('slds-fade-in-open');
         selectedId = j$(this).attr('name');
+    });
+    j$('[id^=jsonBtn_]').click(function () {
+        j$('#backdropJson').addClass('slds-backdrop_open');
+        j$('#modalJson').addClass('slds-fade-in-open');
+        selectedId = j$(this).attr('name');
+        // TODO bring json here
+        console.log(selectedId);
     });
 
     //Modal Close
     function closeModal() {
-        j$('#modal').removeClass('slds-fade-in-open');
+        j$('#modalDelete').removeClass('slds-fade-in-open');
         j$('#backdrop').removeClass('slds-backdrop_open');
+        j$('#backdropJson').removeClass('slds-backdrop_open');
+        j$('#modalJson').removeClass('slds-fade-in-open');
     }
 
     //Modal Confirm
     j$('#deleteBtnConfirm').click(function () {
-        j$('#modal').removeClass('slds-fade-in-open');
-        j$('#backdrop').removeClass('slds-backdrop_open');
+        j$('#modalDelete').removeClass('slds-fade-in-open');
+        j$('#backdropDelete').removeClass('slds-backdrop_open');
         deleteConfig(selectedId);
     });
 
