@@ -132,7 +132,7 @@ public class CustomActivityController {
 
     @GetMapping(value = "/create")
     public String createConfig(Model model) {
-        System.out.println("*** create Config: ");
+        System.out.println("*** create config ***");
         model.addAttribute("config", new CustomActivityConfig());
         return "ca/create";
     }
@@ -140,7 +140,7 @@ public class CustomActivityController {
     @PostMapping(value = "/create")
     public String createConfig(@Valid @ModelAttribute("config") CustomActivityConfig config, BindingResult bindingResult, Model model) {
 
-        System.out.println("*** addConfig: " + config);
+        System.out.println("*** add config: " + config);
         if (bindingResult.hasErrors()) {
             model.addAttribute("config", config);
             return "ca/create";
@@ -151,18 +151,30 @@ public class CustomActivityController {
 
     @GetMapping(value = "/create/{id}")
     public String createConfig(@PathVariable String id, Model model) {
-        System.out.println("*** create Config: ");
+        System.out.println("*** update config: " + id);
         CustomActivityConfig config = customActivityService.getConfigById(id);
         model.addAttribute("config", config != null ? config : new CustomActivityConfig());
         return "ca/create";
     }
 
     @GetMapping(value = "/list")
-    public String list(Model model) {
-        System.out.println("*** list ");
+    public String listConfig(Model model) {
+        System.out.println("*** list configs ***");
         Iterable<CustomActivityConfig> list = customActivityService.getConfigs();
         model.addAttribute("configs", list);
         return "ca/list";
+    }
+
+    /**
+     * Delete config
+     * @param id
+     * @return
+     */
+    @PostMapping(value = "/delete/{id}")
+    public String deleteConfig(@PathVariable String id) {
+        System.out.println("*** delete config: " + id);
+        customActivityService.deleteConfigById(id);
+        return "redirect:/ca/list";
     }
 
 }

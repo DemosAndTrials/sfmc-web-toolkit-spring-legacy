@@ -97,4 +97,15 @@ public class CustomActivityService {
         return customActivityRepository.findOne(id);
     }
 
+    /**
+     * Delete config
+     *
+     * @param idStr
+     * @return
+     */
+    public void deleteConfigById(String idStr) {
+        int id = Integer.parseInt(idStr);
+        customActivityRepository.delete(id);
+    }
+
 }
