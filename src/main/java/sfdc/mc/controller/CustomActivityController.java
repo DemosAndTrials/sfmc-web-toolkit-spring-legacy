@@ -122,7 +122,6 @@ public class CustomActivityController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
@@ -167,6 +166,7 @@ public class CustomActivityController {
 
     /**
      * Delete config
+     *
      * @param id
      * @return
      */

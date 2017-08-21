@@ -6,6 +6,7 @@
 
     <link rel='stylesheet prefetch'
           href='/styles/slds/styles/salesforce-lightning-design-system.min.css'/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
     <style>
     </style>
 </head>
@@ -169,9 +170,11 @@
                 <h2 class="slds-text-heading_medium" id="prompt-heading-id">json.config preview</h2>
             </header>
             <div class="slds-modal__content slds-p-around_medium">
-                <p id="modalContentJson">
+                <pre>
+                    <code id="modalContentJson"class="json">
 
-                </p>
+                    </code>
+                </pre>
             </div>
             <footer class="slds-modal__footer slds-theme_default">
                 <button class="slds-button slds-button_neutral" onclick="closeModal()">Okay</button>
@@ -182,6 +185,9 @@
 </div>
 
 <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>
+<!--<script>hljs.initHighlightingOnLoad();</script>-->
 
 <script type="text/javascript">
     j$ = jQuery.noConflict();
@@ -194,11 +200,19 @@
         selectedId = j$(this).attr('name');
     });
     j$('[id^=jsonBtn_]').click(function () {
-        j$('#backdropJson').addClass('slds-backdrop_open');
-        j$('#modalJson').addClass('slds-fade-in-open');
         selectedId = j$(this).attr('name');
         // TODO bring json here
+        j$.post("/ca/" + selectedId + "/config.json", function (data) {
+            //j$( "#modalContentJson" ).html( "1212123" );
+            j$("#modalContentJson").html(JSON.stringify(data, null, '\t'));
+            j$('pre code').each(function (i, block) {
+                hljs.highlightBlock(block);
+            });
+        });
         console.log(selectedId);
+        j$('#backdropJson').addClass('slds-backdrop_open');
+        j$('#modalJson').addClass('slds-fade-in-open');
+
     });
 
     //Modal Close
