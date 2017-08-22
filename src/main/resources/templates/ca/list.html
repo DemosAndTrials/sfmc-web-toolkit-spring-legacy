@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Create config</title>
-    <link rel="icon" href="/images/fav.ico" type="image/x-icon"/>
+    <title>List config</title>
 
-    <link rel='stylesheet prefetch'
-          href='/styles/slds/styles/salesforce-lightning-design-system.min.css'/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-    <style>
-    </style>
+     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+
+    <div th:replace="fragments/header :: header-css" th:remove="tag"/>
+
+
 </head>
 <body>
 
 <section class="stage slds-grid slds-grid--vertical slds-nowrap">
 
-    <div class="slds-shrink-none">
-        <div class="slds-page-header">Salesforce Marketing Cloud Examples</div>
-    </div>
+    <div th:replace="fragments/header :: header">.</div>
+    <div class="slds-page-header">Header</div>
 
     <!-- Stage Main -->
     <div class="slds-m-around_small">
         <div class="slds-grid">
             <div>
-                <h2 class="slds-text-heading--large slds-m-bottom_medium">List of saved configs</h2>
+                <h2 class="slds-text-heading--medium slds-m-bottom_medium">List of saved configs</h2>
             </div>
             <div class="slds-col slds-m-left_small">
                 <a class="slds-icon_container slds-icon-custom-custom5 slds-icon_small slds-text-align_right"
@@ -124,7 +122,7 @@
         </table>
 
     </div>
-
+    <div th:replace="fragments/footer :: footer"></div>
 </section>
 
 <div name="delete-modal">
@@ -171,7 +169,7 @@
             </header>
             <div class="slds-modal__content slds-p-around_medium">
                 <pre>
-                    <code id="modalContentJson"class="json">
+                    <code id="modalContentJson" class="json">
 
                     </code>
                 </pre>
@@ -203,13 +201,14 @@
         selectedId = j$(this).attr('name');
         // TODO bring json here
         j$.post("/ca/" + selectedId + "/config.json", function (data) {
-            //j$( "#modalContentJson" ).html( "1212123" );
+            // insert json
             j$("#modalContentJson").html(JSON.stringify(data, null, '\t'));
+            // highlight json
             j$('pre code').each(function (i, block) {
                 hljs.highlightBlock(block);
             });
         });
-        console.log(selectedId);
+        // show modal
         j$('#backdropJson').addClass('slds-backdrop_open');
         j$('#modalJson').addClass('slds-fade-in-open');
 

@@ -2,20 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Create config</title>
-    <link rel="icon" href="/images/fav.ico" type="image/x-icon"/>
-
-    <link rel='stylesheet prefetch'
-          href='/styles/slds/styles/salesforce-lightning-design-system.min.css'/>
-    <style>
-    </style>
+    <div th:replace="fragments/header :: header-css" th:remove="tag"/>
 </head>
 <body>
 
 <section class="stage slds-grid slds-grid--vertical slds-nowrap">
 
-    <div class="slds-shrink-none">
-        <div class="slds-page-header">Salesforce Marketing Cloud Examples</div>
-    </div>
+    <div th:replace="fragments/header :: header">.</div>
+    <div class="slds-page-header">Header</div>
 
     <form action="#" th:action="@{/ca/create}" th:object="${config}" method="post">
         <!-- Stage Main -->
@@ -23,8 +17,21 @@
              class="step slds-grid slds-wrap slds-container--medium slds-container--center slds-order-1 slds-medium-order--2 slds-p-vertical--large">
             <div class="slds-col--padded slds-col-rule--right slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--8-of-12 slds-p-bottom--x-large">
 
-                <h2 class="slds-text-heading--large">Create config</h2>
-                <br class="slds-text-longform">
+                <div class="slds-grid">
+                    <div>
+                        <h2 class="slds-text-heading--medium slds-m-bottom_medium">Create config</h2>
+                    </div>
+                    <div class="slds-col slds-m-left_small slds-text-align_right">
+                        <a class="slds-icon_container slds-icon-custom-custom5 slds-icon_small slds-text-align_right"
+                           href="/ca/list" title="Create">
+                            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#list"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Description of icon</span>
+                        </a>
+                    </div>
+                </div>
 
                 <div class="slds-form slds-form_compound">
                     <fieldset class="slds-form-element">
@@ -160,6 +167,7 @@
 
     </form>
 </section>
+<div th:replace="fragments/footer :: footer"/>
 
 <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
 <script>
