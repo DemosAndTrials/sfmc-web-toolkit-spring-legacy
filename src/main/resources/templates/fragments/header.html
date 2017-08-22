@@ -10,183 +10,141 @@
 </head>
 <body>
 <div th:fragment="header">
-    <header class="slds-global-header_container"><a href="javascript:void(0);"
-                                                    class="slds-assistive-text slds-assistive-text_focus">Skip
-        to Navigation</a><a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text_focus">Skip to
-        Main Content</a>
-        <div class="slds-global-header slds-grid slds-grid_align-spread">
-            <ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center">
-                <li class="slds-grid">
-                <div class="slds-global-header__item">
-                    <div class="slds-global-header__logo">
-                        <img src="/styles/slds/images/logo-noname.svg" alt="">
-                    </div>
-                </div>
-                </li>
-                <li class="slds-grid">
-                    <div class="slds-shrink-none">
-                        Salesforce Marketing Cloud Examples
-                    </div>
-                </li>
-            </ul>
 
-           <!-- <div class="slds-global-header__item slds-global-header__item_search">
-                <div aria-expanded="false" aria-haspopup="listbox" class="slds-form-element slds-lookup"
-                     role="combobox">
-                    <label class="slds-assistive-text" for="global-search-01">Search Salesforce</label>
-                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_left-right">
-                        <svg class="slds-input__icon slds-input__icon_left" aria-hidden="true">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#search"></use>
-                        </svg>
-                        <input type="text" aria-activedescendant="" aria-autocomplete="list"
-                               aria-controls="global-search-list-01" autocomplete="off"
-                               class="slds-input slds-lookup__search-input" id="global-search-01"
-                               placeholder="Search Salesforce" role="textbox">
+
+    <div class="slds-context-bar">
+        <div class="slds-context-bar__primary slds-context-bar__item_divider-right">
+            <div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-no-hover slds-context-bar__item_divider-right">
+                <div class="slds-global-header__logo">
+                    <img src="/styles/slds/images/logo-noname.svg" alt="">
+                </div>
+                <span class="slds-context-bar__label-action slds-context-bar__app-name">
+                     <div class="slds-truncate slds-m-left_medium">
+                        SFMC Examples
                     </div>
-                    <div class="slds-lookup__menu" role="listbox" id="global-search-list-01">
-                        <ul class="slds-lookup__list" role="group" aria-label="Recent Items">
-                            <li role="presentation">
-                                <h3 role="presentation" class="slds-lookup__item_label slds-text-body_small">Recent
-                                    Items</h3>
+      </span>
+            </div>
+        </div>
+        <nav class="slds-context-bar__secondary" role="navigation">
+            <ul class="slds-grid">
+                <!--Home-->
+                <li class="slds-context-bar__item slds-context-bar__item_divider-right">
+                    <a href="/" class="slds-context-bar__label-action" title="Home">
+                        <span class="slds-truncate" title="Home">Home</span>
+                    </a>
+                </li>
+                <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-context-bar__item_divider-right">
+                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Demo">
+                        <span class="slds-truncate" title="Menu Item">Demo</span>
+                    </a>
+                    <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open submenu">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Open submenu</span>
+                        </button>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown_right slds-context-bar__item_divider-right">
+                        <ul class="slds-dropdown__list" role="menu">
+                            <!--Item One-->
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/demo/lightning" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Menu Item One">Lighting Design System </span>
+                                </a>
                             </li>
-                            <li role="presentation">
-              <span class="slds-lookup__item-action slds-media" id="option-01" role="option">
-                <svg class="slds-icon slds-icon-standard-opportunity slds-icon_small slds-media__figure"
-                     aria-hidden="true">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                       xlink:href="/styles/slds/icons/standard-sprite/svg/symbols.svg#opportunity"></use>
-                </svg>
-                <span class="slds-media__body">
-                  <span class="slds-lookup__result-text">Salesforce - 1,000 Licenses</span>
-                  <span class="slds-lookup__result-meta slds-text-body_small">Opportunity • Prospecting</span>
-                </span>
-              </span>
-                            </li>
-                            <li role="presentation">
-              <span class="slds-lookup__item-action slds-media" id="option-02" role="option">
-                <svg class="slds-icon slds-icon-standard-contact slds-icon_small slds-media__figure" aria-hidden="true">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                       xlink:href="/styles/slds/icons/standard-sprite/svg/symbols.svg#contact"></use>
-                </svg>
-                <span class="slds-media__body">
-                  <span class="slds-lookup__result-text">Art Vandelay</span>
-                  <span class="slds-lookup__result-meta slds-text-body_small">Contact • avandelay@vandelay.com</span>
-                </span>
-              </span>
-                            </li>
-                            <li role="presentation">
-              <span class="slds-lookup__item-action slds-media" id="option-03" role="option">
-                <svg class="slds-icon slds-icon-standard-account slds-icon_small slds-media__figure" aria-hidden="true">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                       xlink:href="/styles/slds/icons/standard-sprite/svg/symbols.svg#account"></use>
-                </svg>
-                <span class="slds-media__body">
-                  <span class="slds-lookup__result-text">Vandelary Industries</span>
-                  <span class="slds-lookup__result-meta slds-text-body_small">Account • San Francisco</span>
-                </span>
-              </span>
-                            </li>
-                            <li role="presentation">
-              <span class="slds-lookup__item-action slds-media" id="option-04" role="option">
-                <svg class="slds-icon slds-icon-custom-8 slds-icon_small slds-media__figure" aria-hidden="true">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                       xlink:href="/styles/slds/icons/custom-sprite/svg/symbols.svg#custom8"></use>
-                </svg>
-                <span class="slds-media__body">
-                  <span class="slds-lookup__result-text">Salesforce UK 2016 Events</span>
-                  <span class="slds-lookup__result-meta slds-text-body_small">General Ledger • $20,000</span>
-                </span>
-              </span>
-                            </li>
-                            <li role="presentation">
-              <span class="slds-lookup__item-action slds-media" id="option-05" role="option">
-                <svg class="slds-icon slds-icon-standard-lead slds-icon_small slds-media__figure" aria-hidden="true">
-                  <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                       xlink:href="/styles/slds/icons/standard-sprite/svg/symbols.svg#lead"></use>
-                </svg>
-                <span class="slds-media__body">
-                  <span class="slds-lookup__result-text">H.E. Pennypacker</span>
-                  <span class="slds-lookup__result-meta slds-text-body_small">Lead • Nursing</span>
-                </span>
-              </span>
+                            <!--Item Two-->
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/demo/bootstrap" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Menu Item Two">Bootstrap</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
-                </div>
-            </div>-->
+                </li>
 
-            <ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center">
-                <li class="slds-grid">
-                    <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon-favorites"
-                            aria-pressed="false" title="Toggle Favorites">
-                        <svg class="slds-button__icon slds-global-header__icon" aria-hidden="true">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#favorite"></use>
-                        </svg>
-                        <span class="slds-assistive-text">Toggle Favorite</span>
-                    </button>
-                    <span class="slds-dropdown-trigger slds-dropdown-trigger_click">
-          <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon slds-m-left_none"
-                  title="View Favorites">
-            <svg class="slds-button__icon" aria-hidden="true">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                   xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
-            </svg>
-            <span class="slds-assistive-text">View Favorites</span>
-          </button>
-        </span>
+                <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-context-bar__item_divider-right">
+                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Demo">
+                        <span class="slds-truncate" title="Menu Item">API</span>
+                    </a>
+                    <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open submenu">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Open submenu</span>
+                        </button>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown_right slds-context-bar__item_divider-right">
+                        <ul class="slds-dropdown__list" role="menu">
+                            <!--Item One-->
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="#" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Menu Item One">PLACEHOLDER</span>
+                                </a>
+                            </li>
+                            <!--Item Two-->
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="#" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Menu Item Two">PLACEHOLDER</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
-                <li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-p-horizontal_xxx-small">
-                    <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-small slds-button_icon-container slds-button_icon-x-small slds-global-header__button_icon-actions slds-m-horizontal_xx-small"
-                            title="Global Actions">
-                        <svg class="slds-button__icon" aria-hidden="true">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#add"></use>
-                        </svg>
-                        <span class="slds-assistive-text">Global Actions</span>
-                    </button>
+
+                <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-context-bar__item_divider-right">
+                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Demo">
+                        <span class="slds-truncate" title="Menu Item">Custom Activity</span>
+                    </a>
+                    <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open submenu">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Open submenu</span>
+                        </button>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown_right slds-context-bar__item_divider-right">
+                        <ul class="slds-dropdown__list" role="menu">
+                            <!--Item One-->
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/ca/list" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Menu Item One">Saved configurations</span>
+                                </a>
+                            </li>
+                            <!--Item Two-->
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/ca/create" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Menu Item Two">Create configuration</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
-                <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
-                    <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
-                            title="Help and Training">
-                        <svg class="slds-button__icon slds-global-header__icon" aria-hidden="true">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#question"></use>
-                        </svg>
-                        <span class="slds-assistive-text">Help and Training</span>
-                    </button>
+
+                <li class="slds-context-bar__item slds-context-bar__item_divider-right">
+                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item 0">
+                        <span class="slds-truncate" title="Menu Item">Menu Item 0</span>
+                    </a>
                 </li>
-                <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
-                    <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
-                            title="Setup">
-                        <svg class="slds-button__icon slds-global-header__icon" aria-hidden="true">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#setup"></use>
-                        </svg>
-                        <span class="slds-assistive-text">Setup</span>
-                    </button>
+
+                <li class="slds-context-bar__item slds-context-bar__item_divider-right">
+                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item 1">
+                        <span class="slds-truncate" title="Menu Item">Menu Item 1</span>
+                    </a>
                 </li>
-                <li class="slds-dropdown-trigger slds-dropdown-trigger_click">
-                    <button class="slds-button slds-button_icon slds-button_icon slds-button_icon-container slds-button_icon-small slds-global-header__button_icon"
-                            title="Notifications">
-                        <svg class="slds-button__icon slds-global-header__icon" aria-hidden="true">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#notification"></use>
-                        </svg>
-                        <span class="slds-assistive-text">Notifications</span>
-                    </button>
-                </li>
-                <li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small">
-                    <button class="slds-button" title="person name" aria-haspopup="true">
-          <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
-            <img alt="Person name" src="/styles/slds/images/avatar2.jpg" title="User avatar">
-          </span>
-                    </button>
+
+                <li class="slds-context-bar__item slds-context-bar__item_divider-right">
+                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item 2">
+                        <span class="slds-truncate" title="Menu Item">Menu Item 2</span>
+                    </a>
                 </li>
             </ul>
-        </div>
-    </header>
+
+        </nav>
+    </div>
+
 </div>
 </body>
 </html>
