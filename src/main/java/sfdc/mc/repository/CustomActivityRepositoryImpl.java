@@ -185,14 +185,14 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                     // userInterfaces - Contains endpoints and UI configurations for the user interfaces for the activity
                     // (configuration modal, running mode hover, running mode details modal).
                     .add("userInterfaces", Json.createObjectBuilder()
-                            .add("configModal", Json.createObjectBuilder()
-                                    .add("height", config.getEditHeight())
-                                    .add("width", config.getEditWidth())
-                                   /* .add("url", config.getEditUrl())*/)
                             .add("runningModal", Json.createObjectBuilder()
-                                    .add("url", "runningModal.html"))
+                                    .add("url", "https://sfmc-examples.herokuapp.com/ca/modal"))
                             .add("runningHover", Json.createObjectBuilder()
-                                    .add("url", "runningHover.html")))
+                                    .add("url", "https://sfmc-examples.herokuapp.com/ca/hover")))
+                    .add("edit", Json.createObjectBuilder()
+                            .add("url", config.getEditUrl())
+                            .add("height", config.getEditHeight())
+                            .add("width", config.getEditWidth()))
                     .build();
 
             String result = value.toString();

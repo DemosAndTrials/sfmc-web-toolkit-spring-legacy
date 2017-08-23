@@ -39,6 +39,20 @@ public class CustomActivityController {
         return "ca/index";
     }
 
+    @RequestMapping(value = "hover")
+    public String hover() {
+
+        System.out.println("*** hover ***");
+        return "ca/runningHover";
+    }
+
+    @RequestMapping(value = "modal")
+    public String modal() {
+
+        System.out.println("*** modal ***");
+        return "ca/runningModal";
+    }
+
     /**
      * execute - The API calls this method for each contact processed by the journey.
      *
