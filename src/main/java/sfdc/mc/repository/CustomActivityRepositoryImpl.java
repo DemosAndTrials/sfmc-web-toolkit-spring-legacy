@@ -1,8 +1,6 @@
 package sfdc.mc.repository;
 
 import sfdc.mc.model.CustomActivityConfig;
-import sfdc.mc.util.ConfigConstants;
-
 import javax.json.Json;
 import javax.json.JsonObject;
 
@@ -108,17 +106,6 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
     public String getSplitConfig(CustomActivityConfig config) {
         try {
 
-            // get heroku config variables
-            /*String caName = System.getenv(ConfigConstants.CA_NAME) != null ? System.getenv(ConfigConstants.CA_NAME) : "Demo Custom Split Activity";
-            String caEditUrl = System.getenv(ConfigConstants.CA_EDIT_URL) != null ? System.getenv(ConfigConstants.CA_EDIT_URL) : "edit.html";
-            String caImage15 = System.getenv(ConfigConstants.CA_IMG_15) != null ? System.getenv(ConfigConstants.CA_IMG_15) : "https://s25.postimg.org/7ptejywr3/angry-bird-yellow-icon-15.png";
-            String caImage40 = System.getenv(ConfigConstants.CA_IMG_40) != null ? System.getenv(ConfigConstants.CA_IMG_40) : "https://s25.postimg.org/5mizcawy7/angry-bird-yellow-icon-40.png";
-            String caNumSteps = System.getenv(ConfigConstants.CA_NUM_STEPS) != null ? System.getenv(ConfigConstants.CA_NUM_STEPS) : "1";
-            String caEditHeight = System.getenv(ConfigConstants.CA_EDIT_HEIGHT) != null ? System.getenv(ConfigConstants.CA_EDIT_HEIGHT) : "600";
-            String caEditWidth = System.getenv(ConfigConstants.CA_EDIT_WIDTH) != null ? System.getenv(ConfigConstants.CA_EDIT_WIDTH) : "800";
-            String caEndPointUrl = System.getenv(ConfigConstants.CA_ENDPOINT_URL) != null ? System.getenv(ConfigConstants.CA_ENDPOINT_URL) : "index.html";
-            String caKey = System.getenv(ConfigConstants.CA_KEY) != null ? System.getenv(ConfigConstants.CA_KEY) : "f763f8e7-1c1e-481e-817d-ae1c4761ec62";*/
-
             // create json
             JsonObject value = Json.createObjectBuilder()
                     .add("workflowApiVersion", "1.1")
@@ -206,6 +193,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
 
     /**
      * TODO do some logic for split decision
+     *
      * @return
      */
     @Override
