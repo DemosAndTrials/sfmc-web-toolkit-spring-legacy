@@ -136,15 +136,29 @@ public class CustomActivityController {
         return "ca/create";
     }
 
+    /**
+     * Create config or return back to the list
+     * Notice how the BindingResult has to be immediately after the object I have annotated with @Valid.
+     * @param config
+     * @param action
+     * @param bindingResult
+     * @param model
+     * @return
+     */
     @PostMapping(value = "/create")
-    public String createConfig(@Valid @ModelAttribute("config") CustomActivityConfig config, BindingResult bindingResult, Model model) {
-
-        System.out.println("*** add config: " + config);
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("config", config);
-            return "ca/create";
+    public String createConfig(@RequestParam(required = false) String action, @Valid @ModelAttribute("config") CustomActivityConfig config, BindingResult bindingResult, Model model) {
+        // save
+        if( action.equals("save") ){
+            if (bindingResult.hasErrors()) {
+                model.addAttribute("config", config);
+                return "ca/create";
+            }
+            CustomActivityConfig res = customActivityService.createConfig(config);
         }
-        CustomActivityConfig res = customActivityService.createConfig(config);
+        // cancel
+        else if( action.equals("cancel") ){
+            //handle renew
+        }
         return "redirect:/ca/list";
     }
 

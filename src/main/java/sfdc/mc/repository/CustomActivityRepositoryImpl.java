@@ -188,7 +188,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                             .add("configModal", Json.createObjectBuilder()
                                     .add("height", config.getEditHeight())
                                     .add("width", config.getEditWidth())
-                                    .add("url", config.getEditUrl()))
+                                   /* .add("url", config.getEditUrl())*/)
                             .add("runningModal", Json.createObjectBuilder()
                                     .add("url", "runningModal.html"))
                             .add("runningHover", Json.createObjectBuilder()

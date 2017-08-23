@@ -10,7 +10,7 @@
 
     <div th:replace="fragments/header :: header">.</div>
 
-    <form action="#" th:action="@{/ca/create}" th:object="${config}" method="post">
+    <form action="#" th:action="@{/ca/create}" th:object="${config}" method="post" name="config">
         <!-- Stage Main -->
         <div id="step1"
              class="step slds-grid slds-wrap slds-container--medium slds-container--center slds-order-1 slds-medium-order--2 slds-p-vertical--large">
@@ -38,7 +38,8 @@
                             <input type="hidden" id="input-00" th:field="*{Id}">
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-1">
-                                    <label class="slds-form-element__label" for="input-03">Key</label>
+                                    <label class="slds-form-element__label" for="input-03">Key - Must match your
+                                        activity key as defined when created in App Center.</label>
                                     <input type="text" id="input-01" th:field="*{Key}" class="slds-input">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('Id')}"
                                          th:errors="*{Key}">Name Error
@@ -47,8 +48,10 @@
                             </div>
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-1">
-                                    <label class="slds-form-element__label" for="input-03">EndpointUrl</label>
-                                    <input type="text" id="input-02" th:field="*{EndpointUrl}" class="slds-input" placeholder="https://">
+                                    <label class="slds-form-element__label" for="input-03">EndpointUrl - Endpoint used
+                                        to execute the journey.</label>
+                                    <input type="text" id="input-02" th:field="*{EndpointUrl}" class="slds-input"
+                                           placeholder="https://">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EndpointUrl')}"
                                          th:errors="*{EndpointUrl}">Name Error
                                     </div>
@@ -56,7 +59,9 @@
                             </div>
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-1">
-                                    <label class="slds-form-element__label" for="input-03">Type</label>
+                                    <label class="slds-form-element__label" for="input-03">Type - String property
+                                        representing the type of activity. This value must include one of the Marketing
+                                        Cloud-provided types.</label>
                                     <div class="slds-select_container">
                                         <select class="slds-select" id="select-01" th:field="*{Type}">
                                             <option th:value="REST">REST</option>
@@ -72,7 +77,9 @@
                         <div class="slds-form-element__group">
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-1">
-                                    <label class="slds-form-element__label" for="input-03">Name</label>
+                                    <label class="slds-form-element__label" for="input-03">Name - Type of activity (i.e.
+                                        'Send Email', 'SMS', 'Create Salesforce Lead'), as shown in the activity
+                                        list.</label>
                                     <input type="text" id="input-03" th:field="*{Name}" class="slds-input">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EndpointUrl')}"
                                          th:errors="*{Name}">Name Error
@@ -81,25 +88,32 @@
                             </div>
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-1">
-                                    <label class="slds-form-element__label" for="input-03">Description</label>
+                                    <label class="slds-form-element__label" for="input-03">Description - Description of
+                                        what the activity does and what purpose it fulfills.</label>
                                     <input type="text" id="input-04" th:field="*{Description}" class="slds-input">
                                 </div>
                             </div>
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-1">
-                                    <label class="slds-form-element__label" for="input-03">SmallImageUrl</label>
-                                    <input type="text" id="input-05" th:field="*{SmallImageUrl}" class="slds-input">
+                                    <label class="slds-form-element__label" for="input-03">Small Icon(15px) - String
+                                        representing the small display icon for this activity.</label>
+                                    <input type="text" id="input-05" th:field="*{SmallImageUrl}" class="slds-input"
+                                           placeholder="https://">
                                 </div>
                             </div>
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-1">
-                                    <label class="slds-form-element__label" for="input-03">BigImageUrl</label>
-                                    <input type="text" id="input-06" th:field="*{BigImageUrl}" class="slds-input">
+                                    <label class="slds-form-element__label" for="input-03">Icon(40px) - String
+                                        representing the icon for this activity.</label>
+                                    <input type="text" id="input-06" th:field="*{BigImageUrl}" class="slds-input"
+                                           placeholder="https://">
                                 </div>
                             </div>
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-1">
-                                    <label class="slds-form-element__label" for="input-03">NumSteps</label>
+                                    <label class="slds-form-element__label" for="input-03">NumSteps - Number of wizard
+                                        steps that the user may navigate through when configuring the custom
+                                        activity.</label>
                                     <input type="text" id="input-07" th:field="*{NumSteps}" class="slds-input">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('NumSteps')}"
                                          th:errors="*{NumSteps}">Name Error
@@ -113,8 +127,10 @@
                         <div class="slds-form-element__group">
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-1">
-                                    <label class="slds-form-element__label" for="input-03">EditUrl</label>
-                                    <input type="text" id="input-08" th:field="*{EditUrl}" class="slds-input" placeholder="https://">
+                                    <label class="slds-form-element__label" for="input-03">EditUrl - Endpoint for the UI
+                                        displayed to marketers while configuring this activity.</label>
+                                    <input type="text" id="input-08" th:field="*{EditUrl}" class="slds-input"
+                                           placeholder="https://">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditUrl')}"
                                          th:errors="*{EditUrl}">Name Error
                                     </div>
@@ -122,14 +138,16 @@
                             </div>
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-2">
-                                    <label class="slds-form-element__label" for="input-01">Height</label>
+                                    <label class="slds-form-element__label" for="input-01">Height - Property that
+                                        defines the height of the iframe containing the configuration UI.</label>
                                     <input type="text" id="input-09" th:field="*{EditHeight}" class="slds-input">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditHeight')}"
                                          th:errors="*{EditHeight}">Name Error
                                     </div>
                                 </div>
                                 <div class="slds-form-element slds-size_1-of-2">
-                                    <label class="slds-form-element__label" for="input-02">Width</label>
+                                    <label class="slds-form-element__label" for="input-02">Width - Property that defines
+                                        the width of the iframe containing the configuration UI.</label>
                                     <input type="text" id="input-10" th:field="*{EditWidth}" class="slds-input">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditWidth')}"
                                          th:errors="*{EditWidth}">Name Error
@@ -143,8 +161,8 @@
                 <div class="slds-form-element">
                     <br>
                     <div class="slds-button-group" role="group">
-                        <button class="slds-button slds-button_brand">Submit</button>
-                        <button class="slds-button slds-button_destructive">Cancel</button>
+                        <button class="slds-button slds-button_brand" name="action" value="save">Submit</button>
+                        <button class="slds-button slds-button_destructive" name="action" value="cancel">Cancel</button>
                     </div>
                 </div>
 
@@ -154,10 +172,7 @@
             <div class="slds-col--padded slds-size--1-of-1 slds-small-size--1-of-2 slds-m-bottom--large">
                 <div class="slds-box">
                     <h2 class="slds-text-heading--label">Notes:</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et quasi deleniti laborum nobis sed
-                        assumenda itaque optio unde eius corporis, repellat ea ducimus magni, quos fugit, nihil error
-                        quis
-                        tempora.</p>
+                    <p>https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/creating-activities.htm</p>
                 </div>
 
             </div>
