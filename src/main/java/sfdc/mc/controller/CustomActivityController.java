@@ -39,6 +39,10 @@ public class CustomActivityController {
         return "ca/index";
     }
 
+    /**
+     * running hover
+     * @return
+     */
     @RequestMapping(value = "hover")
     public String hover() {
 
@@ -46,6 +50,10 @@ public class CustomActivityController {
         return "ca/runningHover";
     }
 
+    /**
+     * running modal
+     * @return
+     */
     @RequestMapping(value = "modal")
     public String modal() {
 
@@ -74,24 +82,24 @@ public class CustomActivityController {
 
     /**
      * save - Notification is sent to this endpoint when a user saves the interaction (optional).
-     *
+     * called on journey activation
      * @param json
      * @return
      */
-    @RequestMapping(value = "{type}/save", method = RequestMethod.POST, headers = "Accept=application/json")
-    public ResponseEntity save(@PathVariable String type, @RequestBody String json) {
-        System.out.println("*** type: " + type + " *** save: " + json);
+    @RequestMapping(value = "{id}/save", method = RequestMethod.POST, headers = "Accept=application/json")
+    public ResponseEntity save(@PathVariable String id, @RequestBody String json) {
+        System.out.println("*** id: " + id + " *** save: " + json);
         return new ResponseEntity("OK", HttpStatus.OK);
     }
 
     /**
      * publish - Notification is sent to this endpoint when a user publishes the interaction.
-     *
+     * called on journey activation
      * @return
      */
-    @RequestMapping(value = "{type}/publish", method = RequestMethod.POST, headers = "Accept=application/json")
-    public ResponseEntity publish(@PathVariable String type, @RequestBody String json) {
-        System.out.println("*** type: " + type + "  *** publish: " + json);
+    @RequestMapping(value = "{id}/publish", method = RequestMethod.POST, headers = "Accept=application/json")
+    public ResponseEntity publish(@PathVariable String id, @RequestBody String json) {
+        System.out.println("*** id: " + id + "  *** publish: " + json);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -101,9 +109,9 @@ public class CustomActivityController {
      *
      * @return
      */
-    @RequestMapping(value = "{type}/validate", method = RequestMethod.POST, headers = "Accept=application/json")
-    public ResponseEntity validate(@PathVariable String type, @RequestBody String json) {
-        System.out.println("*** type: " + type + "  *** validate: " + json);
+    @RequestMapping(value = "{id}/validate", method = RequestMethod.POST, headers = "Accept=application/json")
+    public ResponseEntity validate(@PathVariable String id, @RequestBody String json) {
+        System.out.println("*** id: " + id + "  *** validate: " + json);
         // TODO validation
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -114,9 +122,9 @@ public class CustomActivityController {
      *
      * @return
      */
-    @RequestMapping(value = "{type}/stop", method = RequestMethod.POST, headers = "Accept=application/json")
-    public ResponseEntity stop(@PathVariable String type, @RequestBody String json) {
-        System.out.println("*** type: " + type + "  *** stop: " + json);
+    @RequestMapping(value = "{id}/stop", method = RequestMethod.POST, headers = "Accept=application/json")
+    public ResponseEntity stop(@PathVariable String id, @RequestBody String json) {
+        System.out.println("*** id: " + id + "  *** stop: " + json);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -143,6 +151,11 @@ public class CustomActivityController {
     * Config CRUD operations
     */
 
+    /**
+     * Create config
+     * @param model
+     * @return
+     */
     @GetMapping(value = "/create")
     public String createConfig(Model model) {
         System.out.println("*** create config ***");
@@ -176,14 +189,25 @@ public class CustomActivityController {
         return "redirect:/ca/list";
     }
 
+    /**
+     * Edit config
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping(value = "/create/{id}")
-    public String createConfig(@PathVariable String id, Model model) {
+    public String editConfig(@PathVariable String id, Model model) {
         System.out.println("*** update config: " + id);
         CustomActivityConfig config = customActivityService.getConfigById(id);
         model.addAttribute("config", config != null ? config : new CustomActivityConfig());
         return "ca/create";
     }
 
+    /**
+     * List of configs
+     * @param model
+     * @return
+     */
     @GetMapping(value = "/list")
     public String listConfig(Model model) {
         System.out.println("*** list configs ***");
