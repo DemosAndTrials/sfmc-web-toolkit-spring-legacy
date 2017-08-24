@@ -36,7 +36,7 @@ public class CustomActivityController {
         String caNumSteps = System.getenv(ConfigConstants.CA_NUM_STEPS) != null ? System.getenv(ConfigConstants.CA_NUM_STEPS) : "1";
         System.out.println("*** Number of steps: " + caNumSteps);
         model.addAttribute("numSteps", caNumSteps);
-        return "ca/index";
+        return "ca/ui/editModal";
     }
 
     /**
@@ -46,8 +46,8 @@ public class CustomActivityController {
     @RequestMapping(value = "hover")
     public String hover() {
 
-        System.out.println("*** hover ***");
-        return "ca/runningHover";
+        System.out.println("*** running hover ***");
+        return "ca/ui/runningHover";
     }
 
     /**
@@ -57,8 +57,8 @@ public class CustomActivityController {
     @RequestMapping(value = "modal")
     public String modal() {
 
-        System.out.println("*** modal ***");
-        return "ca/runningModal";
+        System.out.println("*** running modal ***");
+        return "ca/ui/runningModal";
     }
 
     /**
@@ -67,12 +67,12 @@ public class CustomActivityController {
      * @param json
      * @return
      */
-    @RequestMapping(value = "{type}/execute", method = RequestMethod.POST, headers = "Accept=application/json")
-    public ResponseEntity execute(@PathVariable String type, @RequestBody String json) {
-        System.out.println("*** type: " + type + " *** execute: " + json);
+    @RequestMapping(value = "{id}/execute", method = RequestMethod.POST, headers = "Accept=application/json")
+    public ResponseEntity execute(@PathVariable String id, @RequestBody String json) {
+        System.out.println("*** execute notification: " + id + "  data: " + json);
         String result = null;
         try {
-            result = customActivityService.executeActivity(type);
+            result = customActivityService.executeActivity(id);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,35 +83,59 @@ public class CustomActivityController {
     /**
      * save - Notification is sent to this endpoint when a user saves the interaction (optional).
      * called on journey activation
+     * example of request's body
+     *  {
+     *      "activityObjectID": "770222dc-a0ca-4024-836a-9644dd26f848",
+     *      "interactionId": "2fa18520-ec47-4db1-a5ec-6cbedae20762",
+     *      "originalDefinitionId": "c0b22824-c4db-441b-a8e2-7aea9bfca439",
+     *      "interactionKey": "6384e00d-a5cf-e993-e307-26079ad8554d",
+     *      "interactionVersion": "2"
+     *  }
      * @param json
      * @return
      */
     @RequestMapping(value = "{id}/save", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity save(@PathVariable String id, @RequestBody String json) {
-        System.out.println("*** id: " + id + " *** save: " + json);
+        System.out.println("*** save notification: " + id + "  data: " + json);
         return new ResponseEntity("OK", HttpStatus.OK);
     }
 
     /**
      * publish - Notification is sent to this endpoint when a user publishes the interaction.
      * called on journey activation
+     * example of request's body
+     * {
+     *      "activityObjectID": "770222dc-a0ca-4024-836a-9644dd26f848",
+     *      "interactionId": "2fa18520-ec47-4db1-a5ec-6cbedae20762",
+     *      "originalDefinitionId": "c0b22824-c4db-441b-a8e2-7aea9bfca439",
+     *      "interactionKey": "6384e00d-a5cf-e993-e307-26079ad8554d",
+     *      "interactionVersion": "2",
+     *      "isPublished": true
+     * }
      * @return
      */
     @RequestMapping(value = "{id}/publish", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity publish(@PathVariable String id, @RequestBody String json) {
-        System.out.println("*** id: " + id + "  *** publish: " + json);
+        System.out.println("*** publish notification: " + id + "  data: " + json);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
      * validate - Notification is sent to this endpoint when a user performs some validation
      * as part of the publishing process (optional).
-     *
+     * example of request's body
+     * {
+     *      "activityObjectID": "770222dc-a0ca-4024-836a-9644dd26f848",
+     *      "interactionId": "2fa18520-ec47-4db1-a5ec-6cbedae20762",
+     *      "originalDefinitionId": "c0b22824-c4db-441b-a8e2-7aea9bfca439",
+     *      "interactionKey": "6384e00d-a5cf-e993-e307-26079ad8554d",
+     *      "interactionVersion": "2"
+     * }
      * @return
      */
     @RequestMapping(value = "{id}/validate", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity validate(@PathVariable String id, @RequestBody String json) {
-        System.out.println("*** id: " + id + "  *** validate: " + json);
+        System.out.println("*** validate notification: " + id + "  data: " + json);
         // TODO validation
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -124,7 +148,7 @@ public class CustomActivityController {
      */
     @RequestMapping(value = "{id}/stop", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity stop(@PathVariable String id, @RequestBody String json) {
-        System.out.println("*** id: " + id + "  *** stop: " + json);
+        System.out.println("*** stop notification: " + id + "  data: " + json);
         return new ResponseEntity(HttpStatus.OK);
     }
 

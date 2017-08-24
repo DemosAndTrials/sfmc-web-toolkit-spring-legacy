@@ -66,7 +66,9 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                             .add("publish", Json.createObjectBuilder()
                                     .add("url", config.getEndpointUrl() + "/publish"))
                             .add("validate", Json.createObjectBuilder()
-                                    .add("url", config.getEndpointUrl() + "/validate")))
+                                    .add("url", config.getEndpointUrl() + "/validate"))
+                            .add("stop", Json.createObjectBuilder()
+                                    .add("url", config.getEndpointUrl() + "/stop")))
                     // wizardSteps - Contains an array of objects that define the steps that the user may navigate through when configuring the custom activity.
                     // Each object should follow the format: { "label": "Step 1", "key": "step1", "active": true }
                     .add("wizardSteps", Json.createArrayBuilder()
@@ -143,7 +145,9 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                             .add("publish", Json.createObjectBuilder()
                                     .add("url", config.getEndpointUrl() + "/publish"))
                             .add("validate", Json.createObjectBuilder()
-                                    .add("url", config.getEndpointUrl() + "/validate")))
+                                    .add("url", config.getEndpointUrl() + "/validate"))
+                            .add("stop", Json.createObjectBuilder()
+                                    .add("url", config.getEndpointUrl() + "/stop")))
                     // wizardSteps - Contains an array of objects that define the steps that the user may navigate through when configuring the custom activity.
                     // Each object should follow the format: { "label": "Step 1", "key": "step1", "active": true }
                     .add("wizardSteps", Json.createArrayBuilder()

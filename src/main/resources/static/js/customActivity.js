@@ -33,12 +33,6 @@ define(['postmonger'], function(Postmonger) {
         // TODO just for testing
         connection.trigger('requestEndpoints');
         connection.trigger('requestTokens');
-
-        // TODO for testing only remove this
-       // post({ name: "test" });
-        $("#driver").click(function(event){
-            post({ name: "test" });
-        });
     });
 
     // - Broadcast in response to the first ready event called by the custom application.
