@@ -116,46 +116,66 @@
                     <fieldset id="splitPanel" class="slds-form-element slds-hide">
                         <legend class="slds-form-element__label slds-text-title_caps slds-badge">Custom Split Setup
                         </legend>
+
                         <div class="slds-form-element__group">
 
-                            <div class="slds-form-element__row">
+                            <div class="slds-form-element__row slds-m-bottom_none slds-p-around_none">
                                 <div class="slds-form-element slds-size_1-of-2">
                                     <label class="slds-form-element__label" for="input-31">Label - text that is
                                         displayed in the Journey Builder UI</label>
-                                    <input type="text" id="input-31" class="slds-input">
-                                    <!-- <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditHeight')}"
-                                          th:errors="*{EditHeight}">Name Error
-                                     </div>-->
                                 </div>
                                 <div class="slds-form-element slds-size_1-of-2">
-                                    <label class="slds-form-element__label" for="input-32">Value(Key) - the result of
-                                        activity outcome</label>
-                                    <input type="text" id="input-32" class="slds-input">
+                                    <label class="slds-form-element__label" for="input-32">Value(Key) - the result
+                                        of activity outcome</label>
+                                </div>
+                            </div>
+
+                           <!-- <table>
+                                <tr th:each="split,status : ${config.splits}">
+
+                                    <td>
+                                        <input type="text" id="input-411"
+                                               th:field="*{splits[__${status.index}__].label}" th:value="${split.label}"
+                                               class="slds-input"
+                                               placeholder="label">
+                                    </td>
+                                    <td>
+                                        <input type="text" id="input-412"
+                                               th:field="*{splits[__${status.index}__].value}" th:value="${split.value}"
+                                               class="slds-input"
+                                               placeholder="value">
+                                    </td>
+                                </tr>
+                            </table>-->
+
+                            <div th:each="split,status : ${config.splits}" class="slds-form-element__row">
+                                <div class="slds-form-element slds-size_1-of-2">
+                                    <input type="text" id="input-31"
+                                           th:field="*{splits[__${status.index}__].label}" th:value="${split.label}"
+                                           class="slds-input"
+                                           placeholder="label">
+                                    <div class="slds-text-color_error" th:if="${#fields.hasErrors('${config.splits[__${status.index}__].label}')}"
+                                         th:errors="*{splits[__${status.index}__].label}">Name Error
+                                    </div>
+
+                                </div>
+                                <div class="slds-form-element slds-size_1-of-2">
+                                    <input type="text" id="input-32"
+                                           th:field="*{splits[__${status.index}__].value}" th:value="${split.value}"
+                                           class="slds-input"
+                                           placeholder="value">
                                     <!-- <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditWidth')}"
                                           th:errors="*{EditWidth}">Name Error
                                      </div>-->
                                 </div>
                             </div>
-                            <div class="slds-form-element__row">
-                                <div class="slds-form-element slds-size_1-of-2">
-                                    <input type="text" id="input-33" class="slds-input">
-                                    <!-- <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditHeight')}"
-                                          th:errors="*{EditHeight}">Name Error
-                                     </div>-->
-                                </div>
-                                <div class="slds-form-element slds-size_1-of-2">
-                                    <input type="text" id="input-34" class="slds-input">
-                                    <!-- <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditWidth')}"
-                                          th:errors="*{EditWidth}">Name Error
-                                     </div>-->
-                                </div>
-                            </div>
+
                             <a class="slds-button slds-button_stateful slds-button_neutral slds-not-selected slds-m-bottom_medium"
                                aria-live="assertive" id="addSplitBtn">
                                 <span class="slds-text-not-selected">
                                     <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
                                      <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                         xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#add"></use>
+                                          xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#add"></use>
                                 </svg>Split</span>
                             </a>
                         </div>
@@ -241,20 +261,29 @@
 <script type="text/javascript">
     j$ = jQuery.noConflict();
 
+    j$(document).ready(function () {
+        handleType(j$("#select-12").val());
+    })
+
     j$("#select-12").change(function () {
-        console.log("select ", j$(this).val());
-        var type = j$(this).val();
+        handleType(j$("#select-12").val());
+    });
+
+    j$('#addSplitBtn').click(function () {
+        // add new line here
+
+    });
+
+    // post to controller
+    function handleType(type) {
+        console.log("select: ", type);
         if (type == 'RESTDECISION') {
             j$('#splitPanel').removeClass('slds-hide');
         }
         else {
             j$('#splitPanel').addClass('slds-hide');
         }
-    });
-
-    j$('#addSplitBtn').click(function () {
-       // add new line here
-    });
+    }
 </script>
 </body>
 

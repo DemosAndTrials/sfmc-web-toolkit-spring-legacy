@@ -3,7 +3,10 @@ package sfdc.mc.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -48,6 +51,11 @@ public class CustomActivityConfig {
 
     @NotEmpty
     String EndpointUrl;
+
+    @Valid
+    @ElementCollection
+    @CollectionTable(name = "CustomActivitySplit", joinColumns = {@JoinColumn(name="configId")})
+    private List<CustomActivitySplit> Splits = new ArrayList<>();
 
     public Integer getId() {
         return Id;
@@ -143,6 +151,14 @@ public class CustomActivityConfig {
 
     public void setEndpointUrl(String endpointUrl) {
         EndpointUrl = endpointUrl;
+    }
+
+    public List<CustomActivitySplit> getSplits() {
+        return Splits;
+    }
+
+    public void setSplits(List<CustomActivitySplit> splits) {
+        Splits = splits;
     }
 
     public CustomActivityConfig() {
