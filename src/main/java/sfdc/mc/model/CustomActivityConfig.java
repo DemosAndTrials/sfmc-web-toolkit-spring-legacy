@@ -52,7 +52,6 @@ public class CustomActivityConfig {
     @NotEmpty
     String EndpointUrl;
 
-    @Valid
     @ElementCollection
     @CollectionTable(name = "CustomActivitySplit", joinColumns = {@JoinColumn(name="configId")})
     private List<CustomActivitySplit> Splits = new ArrayList<>();

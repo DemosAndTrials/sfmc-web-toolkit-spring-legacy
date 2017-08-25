@@ -121,55 +121,32 @@
 
                             <div class="slds-form-element__row slds-m-bottom_none slds-p-around_none">
                                 <div class="slds-form-element slds-size_1-of-2">
-                                    <label class="slds-form-element__label" for="input-31">Label - text that is
+                                    <label class="slds-form-element__label">Label - text that is
                                         displayed in the Journey Builder UI</label>
                                 </div>
                                 <div class="slds-form-element slds-size_1-of-2">
-                                    <label class="slds-form-element__label" for="input-32">Value(Key) - the result
+                                    <label class="slds-form-element__label">Value(Key) - the result
                                         of activity outcome</label>
                                 </div>
                             </div>
-
-                           <!-- <table>
-                                <tr th:each="split,status : ${config.splits}">
-
-                                    <td>
-                                        <input type="text" id="input-411"
-                                               th:field="*{splits[__${status.index}__].label}" th:value="${split.label}"
-                                               class="slds-input"
-                                               placeholder="label">
-                                    </td>
-                                    <td>
-                                        <input type="text" id="input-412"
-                                               th:field="*{splits[__${status.index}__].value}" th:value="${split.value}"
-                                               class="slds-input"
-                                               placeholder="value">
-                                    </td>
-                                </tr>
-                            </table>-->
-
                             <div th:each="split,status : ${config.splits}" class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-2">
-                                    <input type="text" id="input-31"
+                                    <input type="text"
                                            th:field="*{splits[__${status.index}__].label}" th:value="${split.label}"
                                            class="slds-input"
                                            placeholder="label">
-                                    <div class="slds-text-color_error" th:if="${#fields.hasErrors('${config.splits[__${status.index}__].label}')}"
-                                         th:errors="*{splits[__${status.index}__].label}">Name Error
-                                    </div>
-
                                 </div>
                                 <div class="slds-form-element slds-size_1-of-2">
-                                    <input type="text" id="input-32"
+                                    <input type="text"
                                            th:field="*{splits[__${status.index}__].value}" th:value="${split.value}"
                                            class="slds-input"
                                            placeholder="value">
-                                    <!-- <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditWidth')}"
-                                          th:errors="*{EditWidth}">Name Error
-                                     </div>-->
                                 </div>
                             </div>
-
+                            <span id="splitPlaceholder"/>
+                            <div class="slds-text-color_error" th:if="${#fields.hasErrors('splits')}"
+                                 th:errors="*{splits}">Name Error
+                            </div>
                             <a class="slds-button slds-button_stateful slds-button_neutral slds-not-selected slds-m-bottom_medium"
                                aria-live="assertive" id="addSplitBtn">
                                 <span class="slds-text-not-selected">
@@ -257,9 +234,29 @@
 </section>
 
 
+<div id="templateSplit">
+    <div class="slds-form-element__row">
+        <div class="slds-form-element slds-size_1-of-2">
+            <input class="slds-input" placeholder="label" type="text" id="tempLabel"
+                   name="splits[1].label">
+        </div>
+        <div class="slds-form-element slds-size_1-of-2">
+            <input class="slds-input" placeholder="value" type="text" id="tempValue"
+                   name="splits[1].value">
+        </div>
+    </div>
+</div>
+
 <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     j$ = jQuery.noConflict();
+
+    /*<![CDATA[*/
+
+    var numOfSplits = [[${config.splits.size()}]];
+
+
+    /*]]>*/
 
     j$(document).ready(function () {
         handleType(j$("#select-12").val());
@@ -271,12 +268,13 @@
 
     j$('#addSplitBtn').click(function () {
         // add new line here
-
+        if (numOfSplits < 5)
+            createTemplate();
     });
 
     // post to controller
     function handleType(type) {
-        console.log("select: ", type);
+
         if (type == 'RESTDECISION') {
             j$('#splitPanel').removeClass('slds-hide');
         }
@@ -284,6 +282,25 @@
             j$('#splitPanel').addClass('slds-hide');
         }
     }
+
+    function createTemplate() {
+        var temp = j$("#templateSplit div.slds-form-element__row").clone();
+        //console.log("createTemplate: ", type);
+        //from here you can do things like change name fields or values
+        // id: splits1.label
+        // name: splits[1].label
+        var lbl = temp.find('#tempLabel');
+        lbl.attr("id", "splits" + numOfSplits + ".label");
+        lbl.attr("name", "splits[" + numOfSplits + "].label");
+        var val = temp.find('#tempValue');
+        val.attr("id", "splits" + numOfSplits + ".value");
+        val.attr("name", "splits[" + numOfSplits + "].value");
+        numOfSplits++;
+        console.log(numOfSplits);
+        //then add the new code to the holding area
+        j$("#splitPlaceholder").before(temp);
+    }
+
 </script>
 </body>
 

@@ -40,6 +40,12 @@ public class CustomActivitySplit {
         this.Value = value;
     }
 
+    public boolean isValid(){
+        if(Label.isEmpty() || Value.isEmpty())
+            return false;
+        return true;
+    }
+
     public String toString() {
         StringBuffer aBuffer = new StringBuffer("CustomActivitySplit ");
         aBuffer.append(" label: ");
