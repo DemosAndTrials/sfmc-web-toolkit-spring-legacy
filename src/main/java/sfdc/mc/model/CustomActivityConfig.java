@@ -1,9 +1,7 @@
 package sfdc.mc.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +11,10 @@ import java.util.UUID;
  * Custom Activity Config object
  */
 @Entity
-@Table(schema = "sfmc")
 public class CustomActivityConfig {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer Id;
 
     @NotEmpty
@@ -53,7 +50,7 @@ public class CustomActivityConfig {
     String EndpointUrl;
 
     @ElementCollection
-    @CollectionTable(name = "CustomActivitySplit", joinColumns = {@JoinColumn(name="configId")})
+    @CollectionTable(name = "CustomActivitySplit", joinColumns = {@JoinColumn(name="config_id")})
     private List<CustomActivitySplit> Splits = new ArrayList<>();
 
     public Integer getId() {

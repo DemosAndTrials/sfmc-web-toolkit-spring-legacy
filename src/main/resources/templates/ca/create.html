@@ -40,7 +40,7 @@
                                 <div class="slds-form-element slds-size_1-of-1">
                                     <label class="slds-form-element__label" for="input-10">Key - Must match your
                                         activity key as defined when created in App Center.</label>
-                                    <input type="text" id="input-10" th:field="*{Key}" class="slds-input">
+                                    <input type="text" id="input-10" th:field="*{Key}" class="slds-input" maxlength="100">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('Id')}"
                                          th:errors="*{Key}">Name Error
                                     </div>
@@ -80,7 +80,7 @@
                                     <label class="slds-form-element__label" for="input-21">Name - Type of activity (i.e.
                                         'Send Email', 'SMS', 'Create Salesforce Lead'), as shown in the activity
                                         list.</label>
-                                    <input type="text" id="input-21" th:field="*{Name}" class="slds-input">
+                                    <input type="text" id="input-21" th:field="*{Name}" class="slds-input" maxlength="100">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EndpointUrl')}"
                                          th:errors="*{Name}">Name Error
                                     </div>
@@ -90,14 +90,14 @@
                                 <div class="slds-form-element slds-size_1-of-1">
                                     <label class="slds-form-element__label" for="input-22">Description - Description of
                                         what the activity does and what purpose it fulfills.</label>
-                                    <input type="text" id="input-22" th:field="*{Description}" class="slds-input">
+                                    <input type="text" id="input-22" th:field="*{Description}" class="slds-input" maxlength="255">
                                 </div>
                             </div>
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-1">
                                     <label class="slds-form-element__label" for="input-23">Small Icon(15px) - String
                                         representing the small display icon for this activity.</label>
-                                    <input type="text" id="input-23" th:field="*{SmallImageUrl}" class="slds-input"
+                                    <input type="text" id="input-23" th:field="*{SmallImageUrl}" class="slds-input" maxlength="255"
                                            placeholder="https://">
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                                 <div class="slds-form-element slds-size_1-of-1">
                                     <label class="slds-form-element__label" for="input-24">Icon(40px) - String
                                         representing the icon for this activity.</label>
-                                    <input type="text" id="input-24" th:field="*{BigImageUrl}" class="slds-input"
+                                    <input type="text" id="input-24" th:field="*{BigImageUrl}" class="slds-input" maxlength="255"
                                            placeholder="https://">
                                 </div>
                             </div>
@@ -133,13 +133,13 @@
                                 <div class="slds-form-element slds-size_1-of-2">
                                     <input type="text"
                                            th:field="*{splits[__${status.index}__].label}" th:value="${split.label}"
-                                           class="slds-input"
+                                           class="slds-input" maxlength="50"
                                            placeholder="label">
                                 </div>
                                 <div class="slds-form-element slds-size_1-of-2">
                                     <input type="text"
                                            th:field="*{splits[__${status.index}__].value}" th:value="${split.value}"
-                                           class="slds-input"
+                                           class="slds-input" maxlength="50"
                                            placeholder="value">
                                 </div>
                             </div>
@@ -165,7 +165,7 @@
                                 <div class="slds-form-element slds-size_1-of-1">
                                     <label class="slds-form-element__label" for="input-41">EditUrl - Endpoint for the UI
                                         displayed to marketers while configuring this activity.</label>
-                                    <input type="text" id="input-41" th:field="*{EditUrl}" class="slds-input"
+                                    <input type="text" id="input-41" th:field="*{EditUrl}" class="slds-input" maxlength="255"
                                            placeholder="https://">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditUrl')}"
                                          th:errors="*{EditUrl}">Name Error
@@ -178,7 +178,7 @@
                                     <label class="slds-form-element__label" for="input-42">NumSteps - Number of wizard
                                         steps that the user may navigate through when configuring the custom
                                         activity.</label>
-                                    <input type="text" id="input-42" th:field="*{NumSteps}" class="slds-input">
+                                    <input type="text" id="input-42" th:field="*{NumSteps}" class="slds-input" maxlength="5">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('NumSteps')}"
                                          th:errors="*{NumSteps}">Name Error
                                     </div>
@@ -188,7 +188,7 @@
                                 <div class="slds-form-element slds-size_1-of-2">
                                     <label class="slds-form-element__label" for="input-43">Height - Property that
                                         defines the height of the iframe containing the configuration UI.</label>
-                                    <input type="text" id="input-43" th:field="*{EditHeight}" class="slds-input">
+                                    <input type="text" id="input-43" th:field="*{EditHeight}" class="slds-input" maxlength="5">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditHeight')}"
                                          th:errors="*{EditHeight}">Name Error
                                     </div>
@@ -196,7 +196,7 @@
                                 <div class="slds-form-element slds-size_1-of-2">
                                     <label class="slds-form-element__label" for="input-44">Width - Property that defines
                                         the width of the iframe containing the configuration UI.</label>
-                                    <input type="text" id="input-44" th:field="*{EditWidth}" class="slds-input">
+                                    <input type="text" id="input-44" th:field="*{EditWidth}" class="slds-input" maxlength="5">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditWidth')}"
                                          th:errors="*{EditWidth}">Name Error
                                     </div>
@@ -234,15 +234,15 @@
 </section>
 
 
-<div id="templateSplit">
+<div id="templateSplit" style="display: none">
     <div class="slds-form-element__row">
         <div class="slds-form-element slds-size_1-of-2">
             <input class="slds-input" placeholder="label" type="text" id="tempLabel"
-                   name="splits[1].label">
+                   maxlength="50" name="splits[1].label">
         </div>
         <div class="slds-form-element slds-size_1-of-2">
             <input class="slds-input" placeholder="value" type="text" id="tempValue"
-                   name="splits[1].value">
+                   maxlength="50" name="splits[1].value">
         </div>
     </div>
 </div>
@@ -277,12 +277,17 @@
 
         if (type == 'RESTDECISION') {
             j$('#splitPanel').removeClass('slds-hide');
+            if (numOfSplits == 0){
+                createTemplate();
+                createTemplate();
+            }
         }
         else {
             j$('#splitPanel').addClass('slds-hide');
         }
     }
 
+    // add split template
     function createTemplate() {
         var temp = j$("#templateSplit div.slds-form-element__row").clone();
         //console.log("createTemplate: ", type);

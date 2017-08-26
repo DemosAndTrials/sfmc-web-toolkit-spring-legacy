@@ -1,6 +1,6 @@
 package sfdc.mc.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
@@ -9,10 +9,10 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class CustomActivitySplit {
 
-    @NotEmpty
+    @Column(length = 50)
     String Label;
 
-    @NotEmpty
+    @Column(length = 50)
     String Value;
 
     public String getLabel() {
