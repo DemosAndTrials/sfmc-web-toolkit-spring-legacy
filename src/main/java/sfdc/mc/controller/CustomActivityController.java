@@ -9,12 +9,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import sfdc.mc.model.CustomActivityConfig;
-import sfdc.mc.model.CustomActivitySplit;
 import sfdc.mc.service.CustomActivityService;
 import sfdc.mc.util.ConfigConstants;
-
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Custom Activity Controller
