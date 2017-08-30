@@ -19,11 +19,29 @@ public class ApiController {
      * @return
      */
     @GetMapping(value = "/index")
-    public String indexConfig() {
+    public String index() {
         return "api/index";
     }
 
+    /**
+     * Index page - Getting Started
+     *
+     * @return
+     */
+    @GetMapping(value = "/rest")
+    public String rest() {
+        return "api/rest";
+    }
 
+    /**
+     * Index page - Getting Started
+     *
+     * @return
+     */
+    @GetMapping(value = "/soap")
+    public String soap() {
+        return "api/soap";
+    }
 
     @RequestMapping("/test")
     public ResponseEntity test(@RequestParam(value = "name", defaultValue = "World") String name) {
