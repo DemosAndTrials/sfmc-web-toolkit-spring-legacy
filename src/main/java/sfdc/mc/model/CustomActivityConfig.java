@@ -1,20 +1,20 @@
 package sfdc.mc.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
  * Custom Activity Config object
  */
 @Entity
-@Table(schema = "sfmc")
 public class CustomActivityConfig {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer Id;
 
     @NotEmpty
@@ -34,9 +34,6 @@ public class CustomActivityConfig {
 
     String BigImageUrl;
 
-    @NotNull
-    Integer NumSteps;
-
     @NotEmpty
     String EditUrl;
 
@@ -48,6 +45,14 @@ public class CustomActivityConfig {
 
     @NotEmpty
     String EndpointUrl;
+
+    @ElementCollection
+    @CollectionTable(name = "CustomActivityStep", joinColumns = {@JoinColumn(name = "config_id")})
+    private List<CustomActivityStep> Steps = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "CustomActivitySplit", joinColumns = {@JoinColumn(name = "config_id")})
+    private List<CustomActivitySplit> Splits = new ArrayList<>();
 
     public Integer getId() {
         return Id;
@@ -105,14 +110,6 @@ public class CustomActivityConfig {
         BigImageUrl = bigImageUrl;
     }
 
-    public Integer getNumSteps() {
-        return NumSteps;
-    }
-
-    public void setNumSteps(Integer numSteps) {
-        NumSteps = numSteps;
-    }
-
     public String getEditUrl() {
         return EditUrl;
     }
@@ -145,12 +142,28 @@ public class CustomActivityConfig {
         EndpointUrl = endpointUrl;
     }
 
+    public List<CustomActivityStep> getSteps() {
+        return Steps;
+    }
+
+    public void setSteps(List<CustomActivityStep> steps) {
+        Steps = steps;
+    }
+
+    public List<CustomActivitySplit> getSplits() {
+        return Splits;
+    }
+
+    public void setSplits(List<CustomActivitySplit> splits) {
+        Splits = splits;
+    }
+
     public CustomActivityConfig() {
         this.setName("My Custom Activity");
         this.setKey(UUID.randomUUID().toString());
         this.setEditHeight(600);
         this.setEditWidth(800);
-        this.setNumSteps(1);
+        this.getSteps().add(new CustomActivityStep("Step 1","step_1"));
     }
 
     @Override
@@ -163,7 +176,7 @@ public class CustomActivityConfig {
                 ", Description='" + Description + '\'' +
                 ", SmallImageUrl='" + SmallImageUrl + '\'' +
                 ", BigImageUrl=" + BigImageUrl +
-                ", NumSteps=" + NumSteps +
+                ", NumSteps=" + Steps.size() +
                 ", EditUrl='" + EditUrl + '\'' +
                 ", EditHeight='" + EditHeight + '\'' +
                 ", EditWidth='" + EditWidth + '\'' +

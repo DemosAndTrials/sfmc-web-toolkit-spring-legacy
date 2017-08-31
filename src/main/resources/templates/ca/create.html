@@ -40,7 +40,8 @@
                                 <div class="slds-form-element slds-size_1-of-1">
                                     <label class="slds-form-element__label" for="input-10">Key - Must match your
                                         activity key as defined when created in App Center.</label>
-                                    <input type="text" id="input-10" th:field="*{Key}" class="slds-input">
+                                    <input type="text" id="input-10" th:field="*{Key}" class="slds-input"
+                                           maxlength="100">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('Id')}"
                                          th:errors="*{Key}">Name Error
                                     </div>
@@ -59,11 +60,11 @@
                             </div>
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-1">
-                                    <label class="slds-form-element__label" for="select-12">Type - String property
+                                    <label class="slds-form-element__label" for="typeSelect">Type - String property
                                         representing the type of activity. This value must include one of the Marketing
                                         Cloud-provided types.</label>
                                     <div class="slds-select_container">
-                                        <select class="slds-select" id="select-12" th:field="*{Type}">
+                                        <select class="slds-select" id="typeSelect" th:field="*{Type}">
                                             <option th:value="REST">REST</option>
                                             <option th:value="RESTDECISION">RESTDECISION</option>
                                         </select>
@@ -80,7 +81,8 @@
                                     <label class="slds-form-element__label" for="input-21">Name - Type of activity (i.e.
                                         'Send Email', 'SMS', 'Create Salesforce Lead'), as shown in the activity
                                         list.</label>
-                                    <input type="text" id="input-21" th:field="*{Name}" class="slds-input">
+                                    <input type="text" id="input-21" th:field="*{Name}" class="slds-input"
+                                           maxlength="100">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EndpointUrl')}"
                                          th:errors="*{Name}">Name Error
                                     </div>
@@ -90,7 +92,8 @@
                                 <div class="slds-form-element slds-size_1-of-1">
                                     <label class="slds-form-element__label" for="input-22">Description - Description of
                                         what the activity does and what purpose it fulfills.</label>
-                                    <input type="text" id="input-22" th:field="*{Description}" class="slds-input">
+                                    <input type="text" id="input-22" th:field="*{Description}" class="slds-input"
+                                           maxlength="255">
                                 </div>
                             </div>
                             <div class="slds-form-element__row">
@@ -98,6 +101,7 @@
                                     <label class="slds-form-element__label" for="input-23">Small Icon(15px) - String
                                         representing the small display icon for this activity.</label>
                                     <input type="text" id="input-23" th:field="*{SmallImageUrl}" class="slds-input"
+                                           maxlength="255"
                                            placeholder="https://">
                                 </div>
                             </div>
@@ -106,6 +110,7 @@
                                     <label class="slds-form-element__label" for="input-24">Icon(40px) - String
                                         representing the icon for this activity.</label>
                                     <input type="text" id="input-24" th:field="*{BigImageUrl}" class="slds-input"
+                                           maxlength="255"
                                            placeholder="https://">
                                 </div>
                             </div>
@@ -116,47 +121,52 @@
                     <fieldset id="splitPanel" class="slds-form-element slds-hide">
                         <legend class="slds-form-element__label slds-text-title_caps slds-badge">Custom Split Setup
                         </legend>
-                        <div class="slds-form-element__group">
 
-                            <div class="slds-form-element__row">
+                        <div id="splitsGroup" class="slds-form-element__group">
+
+                            <div class="slds-form-element__row slds-m-bottom_none slds-p-around_none">
                                 <div class="slds-form-element slds-size_1-of-2">
-                                    <label class="slds-form-element__label" for="input-31">Label - text that is
+                                    <label class="slds-form-element__label">Label - text that is
                                         displayed in the Journey Builder UI</label>
-                                    <input type="text" id="input-31" class="slds-input">
-                                    <!-- <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditHeight')}"
-                                          th:errors="*{EditHeight}">Name Error
-                                     </div>-->
                                 </div>
                                 <div class="slds-form-element slds-size_1-of-2">
-                                    <label class="slds-form-element__label" for="input-32">Value(Key) - the result of
-                                        activity outcome</label>
-                                    <input type="text" id="input-32" class="slds-input">
-                                    <!-- <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditWidth')}"
-                                          th:errors="*{EditWidth}">Name Error
-                                     </div>-->
+                                    <label class="slds-form-element__label">Value(Key) - the result
+                                        of activity outcome</label>
                                 </div>
                             </div>
-                            <div class="slds-form-element__row">
+                            <div th:each="split,status : ${config.splits}" class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-2">
-                                    <input type="text" id="input-33" class="slds-input">
-                                    <!-- <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditHeight')}"
-                                          th:errors="*{EditHeight}">Name Error
-                                     </div>-->
+                                    <input type="text"
+                                           th:field="*{splits[__${status.index}__].label}" th:value="${split.label}"
+                                           class="slds-input" maxlength="50"
+                                           placeholder="label">
                                 </div>
                                 <div class="slds-form-element slds-size_1-of-2">
-                                    <input type="text" id="input-34" class="slds-input">
-                                    <!-- <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditWidth')}"
-                                          th:errors="*{EditWidth}">Name Error
-                                     </div>-->
+                                    <input type="text"
+                                           th:field="*{splits[__${status.index}__].value}" th:value="${split.value}"
+                                           class="slds-input" maxlength="50"
+                                           placeholder="value">
                                 </div>
+                            </div>
+                            <span id="splitPlaceholder"/>
+                            <div class="slds-text-color_error" th:if="${#fields.hasErrors('splits')}"
+                                 th:errors="*{splits}">Name Error
                             </div>
                             <a class="slds-button slds-button_stateful slds-button_neutral slds-not-selected slds-m-bottom_medium"
                                aria-live="assertive" id="addSplitBtn">
                                 <span class="slds-text-not-selected">
                                     <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
                                      <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                         xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#add"></use>
-                                </svg>Split</span>
+                                          xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#add"></use>
+                                </svg>Add</span>
+                            </a>
+                            <a class="slds-button slds-button_stateful slds-button_neutral slds-not-selected slds-m-bottom_medium"
+                               aria-live="assertive" id="removeSplitBtn" disabled="">
+                                <span class="slds-text-not-selected">
+                                    <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
+                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                          xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#remove"></use>
+                                </svg>Remove</span>
                             </a>
                         </div>
                     </fieldset>
@@ -169,29 +179,68 @@
                                     <label class="slds-form-element__label" for="input-41">EditUrl - Endpoint for the UI
                                         displayed to marketers while configuring this activity.</label>
                                     <input type="text" id="input-41" th:field="*{EditUrl}" class="slds-input"
+                                           maxlength="255"
                                            placeholder="https://">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditUrl')}"
                                          th:errors="*{EditUrl}">Name Error
                                     </div>
                                 </div>
                             </div>
-                            <div class="slds-form-element__row">
-                                <!--Number of steps-->
-                                <div class="slds-form-element slds-size_1-of-1">
-                                    <label class="slds-form-element__label" for="input-42">NumSteps - Number of wizard
-                                        steps that the user may navigate through when configuring the custom
-                                        activity.</label>
-                                    <input type="text" id="input-42" th:field="*{NumSteps}" class="slds-input">
-                                    <div class="slds-text-color_error" th:if="${#fields.hasErrors('NumSteps')}"
-                                         th:errors="*{NumSteps}">Name Error
+
+                            <div id="stepsGroup" class="slds-form-element__group">
+
+                                <div class="slds-form-element__row slds-m-bottom_none slds-p-around_none">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label">Label - the text displayed in the steps
+                                            wizard</label>
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label">Key - a unique identifier for the
+                                            step</label>
                                     </div>
                                 </div>
+                                <div th:each="step,status : ${config.steps}" class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <input type="text"
+                                               th:field="*{steps[__${status.index}__].label}" th:value="${step.label}"
+                                               class="slds-input" maxlength="50"
+                                               placeholder="label">
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <input type="text"
+                                               th:field="*{steps[__${status.index}__].key}" th:value="${step.key}"
+                                               class="slds-input" maxlength="50"
+                                               placeholder="value">
+                                    </div>
+                                </div>
+                                <span id="stepPlaceholder"/>
+                                <div class="slds-text-color_error" th:if="${#fields.hasErrors('steps')}"
+                                     th:errors="*{steps}">Name Error
+                                </div>
+                                <a class="slds-button slds-button_stateful slds-button_neutral slds-not-selected slds-m-bottom_medium"
+                                   aria-live="assertive" id="addStepBtn">
+                                <span class="slds-text-not-selected">
+                                    <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
+                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                          xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#add"></use>
+                                </svg>Add</span>
+                                </a>
+                                <a class="slds-button slds-button_stateful slds-button_neutral slds-not-selected slds-m-bottom_medium"
+                                   aria-live="assertive" id="removeStepBtn" disabled="">
+                                <span class="slds-text-not-selected">
+                                    <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
+                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                          xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#remove"></use>
+                                </svg>Remove</span>
+                                </a>
                             </div>
+
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-2">
                                     <label class="slds-form-element__label" for="input-43">Height - Property that
                                         defines the height of the iframe containing the configuration UI.</label>
-                                    <input type="text" id="input-43" th:field="*{EditHeight}" class="slds-input">
+                                    <input type="text" id="input-43" th:field="*{EditHeight}" class="slds-input"
+                                           maxlength="5">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditHeight')}"
                                          th:errors="*{EditHeight}">Name Error
                                     </div>
@@ -199,7 +248,8 @@
                                 <div class="slds-form-element slds-size_1-of-2">
                                     <label class="slds-form-element__label" for="input-44">Width - Property that defines
                                         the width of the iframe containing the configuration UI.</label>
-                                    <input type="text" id="input-44" th:field="*{EditWidth}" class="slds-input">
+                                    <input type="text" id="input-44" th:field="*{EditWidth}" class="slds-input"
+                                           maxlength="5">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EditWidth')}"
                                          th:errors="*{EditWidth}">Name Error
                                     </div>
@@ -237,24 +287,188 @@
 </section>
 
 
+<div id="templateInputsRow" style="display: none">
+    <div id="tempRow" class="slds-form-element__row">
+        <div class="slds-form-element slds-size_1-of-2">
+            <input class="slds-input" placeholder="label" type="text" id="tempLabel"
+                   maxlength="50" name="splits[1].label">
+        </div>
+        <div class="slds-form-element slds-size_1-of-2">
+            <input class="slds-input" placeholder="value" type="text" id="tempValue"
+                   maxlength="50" name="splits[1].value">
+        </div>
+    </div>
+</div>
+
 <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     j$ = jQuery.noConflict();
 
-    j$("#select-12").change(function () {
-        console.log("select ", j$(this).val());
-        var type = j$(this).val();
-        if (type == 'RESTDECISION') {
-            j$('#splitPanel').removeClass('slds-hide');
-        }
-        else {
-            j$('#splitPanel').addClass('slds-hide');
-        }
+    /*<![CDATA[*/
+
+    var numOfSplits = [[${config.splits.size()}]];
+    var numOfSteps = [[${config.steps.size()}]];
+
+    /*]]>*/
+
+    j$(document).ready(function () {
+        handleType(j$("#typeSelect").val());
+        if (numOfSteps > 1)
+            j$('#removeStepBtn').removeAttr('disabled');
+        if (numOfSteps > 4)
+            j$('#addStepBtn').attr("disabled", "");
+        if (numOfSplits > 2)
+            j$('#removeSplitBtn').removeAttr('disabled');
+        if (numOfSplits > 4)
+            j$('#addSplitBtn').attr("disabled", "");
+    })
+
+    /**
+     * Handle type change
+     */
+    j$("#typeSelect").change(function () {
+        handleType(j$(this).val());
     });
 
+    /**
+     * Handle add split
+     */
     j$('#addSplitBtn').click(function () {
-       // add new line here
+        if (isDisabled(this))
+            return;
+        // add new line here
+        if (numOfSplits < 5)
+            createSplitTemplate();
+        // disable add split button
+        if (numOfSplits == 5)
+            j$(this).attr("disabled", "");
+        // enable remove spit button
+        if (numOfSplits > 2)
+            j$('#removeSplitBtn').removeAttr('disabled');
     });
+
+    /**
+     * Handle add step
+     */
+    j$('#addStepBtn').click(function () {
+        if (isDisabled(this))
+            return;
+        // add new line here
+        if (numOfSteps < 5)
+            createStepTemplate();
+        // disable add split button
+        if (numOfSteps == 5)
+            j$(this).attr("disabled", "");
+        // enable remove spit button
+        if (numOfSteps > 1)
+            j$('#removeStepBtn').removeAttr('disabled');
+    });
+
+    /**
+     * Handle remove split
+     */
+    j$('#removeSplitBtn').click(function () {
+        if (isDisabled(this))
+            return;
+        // remove last line
+        if (numOfSplits > 2) {
+            j$("#splitsGroup div.slds-form-element__row").last().remove();
+            numOfSplits--;
+        }
+        // enable add split button
+        if (numOfSplits < 5)
+            j$('#addSplitBtn').removeAttr('disabled');
+        // disable remove split button
+        if (numOfSplits <= 2)
+            j$(this).attr("disabled", "");
+    });
+
+    /**
+     * Handle remove step
+     */
+    j$('#removeStepBtn').click(function () {
+        if (isDisabled(this))
+            return;
+        // remove last line
+        if (numOfSteps > 1) {
+            j$("#stepsGroup div.slds-form-element__row").last().remove();
+            numOfSteps--;
+        }
+        // enable add split button
+        if (numOfSteps < 5)
+            j$('#addStepBtn').removeAttr('disabled');
+        // disable remove split button
+        if (numOfSteps <= 1)
+            j$(this).attr("disabled", "");
+    });
+
+    /**
+     * Checks if element has disable attribute
+     * @param element
+     */
+    function isDisabled(element) {
+        var attr = j$(element).attr('disabled');
+        if (typeof attr !== typeof undefined && attr !== false) {
+            console.log('disabled');
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Handle activity type
+     * @param type
+     */
+    function handleType(type) {
+        if (type == 'RESTDECISION') {
+            j$('#splitPanel').removeClass('slds-hide');
+            if (numOfSplits == 0) {
+                createSplitTemplate();
+                createSplitTemplate();
+            }
+        }
+        else
+            j$('#splitPanel').addClass('slds-hide');
+    }
+
+    /**
+     * Add split template
+     */
+    function createSplitTemplate() {
+        var temp = j$("#templateInputsRow div.slds-form-element__row").clone();
+        var lbl = temp.find('#tempLabel');
+        lbl.attr("id", "splits" + numOfSplits + ".label");
+        lbl.attr("name", "splits[" + numOfSplits + "].label");
+        lbl.val("label path " + (numOfSplits + 1));
+        var val = temp.find('#tempValue');
+        val.attr("id", "splits" + numOfSplits + ".value");
+        val.attr("name", "splits[" + numOfSplits + "].value");
+        val.val("key_path_" + (numOfSplits + 1));
+        numOfSplits++;
+        console.log(numOfSplits);
+        //then add the new code to the holding area
+        j$("#splitPlaceholder").before(temp);
+    }
+
+    /**
+     * Add split template
+     */
+    function createStepTemplate() {
+        var temp = j$("#templateInputsRow div.slds-form-element__row").clone();
+        var lbl = temp.find('#tempLabel');
+        lbl.attr("id", "steps" + numOfSteps + ".label");
+        lbl.attr("name", "steps[" + numOfSteps + "].label");
+        lbl.val("Step " + (numOfSteps + 1));
+        var val = temp.find('#tempValue');
+        val.attr("id", "steps" + numOfSteps + ".key");
+        val.attr("name", "steps[" + numOfSteps + "].key");
+        val.val("step_" + (numOfSteps + 1));
+        numOfSteps++;
+        console.log(numOfSteps);
+        //then add the new code to the holding area
+        j$("#stepPlaceholder").before(temp);
+    }
+
 </script>
 </body>
 

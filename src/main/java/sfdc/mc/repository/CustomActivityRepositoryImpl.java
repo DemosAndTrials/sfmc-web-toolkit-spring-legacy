@@ -1,7 +1,10 @@
 package sfdc.mc.repository;
 
 import sfdc.mc.model.CustomActivityConfig;
+import sfdc.mc.model.CustomActivitySplit;
+
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 
 public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCustom {
@@ -71,13 +74,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                                     .add("url", config.getEndpointUrl() + "/stop")))
                     // wizardSteps - Contains an array of objects that define the steps that the user may navigate through when configuring the custom activity.
                     // Each object should follow the format: { "label": "Step 1", "key": "step1", "active": true }
-                    .add("wizardSteps", Json.createArrayBuilder()
-                            .add(Json.createObjectBuilder()
-                                    .add("label", "Step 1")
-                                    .add("key", "step1"))
-                            .add(Json.createObjectBuilder()
-                                    .add("label", "Step 2")
-                                    .add("key", "step2")))
+                    .add("wizardSteps", createStepsJsonNode(config))
                     // userInterfaces - Contains endpoints and UI configurations for the user interfaces for the activity
                     // (configuration modal, running mode hover, running mode details modal).
                     .add("userInterfaces", Json.createObjectBuilder()
@@ -107,7 +104,6 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
     @Override
     public String getSplitConfig(CustomActivityConfig config) {
         try {
-
             // create json
             JsonObject value = Json.createObjectBuilder()
                     .add("workflowApiVersion", "1.1")
@@ -150,29 +146,12 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                                     .add("url", config.getEndpointUrl() + "/stop")))
                     // wizardSteps - Contains an array of objects that define the steps that the user may navigate through when configuring the custom activity.
                     // Each object should follow the format: { "label": "Step 1", "key": "step1", "active": true }
-                    .add("wizardSteps", Json.createArrayBuilder()
-                                    .add(Json.createObjectBuilder()
-                                            .add("label", "Step 1")
-                                            .add("key", "step1"))
-                            /*.add(Json.createObjectBuilder()
-                                    .add("label", "Step 2")
-                                    .add("key", "step2"))*/)
+                    .add("wizardSteps", createStepsJsonNode(config))
                     // outcomes - Contains multiple possible outcomes to follow once the activity has executed
                     // Each default outcome must contain an arguments object, containing a branchResult field.
                     // Journey Builder will expect the response of the custom activity's Execute REST call
                     // to contain an object { branchResult: <value> }, where <value> matches the branchResult of one of the activity's outcomes.
-                    .add("outcomes", Json.createArrayBuilder()
-                            .add(Json.createObjectBuilder()
-                                    .add("arguments", Json.createObjectBuilder()
-                                            .add("branchResult", "path_1_key"))
-                                    .add("metaData", Json.createObjectBuilder()
-                                            .add("label", "LABEL FOR PATH 1")))
-                            .add(Json.createObjectBuilder()
-                                    .add("arguments", Json.createObjectBuilder()
-                                            .add("branchResult", "path_2_key"))
-                                    .add("metaData", Json.createObjectBuilder()
-                                            .add("label", "LABEL FOR PATH 2"))))
-
+                    .add("outcomes", createSplitJsonNode(config))
                     // userInterfaces - Contains endpoints and UI configurations for the user interfaces for the activity
                     // (configuration modal, running mode hover, running mode details modal).
                     .add("userInterfaces", Json.createObjectBuilder()
@@ -193,6 +172,42 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
         }
         // something wrong
         return "";
+    }
+
+    /**
+     * Create json array for wizard steps
+     * TODO dynamic creation
+     * @param config
+     * @return
+     */
+    private JsonArrayBuilder createStepsJsonNode(CustomActivityConfig config) {
+
+        JsonArrayBuilder arr = Json.createArrayBuilder();
+        arr.add(Json.createObjectBuilder()
+                .add("label", "Step 1")
+                .add("key", "step1"))
+           .add(Json.createObjectBuilder()
+                .add("label", "Step 2")
+                .add("key", "step2"));
+        return arr;
+    }
+
+    /**
+     * Create json array for splits
+     *
+     * @param config
+     * @return
+     */
+    private JsonArrayBuilder createSplitJsonNode(CustomActivityConfig config) {
+        JsonArrayBuilder arr = Json.createArrayBuilder();
+        for (CustomActivitySplit split : config.getSplits()) {
+            arr.add(Json.createObjectBuilder()
+                    .add("arguments", Json.createObjectBuilder()
+                            .add("branchResult", split.getValue()))
+                    .add("metaData", Json.createObjectBuilder()
+                            .add("label", split.getLabel())));
+        }
+        return arr;
     }
 
     /**

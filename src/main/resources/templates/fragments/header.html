@@ -27,12 +27,85 @@
         </div>
         <nav class="slds-context-bar__secondary" role="navigation">
             <ul class="slds-grid">
-                <!--Home-->
+                <!--HOME-->
                 <li class="slds-context-bar__item slds-context-bar__item_divider-right">
                     <a href="/" class="slds-context-bar__label-action" title="Home">
                         <span class="slds-truncate" title="Home">Home</span>
                     </a>
                 </li>
+               <!--API-->
+                <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-context-bar__item_divider-right">
+                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Demo">
+                        <span class="slds-truncate" title="Menu Item">API</span>
+                    </a>
+                    <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open submenu">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Open submenu</span>
+                        </button>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown_right slds-context-bar__item_divider-right">
+                        <ul class="slds-dropdown__list" role="menu">
+                            <!--Index-->
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/api/index" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Getting Started">Getting Started</span>
+                                </a>
+                            </li>
+                            <!--Item One-->
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/api/rest" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Menu Item One">REST API</span>
+                                </a>
+                            </li>
+                            <!--Item Two-->
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/api/soap" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Menu Item Two">SOAP API</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!--CUSTOM ACTIVITY-->
+                <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-context-bar__item_divider-right">
+                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Custom Activity">
+                        <span class="slds-truncate" title="Menu Item">Custom Activity</span>
+                    </a>
+                    <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open submenu">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Open submenu</span>
+                        </button>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown_right slds-context-bar__item_divider-right">
+                        <ul class="slds-dropdown__list" role="menu">
+                            <!--Index-->
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/ca/index" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Getting Started">Getting Started</span>
+                                </a>
+                            </li>
+                            <!--List of configurations-->
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/ca/list" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Saved configurations">Saved configurations</span>
+                                </a>
+                            </li>
+                            <!--Create configuration-->
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/ca/create" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Create configuration">Create configuration</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!--DEMO DESIGN-->
                 <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-context-bar__item_divider-right">
                     <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Demo">
                         <span class="slds-truncate" title="Menu Item">Demo</span>
@@ -63,66 +136,6 @@
                     </div>
                 </li>
 
-                <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-context-bar__item_divider-right">
-                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Demo">
-                        <span class="slds-truncate" title="Menu Item">API</span>
-                    </a>
-                    <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
-                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open submenu">
-                            <svg class="slds-button__icon" aria-hidden="true">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
-                            </svg>
-                            <span class="slds-assistive-text">Open submenu</span>
-                        </button>
-                    </div>
-                    <div class="slds-dropdown slds-dropdown_right slds-context-bar__item_divider-right">
-                        <ul class="slds-dropdown__list" role="menu">
-                            <!--Item One-->
-                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
-                                <a href="#" role="menuitem" tabindex="-1">
-                                    <span class="slds-truncate" title="Menu Item One">PLACEHOLDER</span>
-                                </a>
-                            </li>
-                            <!--Item Two-->
-                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
-                                <a href="#" role="menuitem" tabindex="-1">
-                                    <span class="slds-truncate" title="Menu Item Two">PLACEHOLDER</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-context-bar__item_divider-right">
-                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Demo">
-                        <span class="slds-truncate" title="Menu Item">Custom Activity</span>
-                    </a>
-                    <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
-                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open submenu">
-                            <svg class="slds-button__icon" aria-hidden="true">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
-                            </svg>
-                            <span class="slds-assistive-text">Open submenu</span>
-                        </button>
-                    </div>
-                    <div class="slds-dropdown slds-dropdown_right slds-context-bar__item_divider-right">
-                        <ul class="slds-dropdown__list" role="menu">
-                            <!--Item One-->
-                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
-                                <a href="/ca/list" role="menuitem" tabindex="-1">
-                                    <span class="slds-truncate" title="Menu Item One">Saved configurations</span>
-                                </a>
-                            </li>
-                            <!--Item Two-->
-                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
-                                <a href="/ca/create" role="menuitem" tabindex="-1">
-                                    <span class="slds-truncate" title="Menu Item Two">Create configuration</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
                 <li class="slds-context-bar__item slds-context-bar__item_divider-right">
                     <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item 0">
                         <span class="slds-truncate" title="Menu Item">Menu Item 0</span>
@@ -135,11 +148,6 @@
                     </a>
                 </li>
 
-                <li class="slds-context-bar__item slds-context-bar__item_divider-right">
-                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item 2">
-                        <span class="slds-truncate" title="Menu Item">Menu Item 2</span>
-                    </a>
-                </li>
             </ul>
 
         </nav>
