@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import sfdc.mc.model.CustomActivityConfig;
 import sfdc.mc.service.CustomActivityService;
 import sfdc.mc.util.ConfigConstants;
-
 import javax.validation.Valid;
 
 /**

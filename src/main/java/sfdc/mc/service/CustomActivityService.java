@@ -6,8 +6,6 @@ import sfdc.mc.model.ConfigType;
 import sfdc.mc.model.CustomActivityConfig;
 import sfdc.mc.repository.CustomActivityRepository;
 
-import java.util.List;
-
 /**
  * Custom Activity Service
  */

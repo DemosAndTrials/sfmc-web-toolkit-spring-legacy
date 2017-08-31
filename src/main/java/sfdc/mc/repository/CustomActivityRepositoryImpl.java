@@ -2,7 +2,7 @@ package sfdc.mc.repository;
 
 import sfdc.mc.model.CustomActivityConfig;
 import sfdc.mc.model.CustomActivitySplit;
-
+import sfdc.mc.model.CustomActivityStep;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -177,18 +177,17 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
     /**
      * Create json array for wizard steps
      * TODO dynamic creation
+     *
      * @param config
      * @return
      */
     private JsonArrayBuilder createStepsJsonNode(CustomActivityConfig config) {
-
         JsonArrayBuilder arr = Json.createArrayBuilder();
-        arr.add(Json.createObjectBuilder()
-                .add("label", "Step 1")
-                .add("key", "step1"))
-           .add(Json.createObjectBuilder()
-                .add("label", "Step 2")
-                .add("key", "step2"));
+        for (CustomActivityStep step : config.getSteps()) {
+            arr.add(Json.createObjectBuilder()
+                    .add("label", step.getLabel())
+                    .add("key", step.getKey()));
+        }
         return arr;
     }
 
