@@ -186,19 +186,55 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="slds-form-element__row">
-                                <!--Number of steps-->
-                                <div class="slds-form-element slds-size_1-of-1">
-                                    <label class="slds-form-element__label" for="input-42">NumSteps - Number of wizard
-                                        steps that the user may navigate through when configuring the custom
-                                        activity.</label>
-                                    <input type="text" id="input-42" th:field="*{NumSteps}" class="slds-input"
-                                           maxlength="5">
-                                    <div class="slds-text-color_error" th:if="${#fields.hasErrors('NumSteps')}"
-                                         th:errors="*{NumSteps}">Name Error
+
+                            <div id="stepsGroup" class="slds-form-element__group">
+
+                                <div class="slds-form-element__row slds-m-bottom_none slds-p-around_none">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label">Label - the text displayed in the steps
+                                            wizard</label>
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <label class="slds-form-element__label">Key - a unique identifier for the
+                                            step</label>
                                     </div>
                                 </div>
+                                <div th:each="step,status : ${config.steps}" class="slds-form-element__row">
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <input type="text"
+                                               th:field="*{steps[__${status.index}__].label}" th:value="${step.label}"
+                                               class="slds-input" maxlength="50"
+                                               placeholder="label">
+                                    </div>
+                                    <div class="slds-form-element slds-size_1-of-2">
+                                        <input type="text"
+                                               th:field="*{steps[__${status.index}__].key}" th:value="${step.key}"
+                                               class="slds-input" maxlength="50"
+                                               placeholder="value">
+                                    </div>
+                                </div>
+                                <span id="stepPlaceholder"/>
+                                <div class="slds-text-color_error" th:if="${#fields.hasErrors('steps')}"
+                                     th:errors="*{steps}">Name Error
+                                </div>
+                                <a class="slds-button slds-button_stateful slds-button_neutral slds-not-selected slds-m-bottom_medium"
+                                   aria-live="assertive" id="addStepBtn">
+                                <span class="slds-text-not-selected">
+                                    <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
+                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                          xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#add"></use>
+                                </svg>Add</span>
+                                </a>
+                                <a class="slds-button slds-button_stateful slds-button_neutral slds-not-selected slds-m-bottom_medium"
+                                   aria-live="assertive" id="removeStepBtn" disabled="">
+                                <span class="slds-text-not-selected">
+                                    <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
+                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                          xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#remove"></use>
+                                </svg>Remove</span>
+                                </a>
                             </div>
+
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-2">
                                     <label class="slds-form-element__label" for="input-43">Height - Property that
@@ -271,11 +307,20 @@
     /*<![CDATA[*/
 
     var numOfSplits = [[${config.splits.size()}]];
+    var numOfSteps = [[${config.steps.size()}]];
 
     /*]]>*/
 
     j$(document).ready(function () {
         handleType(j$("#typeSelect").val());
+        if (numOfSteps > 1)
+            j$('#removeStepBtn').removeAttr('disabled');
+        if (numOfSteps > 4)
+            j$('#addStepBtn').attr("disabled", "");
+        if (numOfSplits > 2)
+            j$('#removeSplitBtn').removeAttr('disabled');
+        if (numOfSplits > 4)
+            j$('#addSplitBtn').attr("disabled", "");
     })
 
     /**
@@ -303,6 +348,23 @@
     });
 
     /**
+     * Handle add step
+     */
+    j$('#addStepBtn').click(function () {
+        if (isDisabled(this))
+            return;
+        // add new line here
+        if (numOfSteps < 5)
+            createStepTemplate();
+        // disable add split button
+        if (numOfSteps == 5)
+            j$(this).attr("disabled", "");
+        // enable remove spit button
+        if (numOfSteps > 1)
+            j$('#removeStepBtn').removeAttr('disabled');
+    });
+
+    /**
      * Handle remove split
      */
     j$('#removeSplitBtn').click(function () {
@@ -318,6 +380,25 @@
             j$('#addSplitBtn').removeAttr('disabled');
         // disable remove split button
         if (numOfSplits <= 2)
+            j$(this).attr("disabled", "");
+    });
+
+    /**
+     * Handle remove step
+     */
+    j$('#removeStepBtn').click(function () {
+        if (isDisabled(this))
+            return;
+        // remove last line
+        if (numOfSteps > 1) {
+            j$("#stepsGroup div.slds-form-element__row").last().remove();
+            numOfSteps--;
+        }
+        // enable add split button
+        if (numOfSteps < 5)
+            j$('#addStepBtn').removeAttr('disabled');
+        // disable remove split button
+        if (numOfSteps <= 1)
             j$(this).attr("disabled", "");
     });
 
@@ -367,6 +448,25 @@
         console.log(numOfSplits);
         //then add the new code to the holding area
         j$("#splitPlaceholder").before(temp);
+    }
+
+    /**
+     * Add split template
+     */
+    function createStepTemplate() {
+        var temp = j$("#templateInputsRow div.slds-form-element__row").clone();
+        var lbl = temp.find('#tempLabel');
+        lbl.attr("id", "steps" + numOfSteps + ".label");
+        lbl.attr("name", "steps[" + numOfSteps + "].label");
+        lbl.val("Step " + (numOfSteps + 1));
+        var val = temp.find('#tempValue');
+        val.attr("id", "steps" + numOfSteps + ".key");
+        val.attr("name", "steps[" + numOfSteps + "].key");
+        val.val("step_" + (numOfSteps + 1));
+        numOfSteps++;
+        console.log(numOfSteps);
+        //then add the new code to the holding area
+        j$("#stepPlaceholder").before(temp);
     }
 
 </script>

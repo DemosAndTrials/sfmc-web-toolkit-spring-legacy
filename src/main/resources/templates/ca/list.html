@@ -95,7 +95,7 @@
                     <div class="slds-truncate" th:text="${config.Key}">Key</div>
                 </td>
                 <td data-label="NumSteps" class="">
-                    <div class="slds-truncate" th:text="${config.NumSteps}">1</div>
+                    <div class="slds-truncate" th:text="${config.Steps.size()}">1</div>
                 </td>
                 <td data-label="EditUrl" class="">
                     <div class="slds-truncate" title="Name"><a th:href="${config.EditUrl}" target="_blank">Open</a>

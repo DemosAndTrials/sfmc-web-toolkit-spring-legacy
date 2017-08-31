@@ -34,9 +34,6 @@ public class CustomActivityConfig {
 
     String BigImageUrl;
 
-    @NotNull
-    Integer NumSteps;
-
     @NotEmpty
     String EditUrl;
 
@@ -50,7 +47,11 @@ public class CustomActivityConfig {
     String EndpointUrl;
 
     @ElementCollection
-    @CollectionTable(name = "CustomActivitySplit", joinColumns = {@JoinColumn(name="config_id")})
+    @CollectionTable(name = "CustomActivityStep", joinColumns = {@JoinColumn(name = "config_id")})
+    private List<CustomActivityStep> Steps = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "CustomActivitySplit", joinColumns = {@JoinColumn(name = "config_id")})
     private List<CustomActivitySplit> Splits = new ArrayList<>();
 
     public Integer getId() {
@@ -109,14 +110,6 @@ public class CustomActivityConfig {
         BigImageUrl = bigImageUrl;
     }
 
-    public Integer getNumSteps() {
-        return NumSteps;
-    }
-
-    public void setNumSteps(Integer numSteps) {
-        NumSteps = numSteps;
-    }
-
     public String getEditUrl() {
         return EditUrl;
     }
@@ -149,6 +142,14 @@ public class CustomActivityConfig {
         EndpointUrl = endpointUrl;
     }
 
+    public List<CustomActivityStep> getSteps() {
+        return Steps;
+    }
+
+    public void setSteps(List<CustomActivityStep> steps) {
+        Steps = steps;
+    }
+
     public List<CustomActivitySplit> getSplits() {
         return Splits;
     }
@@ -162,7 +163,7 @@ public class CustomActivityConfig {
         this.setKey(UUID.randomUUID().toString());
         this.setEditHeight(600);
         this.setEditWidth(800);
-        this.setNumSteps(1);
+        this.getSteps().add(new CustomActivityStep("Step 1","step_1"));
     }
 
     @Override
@@ -175,7 +176,7 @@ public class CustomActivityConfig {
                 ", Description='" + Description + '\'' +
                 ", SmallImageUrl='" + SmallImageUrl + '\'' +
                 ", BigImageUrl=" + BigImageUrl +
-                ", NumSteps=" + NumSteps +
+                ", NumSteps=" + Steps.size() +
                 ", EditUrl='" + EditUrl + '\'' +
                 ", EditHeight='" + EditHeight + '\'' +
                 ", EditWidth='" + EditWidth + '\'' +

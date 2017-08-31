@@ -4,16 +4,16 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
- * Custom Activity Split object
+ * Custom Activity Wizard Step object
  */
 @Embeddable
-public class CustomActivitySplit {
+public class CustomActivityStep {
 
     @Column(length = 50)
     String Label;
 
     @Column(length = 50)
-    String Value;
+    String Key;
 
     public String getLabel() {
         return Label;
@@ -23,34 +23,34 @@ public class CustomActivitySplit {
         Label = label;
     }
 
-    public String getValue() {
-        return Value;
+    public String getKey() {
+        return Key;
     }
 
-    public void setValue(String value) {
-        Value = value;
+    public void setKey(String key) {
+        Key = key;
     }
 
-    public CustomActivitySplit() {
+    public CustomActivityStep() {
     }
 
-    public CustomActivitySplit(String label, String value) {
+    public CustomActivityStep(String label, String value) {
         this.Label = label;
-        this.Value = value;
+        this.Key = value;
     }
 
     public boolean isValid(){
-        if(Label.isEmpty() || Value.isEmpty())
+        if(Label.isEmpty() || Key.isEmpty())
             return false;
         return true;
     }
 
     public String toString() {
-        StringBuffer aBuffer = new StringBuffer("Split - ");
+        StringBuffer aBuffer = new StringBuffer("Step - ");
         aBuffer.append(" label: ");
         aBuffer.append(Label);
         aBuffer.append(" vlaue: ");
-        aBuffer.append(Value);
+        aBuffer.append(Key);
         return aBuffer.toString();
     }
 }

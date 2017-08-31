@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import sfdc.mc.model.CustomActivityConfig;
 import sfdc.mc.service.CustomActivityService;
 import sfdc.mc.util.ConfigConstants;
+
 import javax.validation.Valid;
 
 /**
@@ -246,10 +247,16 @@ public class CustomActivityController {
         if (action.equals("save")) {
             if (bindingResult.hasErrors()) {
                 model.addAttribute("config", config);
-                // set error for split
-                long er = config.getSplits().stream().filter(s -> !s.isValid()).count();
-                if (er != 0) {
+                // set error for splits if any
+                long erSplits = config.getSplits().stream().filter(s -> !s.isValid()).count();
+                if (erSplits != 0) {
                     FieldError error = new FieldError("config", "splits", "may not be empty");
+                    bindingResult.addError(error);
+                }
+                // set error for steps if any
+                long erSteps = config.getSteps().stream().filter(s -> !s.isValid()).count();
+                if (erSteps != 0) {
+                    FieldError error = new FieldError("config", "steps", "may not be empty");
                     bindingResult.addError(error);
                 }
                 return "ca/create";
@@ -258,14 +265,21 @@ public class CustomActivityController {
             if (config.getType().equals("REST")) {
                 config.getSplits().clear();
             }
+            // - should not be steps with empty fields
+            if (config.getSteps().stream().filter(s -> !s.isValid()).count() != 0 || config.getSteps().size() == 0) {
+                FieldError error = new FieldError("config", "steps", "may not be empty");
+                bindingResult.addError(error);
+            }
             // RESTDECISION validation
-            // - should be splits with non empty fields
+            // - should not be splits with empty fields
             if (config.getType().equals("RESTDECISION")
                     && (config.getSplits().stream().filter(s -> !s.isValid()).count() != 0 || config.getSplits().size() == 0)) {
                 FieldError error = new FieldError("config", "splits", "may not be empty");
                 bindingResult.addError(error);
-                return "ca/create";
             }
+            if (bindingResult.hasErrors())
+                return "ca/create";
+
             //config.getSplits().add(new CustomActivitySplit("LABEL FOR PATH 1", "path_1_key"));
             //config.getSplits().add(new CustomActivitySplit("LABEL FOR PATH 2", "path_2_key"));
             CustomActivityConfig res = customActivityService.createConfig(config);
