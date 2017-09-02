@@ -189,6 +189,16 @@ public class CustomActivityController {
     }
 
     /**
+     * Setup page - HowTo
+     *
+     * @return
+     */
+    @GetMapping(value = "/setup")
+    public String setupConfig() {
+        return "ca/setup";
+    }
+
+    /**
      * List of configs
      *
      * @param model

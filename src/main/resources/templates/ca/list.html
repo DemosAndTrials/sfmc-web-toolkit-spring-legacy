@@ -3,7 +3,7 @@
 <head>
     <title>List config</title>
 
-     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
 
     <div th:replace="fragments/header :: header-css" th:remove="tag"/>
 </head>
@@ -13,24 +13,26 @@
 
     <div th:replace="fragments/header :: header">.</div>
 
-    <!-- Stage Main -->
-    <div class="slds-m-around_small">
-        <div class="slds-grid">
-            <div>
-                <h2 class="slds-text-heading--medium slds-m-bottom_medium">List of saved configs</h2>
-            </div>
-            <div class="slds-col slds-m-left_small">
-                <a class="slds-icon_container slds-icon-custom-custom5 slds-icon_small slds-text-align_right"
-                   href="/ca/create" title="Create">
-                    <svg class="slds-icon slds-icon_small" aria-hidden="true">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                             xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#new"></use>
-                    </svg>
-                    <span class="slds-assistive-text">Description of icon</span>
-                </a>
+    <div class="slds-shrink-none">
+        <div class="slds-page-header">
+            <div class="slds-grid">
+                <h2 class="slds-text-heading--medium">List of saved configs</h2>
+                <div class="slds-col slds-m-left_small">
+                    <a class="slds-icon_container slds-icon-custom-custom5 slds-icon_small slds-text-align_right"
+                       href="/ca/create" title="Create">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#new"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Description of icon</span>
+                    </a>
+                </div>
             </div>
         </div>
+    </div>
 
+    <!-- Stage Main -->
+    <div class="slds-m-around_small slds-m-top_medium">
 
         <table class="slds-table slds-table_bordered slds-table_striped">
             <thead>

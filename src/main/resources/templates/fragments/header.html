@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:fragment="header-css">
 
-        <link rel="icon" href="/images/fav.ico" type="image/x-icon"/>
+    <link rel="icon" href="/images/fav.ico" type="image/x-icon"/>
 
-        <!-- this is header-css -->
-        <link rel='stylesheet prefetch'
-              href='/styles/slds/styles/salesforce-lightning-design-system.min.css'/>
+    <!-- this is header-css -->
+    <link rel='stylesheet prefetch'
+          href='/styles/slds/styles/salesforce-lightning-design-system.min.css'/>
 </head>
 <body>
 <div th:fragment="header">
@@ -33,15 +33,17 @@
                         <span class="slds-truncate" title="Home">Home</span>
                     </a>
                 </li>
-               <!--API-->
+                <!--API-->
                 <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-context-bar__item_divider-right">
                     <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Demo">
                         <span class="slds-truncate" title="Menu Item">API</span>
                     </a>
                     <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
-                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open submenu">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button"
+                                aria-haspopup="true" title="Open submenu">
                             <svg class="slds-button__icon" aria-hidden="true">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
                             </svg>
                             <span class="slds-assistive-text">Open submenu</span>
                         </button>
@@ -75,9 +77,11 @@
                         <span class="slds-truncate" title="Menu Item">Custom Activity</span>
                     </a>
                     <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
-                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open submenu">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button"
+                                aria-haspopup="true" title="Open submenu">
                             <svg class="slds-button__icon" aria-hidden="true">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
                             </svg>
                             <span class="slds-assistive-text">Open submenu</span>
                         </button>
@@ -88,6 +92,12 @@
                             <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
                                 <a href="/ca/index" role="menuitem" tabindex="-1">
                                     <span class="slds-truncate" title="Getting Started">Getting Started</span>
+                                </a>
+                            </li>
+                            <!--Setup-->
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/ca/setup" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Getting Started">Setup Activity</span>
                                 </a>
                             </li>
                             <!--List of configurations-->
@@ -111,9 +121,11 @@
                         <span class="slds-truncate" title="Menu Item">Demo</span>
                     </a>
                     <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
-                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button" aria-haspopup="true" title="Open submenu">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button"
+                                aria-haspopup="true" title="Open submenu">
                             <svg class="slds-button__icon" aria-hidden="true">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
                             </svg>
                             <span class="slds-assistive-text">Open submenu</span>
                         </button>
@@ -137,14 +149,8 @@
                 </li>
 
                 <li class="slds-context-bar__item slds-context-bar__item_divider-right">
-                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item 0">
-                        <span class="slds-truncate" title="Menu Item">Menu Item 0</span>
-                    </a>
-                </li>
-
-                <li class="slds-context-bar__item slds-context-bar__item_divider-right">
-                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item 1">
-                        <span class="slds-truncate" title="Menu Item">Menu Item 1</span>
+                    <a href="/about" class="slds-context-bar__label-action" title="Menu Item 0">
+                        <span class="slds-truncate" title="Menu Item">About</span>
                     </a>
                 </li>
 
