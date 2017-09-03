@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import sfdc.mc.model.ConfigType;
 import sfdc.mc.model.CustomActivityConfig;
 import sfdc.mc.repository.CustomActivityRepository;
+import sfdc.mc.util.Helpers;
 
 /**
  * Custom Activity Service
@@ -70,7 +71,20 @@ public class CustomActivityService {
      * @return config
      */
     public CustomActivityConfig createConfig(CustomActivityConfig config) {
+        // additional validation
+        // checks and corrects endpoint url
+        Boolean isNew = config.getId() == null;
+        String endpoint = config.getEndpointUrl().trim();
+        if (endpoint.endsWith("/"))
+            endpoint = Helpers.removeLastChar(config.getEndpointUrl());
+        config.setEndpointUrl(endpoint);
         CustomActivityConfig savedConfig = customActivityRepository.save(config);
+        // update with id
+        if (isNew) {
+            Integer id = savedConfig.getId();
+            savedConfig.setEndpointUrl(savedConfig.getEndpointUrl() + "/" + id.toString());
+            savedConfig = customActivityRepository.save(savedConfig);
+        }
         return savedConfig;
     }
 
@@ -101,9 +115,15 @@ public class CustomActivityService {
      * @param idStr
      * @return
      */
-    public void deleteConfigById(String idStr) {
-        int id = Integer.parseInt(idStr);
-        customActivityRepository.delete(id);
+    public boolean deleteConfigById(String idStr) {
+        try {
+            int id = Integer.parseInt(idStr);
+            customActivityRepository.delete(id);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

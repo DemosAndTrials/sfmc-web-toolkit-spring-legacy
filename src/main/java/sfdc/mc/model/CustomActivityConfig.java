@@ -159,11 +159,25 @@ public class CustomActivityConfig {
     }
 
     public CustomActivityConfig() {
+        init("");
+    }
+
+    public CustomActivityConfig(String host) {
+        init(host);
+    }
+
+    private void init(String host) {
         this.setName("My Custom Activity");
         this.setKey(UUID.randomUUID().toString());
         this.setEditHeight(600);
         this.setEditWidth(800);
-        this.getSteps().add(new CustomActivityStep("Step 1","step_1"));
+        this.Steps.add(new CustomActivityStep("Step 1", "step_1"));
+        if (!host.isEmpty()) {
+            this.EndpointUrl = host + "/ca/";
+            this.EditUrl = host + "/ca/ui/";
+            this.BigImageUrl = host + "/images/ca/icon.png";
+            this.SmallImageUrl= host + "/images/ca/icon_small.png";
+        }
     }
 
     @Override

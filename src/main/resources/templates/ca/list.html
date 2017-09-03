@@ -12,7 +12,7 @@
 <section class="stage slds-grid slds-grid--vertical slds-nowrap">
 
     <div th:replace="fragments/header :: header">.</div>
-
+    <span id="alertPlaceholder"/>
     <div class="slds-shrink-none">
         <div class="slds-page-header">
             <div class="slds-grid">
@@ -62,6 +62,9 @@
                     <div class="slds-truncate" title="EditUrl">Edit Url</div>
                 </th>
                 <th scope="col" class="">
+                    <div class="slds-truncate" title="EndpointUrl">Endpoint Url</div>
+                </th>
+                <th scope="col" class="">
                     <div class="slds-truncate" title="EditUrl">json</div>
                 </th>
                 <th scope="col" class="">
@@ -70,7 +73,7 @@
             </thead>
             <tbody>
 
-            <tr th:each="config : ${configs}">
+            <tr th:each="config : ${configs}" th:id="@{'config_' + ${config.Id}}">
                 <th scope="row" data-label="Id" class="">
                     <div class="slds-truncate" title="Id"><a th:href="@{'/ca/create/' + ${config.Id}}"
                                                              th:text="${config.Id}">Id</a></div>
@@ -94,17 +97,27 @@
                     <div class="slds-truncate" th:text="${config.Type}">Type</div>
                 </td>
                 <td data-label="Key" class="">
-                    <div class="slds-truncate" th:text="${config.Key}">Key</div>
+                    <div class="slds-truncate" title="EndpointUrl">
+                        <a th:id="@{'copyToClipboardKey_' + ${config.Id}}" th:text="${config.Key}"
+                           th:data="${config.Key}" target="_blank">Copy</a>
+                    </div>
+
                 </td>
                 <td data-label="NumSteps" class="">
                     <div class="slds-truncate" th:text="${config.Steps.size()}">1</div>
                 </td>
                 <td data-label="EditUrl" class="">
-                    <div class="slds-truncate" title="Name"><a th:href="${config.EditUrl}" target="_blank">Open</a>
+                    <div class="slds-truncate" title="EditUrl"><a th:href="${config.EditUrl}" target="_blank">Open</a>
+                    </div>
+                </td>
+                <td data-label="EndpointUrl" class="">
+                    <div class="slds-truncate" title="EndpointUrl">
+                        <a th:id="@{'copyToClipboardUrl_' + ${config.Id}}"
+                           th:data="${config.EndpointUrl}" target="_blank">Copy</a>
                     </div>
                 </td>
                 <td data-label="EditUrl" class="">
-                    <div class="slds-truncate" title="Name">
+                    <div class="slds-truncate" title="Json">
                         <a th:id="@{'jsonBtn_' + ${config.Id}}" href="#" th:name="${config.Id}">View</a>
                     </div>
                 </td>
@@ -187,9 +200,31 @@
     <div id="backdropJson" class="slds-backdrop"></div>
 </div>
 
+<div id="templateAlert" style="display: none">
+    <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert">
+        <span class="slds-assistive-text">info</span>
+        <span class="slds-icon_container slds-icon-utility-user slds-m-right_x-small"
+              title="Description of icon when needed">
+    <svg class="slds-icon slds-icon_x-small" aria-hidden="true">
+      <use xmlns:xlink="http://www.w3.org/1999/xlink"
+           xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#info_alt"></use>
+    </svg>
+  </span>
+        <h2 id="alertTempLabel">Key copied to clipboard</h2>
+        <button id="closeAlert" class="slds-button slds-button_icon slds-notify__close slds-button_icon-inverse" title="Close" onclick="closeAlert()">
+            <svg class="slds-button__icon" aria-hidden="true">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                     xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#close"></use>
+            </svg>
+            <span class="slds-assistive-text">Close</span>
+        </button>
+    </div>
+</div>
+
 <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@1/dist/clipboard.min.js"></script>
 <!--<script>hljs.initHighlightingOnLoad();</script>-->
 
 <script type="text/javascript">
@@ -236,9 +271,53 @@
 
     // post to controller
     function deleteConfig(id) {
-        console.log("delete config: ", id);
-        j$.post("/ca/delete/" + id);
+        //j$.post("/ca/delete/" + id);
+        j$.post("/ca/delete/" + id, function (result) {
+            if (result == true)
+                j$('#config_' + id).remove();
+        }).fail(function (response) {
+            console.log('delete failed: ' + response.responseText);
+        });
     }
+
+    // copy endpoint url to clipboard
+    j$('[id^=copyToClipboard]').click(function () {
+        var data = j$(this).attr("data");
+        j$(this).attr("data-clipboard-text", data);
+        var clipboard = new Clipboard("#" + j$(this).attr("id"));
+        clipboard.on('success', function (e) {
+            //console.log(e);
+            createAlertTemplate(data);
+        });
+        clipboard.on('error', function (e) {
+            //console.log(e);
+        });
+    });
+
+    /**
+     * Add alert template
+     */
+    function createAlertTemplate(data) {
+        j$('#copyAlert').remove();
+        var temp = j$("#templateAlert div.slds-notify").clone();
+        j$(temp).attr("id", "copyAlert");
+        //console.log(temp.html());
+        var lbl = temp.find('#alertTempLabel');
+        lbl.html(data + ' copied to clipboard.');
+        //console.log(lbl.html());
+        //then add the new code to the holding area
+        j$("#alertPlaceholder").before(temp);
+    }
+
+    function closeAlert() {
+        console.log("close alert 1");
+        j$('#copyAlert').remove();
+    }
+
+//    j$('#closeAlert').click(function () {
+//        console.log("close alert 3");
+//    });
+
 </script>
 
 </body>

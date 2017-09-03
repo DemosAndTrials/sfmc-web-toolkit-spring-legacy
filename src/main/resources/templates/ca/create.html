@@ -48,17 +48,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="slds-form-element__row">
-                                <div class="slds-form-element slds-size_1-of-1">
-                                    <label class="slds-form-element__label" for="input-11">EndpointUrl - Endpoint used
-                                        to execute the journey.</label>
-                                    <input type="text" id="input-11" th:field="*{EndpointUrl}" class="slds-input"
-                                           placeholder="https://">
-                                    <div class="slds-text-color_error" th:if="${#fields.hasErrors('EndpointUrl')}"
-                                         th:errors="*{EndpointUrl}">Name Error
-                                    </div>
-                                </div>
-                            </div>
+                            <!--<div class="slds-form-element__row">-->
+                                <!--<div class="slds-form-element slds-size_1-of-1">-->
+                                    <!--<label class="slds-form-element__label" for="input-11">EndpointUrl - Endpoint used-->
+                                        <!--to execute the journey.</label>-->
+                                    <!--<input type="text" id="input-11" th:field="*{EndpointUrl}" class="slds-input"-->
+                                           <!--placeholder="https://">-->
+                                    <!--<div class="slds-text-color_error" th:if="${#fields.hasErrors('EndpointUrl')}"-->
+                                         <!--th:errors="*{EndpointUrl}">Name Error-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
                             <div class="slds-form-element__row">
                                 <div class="slds-form-element slds-size_1-of-1">
                                     <label class="slds-form-element__label" for="typeSelect">Type - String property
@@ -289,7 +289,6 @@
     </form>
     <div th:replace="fragments/footer :: footer"/>
 </section>
-
 
 <div id="templateInputsRow" style="display: none">
     <div id="tempRow" class="slds-form-element__row">
