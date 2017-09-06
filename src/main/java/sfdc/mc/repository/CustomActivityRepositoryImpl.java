@@ -3,6 +3,7 @@ package sfdc.mc.repository;
 import sfdc.mc.model.CustomActivityConfig;
 import sfdc.mc.model.CustomActivitySplit;
 import sfdc.mc.model.CustomActivityStep;
+
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -97,7 +98,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
      * Get default content for config.json
      * Every custom Journey Builder activity must include a config.json in the root of its endpoint.
      * https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/creating-activities.htm
-     * TODO refactoring
+     * TODO refactoring, remove hardcoded modals url
      *
      * @return
      */

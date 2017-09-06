@@ -10,27 +10,28 @@
 
     <div th:replace="fragments/header :: header">.</div>
 
+    <div class="slds-shrink-none">
+        <div class="slds-page-header">
+            <div class="slds-grid">
+                <h2 class="slds-text-heading--medium">Create configuration</h2>
+                <div class="slds-col slds-m-left_small">
+                    <a class="slds-icon_container slds-icon-custom-custom5 slds-icon_small slds-text-align_right"
+                       href="/ca/list" title="List">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#list"></use>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <form action="#" th:action="@{/ca/create}" th:object="${config}" method="post" name="config">
         <!-- Stage Main -->
         <div id="step1"
              class="step slds-grid slds-wrap slds-container--medium slds-container--center slds-order-1 slds-medium-order--2 slds-p-vertical--large">
             <div class="slds-col--padded slds-col-rule--right slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--8-of-12 slds-p-bottom--x-large">
-
-                <div class="slds-grid">
-                    <div>
-                        <h2 class="slds-text-heading--medium slds-m-bottom_medium">Create config</h2>
-                    </div>
-                    <div class="slds-col slds-m-left_small slds-text-align_right">
-                        <a class="slds-icon_container slds-icon-custom-custom5 slds-icon_small slds-text-align_right"
-                           href="/ca/list" title="Create">
-                            <svg class="slds-icon slds-icon_small" aria-hidden="true">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                     xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#list"></use>
-                            </svg>
-                            <span class="slds-assistive-text">Description of icon</span>
-                        </a>
-                    </div>
-                </div>
 
                 <div class="slds-form slds-form_compound">
                     <fieldset class="slds-form-element">
@@ -47,11 +48,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="slds-form-element__row">
+                            <div class="slds-form-element__row" th:if="${config.Id != null}">
                                 <div class="slds-form-element slds-size_1-of-1">
                                     <label class="slds-form-element__label" for="input-11">EndpointUrl - Endpoint used
-                                        to execute the journey.</label>
-                                    <input type="text" id="input-11" th:field="*{EndpointUrl}" class="slds-input"
+                                        to execute the journey. (Populated automatically)</label>
+                                    <input type="text" disabled="" id="input-11" th:field="*{EndpointUrl}" class="slds-input"
                                            placeholder="https://">
                                     <div class="slds-text-color_error" th:if="${#fields.hasErrors('EndpointUrl')}"
                                          th:errors="*{EndpointUrl}">Name Error
@@ -274,10 +275,13 @@
             <div class="slds-col--padded slds-size--1-of-1 slds-small-size--1-of-2 slds-m-bottom--large">
                 <div class="slds-box">
                     <h2 class="slds-text-heading--label">Notes:</h2>
-                    <p>
-                        https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/creating-activities.htm</p>
+                    <p><a href="/ca/setup">How to setup custom activity</a></p>
+                    <p><a target="_blank"
+                          href="https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/creating-activities.htm">Marketing
+                        Cloud App Development - Create Custom Activities</a>
+                    </p>
+                    <p><a href="/ca/list">Browse existing configurations</a></p>
                 </div>
-
             </div>
 
         </div>
@@ -285,7 +289,6 @@
     </form>
     <div th:replace="fragments/footer :: footer"/>
 </section>
-
 
 <div id="templateInputsRow" style="display: none">
     <div id="tempRow" class="slds-form-element__row">

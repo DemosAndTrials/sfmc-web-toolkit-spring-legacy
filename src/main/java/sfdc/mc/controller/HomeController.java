@@ -14,7 +14,14 @@ public class HomeController {
      */
     @RequestMapping(value = "/")
     public String index() {
-        System.out.println("*******************************");
         return "index";
+    }
+
+    /**
+     * About page
+     */
+    @RequestMapping(value = "/about")
+    public String about() {
+        return "about";
     }
 }

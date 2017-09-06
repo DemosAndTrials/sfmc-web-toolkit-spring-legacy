@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Home</title>
+    <title>SFMC Examples</title>
     <div th:replace="fragments/header :: header-css" th:remove="tag"/>
 </head>
 <body>
@@ -9,10 +9,162 @@
 <section class="stage slds-grid slds-grid--vertical slds-nowrap">
 
     <div th:replace="fragments/header :: header">.</div>
-    <div>
-        <h2 class="slds-text-heading--medium slds-m-bottom_medium">Homepage</h2>
+    <div class="slds-shrink-none">
+        <div class="slds-page-header"><h2 class="slds-text-heading--medium">Homepage</h2></div>
     </div>
 
+    <div class="slds-box">
+        <ul class="slds-timeline">
+            <!--<li>-->
+                <!--<div class="slds-timeline__item">-->
+                    <!--<span class="slds-assistive-text">Task</span>-->
+                    <!--<div class="slds-media">-->
+                        <!--<div class="slds-media__body">-->
+                            <!--<div class="slds-media slds-timeline__media slds-timeline__media_task">-->
+                                <!--<div class="slds-media__figure slds-timeline__icon">-->
+                                    <!--<div class="slds-icon_container slds-icon-standard-task" title="task">-->
+                                        <!--<svg class="slds-icon slds-icon_small" aria-hidden="true">-->
+                                            <!--<use xmlns:xlink="http://www.w3.org/1999/xlink"-->
+                                                 <!--xlink:href="/styles/slds/icons/standard-sprite/svg/symbols.svg#announcement"></use>-->
+                                        <!--</svg>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="slds-media__body">-->
+                                    <!--<div class="slds-media">-->
+                                        <!--<div class="slds-media__body">-->
+                                            <!--<h3 class="slds-truncate"-->
+                                                <!--title="Review proposals for EBC deck with larger team and have marketing review this">-->
+                                                <!--<a href="javascript:void(0);">Review proposals for EBC deck with larger-->
+                                                    <!--team and have marketing review this</a></h3>-->
+                                            <!--<ul class="slds-list_horizontal slds-wrap">-->
+                                                <!--<li class="slds-m-right_large">-->
+                                                    <!--<span class="slds-text-title">Author:</span>-->
+                                                    <!--<span class="slds-text-body_small"><a href="javascript:void(0);">Ros Haitovich</a></span>-->
+                                                <!--</li>-->
+                                                <!--<li class="slds-m-right_large">-->
+                                                    <!--<span class="slds-text-title">Date: </span>-->
+                                                    <!--<span class="slds-text-body_small"><a href="javascript:void(0);">10.09.2017</a></span>-->
+                                                <!--</li>-->
+                                            <!--</ul>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</li>-->
+            <!---->
+            <!--<li>-->
+                <!--<div class="slds-timeline__item">-->
+                    <!--<span class="slds-assistive-text">Event</span>-->
+                    <!--<div class="slds-media">-->
+                        <!--<div class="slds-media__body">-->
+                            <!--<div class="slds-media slds-timeline__media slds-timeline__media_event">-->
+                                <!--<div class="slds-media__figure slds-timeline__icon">-->
+                                    <!--<div class="slds-icon_container slds-icon-standard-event" title="event">-->
+                                        <!--<svg class="slds-icon slds-icon_small" aria-hidden="true">-->
+                                            <!--<use xmlns:xlink="http://www.w3.org/1999/xlink"-->
+                                                 <!--xlink:href="/styles/slds/icons/standard-sprite/svg/symbols.svg#announcement"></use>-->
+                                        <!--</svg>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="slds-media__body">-->
+                                    <!--<h3 class="slds-truncate" title="Company One — EBC Meeting"><a-->
+                                            <!--href="javascript:void(0);">Company One — EBC Meeting</a></h3>-->
+                                    <!--<p class="slds-truncate"-->
+                                       <!--title="Let’s get together to review the theater’s layout and facilities. We’ll also discuss potential things that truncate at a certain width.">-->
+                                        <!--Let’s get together to review the theater’s layout and facilities. We’ll also-->
+                                        <!--discuss potential things that truncate at a certain width.</p>-->
+                                    <!--<ul class="slds-list_horizontal slds-wrap">-->
+                                        <!--<li class="slds-m-right_large">-->
+                                            <!--<span class="slds-text-title">Author:</span>-->
+                                            <!--<span class="slds-text-body_small"><a href="javascript:void(0);">Ros Haitovich</a></span>-->
+                                        <!--</li>-->
+                                        <!--<li class="slds-m-right_large">-->
+                                            <!--<span class="slds-text-title">Date: </span>-->
+                                            <!--<span class="slds-text-body_small"><a href="javascript:void(0);">10.09.2017</a></span>-->
+                                        <!--</li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</li>-->
+            <li>
+                <div class="slds-timeline__item">
+                    <span class="slds-assistive-text">Call</span>
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <div class="slds-media slds-timeline__media slds-timeline__media_call">
+                                <div class="slds-media__figure slds-timeline__icon">
+                                    <div class="slds-icon_container slds-icon-standard-log-a-call" title="call">
+                                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                 xlink:href="/styles/slds/icons/standard-sprite/svg/symbols.svg#announcement"></use>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="slds-media__body">
+                                    <h3 class="slds-truncate" title="Mobile conversation on Monday"><a
+                                            href="javascript:void(0);">Custom Activity Tutorial</a></h3>
+                                    <p class="slds-truncate"
+                                       title="">Tutorial for custom activity creation can be found <a href="/ca/setup">here</a>.</p>
+                                    <ul class="slds-list_horizontal slds-wrap">
+                                        <li class="slds-m-right_large">
+                                            <span class="slds-text-title">Author:</span>
+                                            <span class="slds-text-body_small"><a href="javascript:void(0);">Ros Haitovich</a></span>
+                                        </li>
+                                        <li class="slds-m-right_large">
+                                            <span class="slds-text-title">Date: </span>
+                                            <span class="slds-text-body_small"><a href="javascript:void(0);">06.09.2017</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="slds-timeline__item">
+                    <span class="slds-assistive-text">Email</span>
+                    <div class="slds-media">
+                        <div class="slds-media__body">
+                            <div class="slds-media slds-timeline__media slds-timeline__media_email">
+                                <div class="slds-media__figure slds-timeline__icon">
+                                    <div class="slds-icon_container slds-icon-standard-email" title="email">
+                                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                 xlink:href="/styles/slds/icons/standard-sprite/svg/symbols.svg#announcement"></use>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="slds-media__body">
+                                    <h3 class="slds-truncate" title="Mobile conversation on Monday"><a
+                                            href="javascript:void(0);">Beta version online</a></h3>
+                                    <p class="slds-truncate"
+                                       title="">
+                                        Custom activity first beta version available now.</p>
+                                    <ul class="slds-list_horizontal slds-wrap">
+                                        <li class="slds-m-right_large">
+                                            <span class="slds-text-title">Author:</span>
+                                            <span class="slds-text-body_small"><a href="javascript:void(0);">Ros Haitovich</a></span>
+                                        </li>
+                                        <li class="slds-m-right_large">
+                                            <span class="slds-text-title">Date: </span>
+                                            <span class="slds-text-body_small"><a href="javascript:void(0);">31.08.2017</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
 
     <div th:replace="fragments/footer :: footer"></div>
 </section>

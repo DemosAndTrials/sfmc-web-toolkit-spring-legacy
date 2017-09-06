@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Setup Custom Activity</title>
+    <div th:replace="fragments/header :: header-css" th:remove="tag"/>
+</head>
+<body>
+
+<section class="stage slds-grid slds-grid--vertical slds-nowrap">
+
+    <div th:replace="fragments/header :: header">.</div>
+
+    <div class="slds-shrink-none">
+        <div class="slds-page-header"><h2 class="slds-text-heading--medium">How to setup custom activity</h2></div>
+    </div>
+
+
+    <div class="slds-box">
+
+        <div class="slds-grid slds-wrap slds-container--medium slds-container--center slds-order-1 slds-medium-order--2 slds-p-vertical--large">
+            <div class="slds-col--padded slds-col-rule--right slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--8-of-12 slds-p-bottom--x-large">
+                <article class="slds-text-longform">
+                    <h3 class="slds-text-heading--medium">Introduction</h3>
+                    <p>
+                        Step by step guide to getting up and running with a basic Custom Activity
+                    </p>
+                    <h3 class="slds-text-heading--medium">Step 1</h3>
+                    <p>Go to <a href="/ca/create">this page</a> and create new configuration or pick one of the existing
+                        <a href="/ca/list">configurations</a>.</p>
+                    <ul class="slds-list_dotted">
+                        <li>
+                            Key - Custom activity Unique key. Must match your activity key as defined when created in
+                            App Center.
+                        </li>
+                        <!--<li>-->
+                            <!--EndpointUrl - Endpoint URL used to execute the journey. Marketing Cloud will use this url-->
+                            <!--for fetching config.json file.-->
+                        <!--</li>-->
+                        <li>
+                            Type - String property representing the type of activity. Select REST for default activity
+                            and RESTDECISION for custom split activity.
+                        </li>
+                        <li>
+                            Name - Name of activity (i.e. 'Send Email', 'SMS', 'Create Salesforce Lead'), as shown in
+                            the activity list.
+                        </li>
+                        <li>
+                            Description - Description of what the activity does and what purpose it fulfills.
+                        </li>
+                        <li>
+                            Icon - String representing the icon for this activity. Defaults to images/icon.png when not
+                            provided.
+                        </li>
+                        <li>
+                            Small Icon - String representing the small display icon for this activity. Defaults to
+                            images/iconSmall.png.
+                        </li>
+                        <li>
+                            Splits - Contains an array of objects that define the custom splits. Each object contains
+                            label and key.
+                        </li>
+                        <li>
+                            EditUrl - Endpoint for the UI displayed to marketers while configuring this activity.
+                        </li>
+                        <li>
+                            Steps - Contains an array of objects that define the steps that the user may navigate
+                            through when configuring the custom activity.
+                            Each object contains label and key.
+                        </li>
+                        <li>
+                            Height and Width - Properties that defines the height and width of the iframe containing the
+                            configuration UI.
+                        </li>
+                    </ul>
+                    <p>
+                        Note: Key and EndpointUrl will be used in next step.
+                    </p>
+                    <h3 class="slds-text-heading--medium">Step 2</h3>
+                    <p>Create a package containing a Journey Builder Activity in
+                        <a target="_blank" href="https://appcenter-auth.s1.marketingcloudapps.com/#app-center">Salesforce
+                            Marketing Cloud App Center</a>.
+                        A documentation for this task can be found here:
+                        <a target="_blank"
+                           href="https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/define-jb-extension-app-center.htm">Create
+                            a Marketing Cloud App</a>.
+                    <ul class="slds-list_dotted">
+                        <li>
+                            Select NO for SSO and Account Integration.
+                        </li>
+                        <li>
+                            The Key value specified in the configuration will be used as the Unique Key!
+                        </li>
+                        <li>
+                            The EndpointUrl value specified in the configuration will be used as the Endpoint URL!
+                        </li>
+                        <li>
+                            Category: Message
+                        </li>
+                        <li>
+                            Select “This application and other installed applications” for the Public Extension
+                        </li>
+                    </ul>
+                    </p>
+                    <h3 class="slds-text-heading--medium">Step 3</h3>
+                    <p>
+                        Go into <a target="_blank" href="https://mc.exacttarget.com/cloud/#app/Journey%20Builder">Journey
+                        Builder</a>
+                        and the Custom Activity should appear.
+                    </p>
+                    <p>
+                        Note: There is some caching done by the browser that could prevent your app from showing up in
+                        Journey Builder.
+                        Going back to activities list and reloading the page usually helps to solve this issue.
+                    </p>
+                    <h3 class="slds-text-heading--medium"> What’s next?</h3>
+                    <ul class="slds-list_dotted">
+                        <li>
+                            Same configuration can be used for different custom activities.
+                        </li>
+                        <li>
+                            Configuration can be changed at any time (journey builder reload required)
+                        </li>
+                    </ul>
+                </article>
+            </div>
+
+            <div class="slds-col--padded slds-size--1-of-1 slds-small-size--1-of-2 slds-m-bottom--large">
+                <div class="slds-box">
+                    <h2 class="slds-text-heading--label">Notes:</h2>
+                    <p> <a href="/ca/create">Create new configuration</a></p>
+                    <p> <a href="/ca/list">Browse existing configurations</a></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</section>
+
+<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+
+</body>
+</html>

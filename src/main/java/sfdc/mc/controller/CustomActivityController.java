@@ -8,9 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sfdc.mc.model.CustomActivityConfig;
 import sfdc.mc.service.CustomActivityService;
 import sfdc.mc.util.ConfigConstants;
+
 import javax.validation.Valid;
 
 /**
@@ -23,6 +25,10 @@ public class CustomActivityController {
     @Autowired
     CustomActivityService customActivityService;
 
+     /*
+    * Config UI operations
+    */
+
     /**
      * Custom Activity UI
      * Endpoint for the UI displayed to marketers while configuring this activity.
@@ -30,7 +36,7 @@ public class CustomActivityController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "")
+    @RequestMapping(value = {"ui", "ui/edit"})
     public String editModal(Model model) {
 
         String caNumSteps = System.getenv(ConfigConstants.CA_NUM_STEPS) != null ? System.getenv(ConfigConstants.CA_NUM_STEPS) : "1";
@@ -44,7 +50,7 @@ public class CustomActivityController {
      *
      * @return
      */
-    @RequestMapping(value = "hover")
+    @RequestMapping(value = "ui/hover")
     public String runningHover() {
         System.out.println("*** running hover ***");
         return "ca/ui/runningHover";
@@ -55,11 +61,15 @@ public class CustomActivityController {
      *
      * @return
      */
-    @RequestMapping(value = "modal")
+    @RequestMapping(value = "ui/modal")
     public String runningModal() {
         System.out.println("*** running modal ***");
         return "ca/ui/runningModal";
     }
+
+     /*
+    * Config Endpoints
+    */
 
     /**
      * execute - The API calls this method for each contact processed by the journey.
@@ -183,9 +193,19 @@ public class CustomActivityController {
      *
      * @return
      */
-    @GetMapping(value = "/index")
+    @GetMapping(value = {"/", "/index"})
     public String indexConfig() {
         return "ca/index";
+    }
+
+    /**
+     * Setup page - HowTo
+     *
+     * @return
+     */
+    @GetMapping(value = "/setup")
+    public String setupConfig() {
+        return "ca/setup";
     }
 
     /**
@@ -211,7 +231,9 @@ public class CustomActivityController {
     @GetMapping(value = "/create")
     public String createConfig(Model model) {
         System.out.println("*** create config ***");
-        model.addAttribute("config", new CustomActivityConfig());
+        ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentRequestUri();
+        String host = builder.replacePath("").build().toUriString();
+        model.addAttribute("config", new CustomActivityConfig(host));
         return "ca/create";
     }
 
@@ -291,16 +313,16 @@ public class CustomActivityController {
     }
 
     /**
-     * Delete config
+     * Delete config using jquery
      *
      * @param id
      * @return
      */
     @PostMapping(value = "/delete/{id}")
-    public String deleteConfig(@PathVariable String id) {
-        System.out.println("*** delete config: " + id);
-        customActivityService.deleteConfigById(id);
-        return "redirect:/ca/list";
+    public ResponseEntity deleteConfig(@PathVariable String id) {
+        return new ResponseEntity("OK", HttpStatus.OK);
+
+        //return new ResponseEntity(customActivityService.deleteConfigById(id), HttpStatus.OK);
     }
 
 }
