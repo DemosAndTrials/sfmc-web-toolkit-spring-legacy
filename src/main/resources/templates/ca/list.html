@@ -53,13 +53,13 @@
                     <div class="slds-truncate" title="Description">Type</div>
                 </th>
                 <th scope="col" class="">
-                    <div class="slds-truncate" title="KEy">Key</div>
-                </th>
-                <th scope="col" class="">
                     <div class="slds-truncate" title="Number of steps">Number of steps</div>
                 </th>
                 <th scope="col" class="">
                     <div class="slds-truncate" title="EditUrl">Edit Url</div>
+                </th>
+                <th scope="col" class="">
+                    <div class="slds-truncate" title="Key">Key</div>
                 </th>
                 <th scope="col" class="">
                     <div class="slds-truncate" title="EndpointUrl">Endpoint Url</div>
@@ -96,19 +96,19 @@
                 <td data-label="Description" class="">
                     <div class="slds-truncate" th:text="${config.Type}">Type</div>
                 </td>
-                <td data-label="Key" class="">
-                    <div class="slds-truncate" title="EndpointUrl">
-                        <a th:id="@{'copyToClipboardKey_' + ${config.Id}}" th:text="${config.Key}"
-                           th:data="${config.Key}" target="_blank">Copy</a>
-                    </div>
-
-                </td>
                 <td data-label="NumSteps" class="">
                     <div class="slds-truncate" th:text="${config.Steps.size()}">1</div>
                 </td>
                 <td data-label="EditUrl" class="">
                     <div class="slds-truncate" title="EditUrl"><a th:href="${config.EditUrl}" target="_blank">Open</a>
                     </div>
+                </td>
+                <td data-label="Key" class="">
+                    <div class="slds-truncate" title="EndpointUrl">
+                        <a th:id="@{'copyToClipboardKey_' + ${config.Id}}" th:text="${config.Key}"
+                           th:data="${config.Key}" target="_blank">Copy</a>
+                    </div>
+
                 </td>
                 <td data-label="EndpointUrl" class="">
                     <div class="slds-truncate" title="EndpointUrl">
