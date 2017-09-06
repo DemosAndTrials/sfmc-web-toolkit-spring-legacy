@@ -44,24 +44,25 @@ public class CustomActivityService {
     }
 
     /**
-     * @param type
+     * @param id
      * @return
      */
-    public String executeActivity(String type) throws Exception {
+    public String executeActivity(String id) throws Exception {
         try {
-            ConfigType cType = ConfigType.valueOf(type.toUpperCase());
+            CustomActivityConfig config = getConfigById(id);
+            ConfigType cType = ConfigType.valueOf(config.getType().toUpperCase());
             switch (cType) {
                 case REST:
                     return "OK";
                 case RESTDECISION:
                     return customActivityRepository.getSplitResult();
                 default:
-                    throw new Exception("Unknown type: " + type);
+                    throw new Exception("Unknown type: " + config.getType());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        throw new Exception("Unknown type: " + type);
+        throw new Exception("Unknown config: " + id);
     }
 
     /**
