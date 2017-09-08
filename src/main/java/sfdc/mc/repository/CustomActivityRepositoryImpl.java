@@ -54,7 +54,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                     .add("arguments", Json.createObjectBuilder()
                             .add("execute", Json.createObjectBuilder()
                                     .add("inArguments", Json.createArrayBuilder())
-                                    .add("url", config.getEndpointUrl()+ "/execute")
+                                    .add("url", config.getEndpointUrl() + "/execute")
                                     .add("verb", "POST")
                                     .add("body", "")
                                     .add("header", "")
@@ -82,7 +82,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                             .add("configModal", Json.createObjectBuilder()
                                     .add("height", config.getEditHeight())
                                     .add("width", config.getEditWidth())
-                                    .add("url", config.getEditUrl())))
+                                    .add("url", config.getEditUrl() + "?numSteps=" + config.getSteps().size())))
                     .build();
 
             String result = value.toString();
@@ -126,7 +126,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                     .add("arguments", Json.createObjectBuilder()
                             .add("execute", Json.createObjectBuilder()
                                     .add("inArguments", Json.createArrayBuilder())
-                                    .add("url", config.getEndpointUrl()+ "/execute")
+                                    .add("url", config.getEndpointUrl() + "/execute")
                                     .add("verb", "POST")
                                     .add("body", "")
                                     .add("header", "")
@@ -161,7 +161,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                             .add("runningHover", Json.createObjectBuilder()
                                     .add("url", "https://sfmc-examples.herokuapp.com/ca/ui/hover")))
                     .add("edit", Json.createObjectBuilder()
-                            .add("url", config.getEditUrl())
+                            .add("url", config.getEditUrl() + "?numSteps=" + config.getSteps().size())
                             .add("height", config.getEditHeight())
                             .add("width", config.getEditWidth()))
                     .build();

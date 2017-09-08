@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sfdc.mc.model.CustomActivityConfig;
 import sfdc.mc.service.CustomActivityService;
-import sfdc.mc.util.ConfigConstants;
 
 import javax.validation.Valid;
 
@@ -33,15 +32,11 @@ public class CustomActivityController {
      * Custom Activity UI
      * Endpoint for the UI displayed to marketers while configuring this activity.
      *
-     * @param model
      * @return
      */
     @RequestMapping(value = {"ui", "ui/edit"})
-    public String editModal(Model model) {
-
-        String caNumSteps = System.getenv(ConfigConstants.CA_NUM_STEPS) != null ? System.getenv(ConfigConstants.CA_NUM_STEPS) : "1";
-        System.out.println("*** Number of steps: " + caNumSteps);
-        model.addAttribute("numSteps", caNumSteps);
+    public String editModal(@RequestParam(value = "numSteps", defaultValue = "0") String numSteps) {
+        System.out.println("*** UI with " + numSteps + "steps ***");
         return "ca/ui/editModal";
     }
 
@@ -73,16 +68,33 @@ public class CustomActivityController {
 
     /**
      * execute - The API calls this method for each contact processed by the journey.
+     * example of request's body:
+     * {
+     * "inArguments":
+     * [
+     * {"input-id-01": ""},
+     * "input-id-02": ""{},
+     * {"select-01": "Option One"}
+     * "activityObjectID": "5d88fd34-ba45-42ef-abda-d4a1f5830171",
+     * ],
+     * "journeyId": "8baa72eb-cc91-4c19-b053-e869a5bd5e42",
+     * "activityId": "5d88fd34-ba45-42ef-abda-d4a1f5830171",
+     * "definitionInstanceId": "45e3ec68-7b70-4e0d-9c13-218344f90fcb",
+     * "activityInstanceId": "b8f5640b-ecbe-411e-a143-29d21a89159a",
+     * "keyValue": "matrostik@gmail.com",
+     * "mode": 0
+     * }
      *
      * @param json
      * @return
      */
     @RequestMapping(value = "{id}/execute", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity execute(@PathVariable String id, @RequestBody String json) {
-        System.out.println("*** execute notification: " + id + "  data: " + json);
+        System.out.println("*** execute activity: " + id + "  data: " + json);
         String result = null;
         try {
             result = customActivityService.executeActivity(id);
+            System.out.println("*** execute activity: " + id + "  result: " + result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,7 +105,7 @@ public class CustomActivityController {
     /**
      * save - Notification is sent to this endpoint when a user saves the interaction (optional).
      * called on journey activation
-     * example of request's body
+     * example of request's body:
      * {
      * "activityObjectID": "770222dc-a0ca-4024-836a-9644dd26f848",
      * "interactionId": "2fa18520-ec47-4db1-a5ec-6cbedae20762",
@@ -107,14 +119,14 @@ public class CustomActivityController {
      */
     @RequestMapping(value = "{id}/save", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity save(@PathVariable String id, @RequestBody String json) {
-        System.out.println("*** save notification: " + id + "  data: " + json);
+        System.out.println("*** save activity: " + id + "  data: " + json);
         return new ResponseEntity("OK", HttpStatus.OK);
     }
 
     /**
      * publish - Notification is sent to this endpoint when a user publishes the interaction.
      * called on journey activation
-     * example of request's body
+     * example of request's body:
      * {
      * "activityObjectID": "770222dc-a0ca-4024-836a-9644dd26f848",
      * "interactionId": "2fa18520-ec47-4db1-a5ec-6cbedae20762",
@@ -128,14 +140,14 @@ public class CustomActivityController {
      */
     @RequestMapping(value = "{id}/publish", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity publish(@PathVariable String id, @RequestBody String json) {
-        System.out.println("*** publish notification: " + id + "  data: " + json);
+        System.out.println("*** publish activity: " + id + "  data: " + json);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
      * validate - Notification is sent to this endpoint when a user performs some validation
      * as part of the publishing process (optional).
-     * example of request's body
+     * example of request's body:
      * {
      * "activityObjectID": "770222dc-a0ca-4024-836a-9644dd26f848",
      * "interactionId": "2fa18520-ec47-4db1-a5ec-6cbedae20762",
@@ -148,7 +160,7 @@ public class CustomActivityController {
      */
     @RequestMapping(value = "{id}/validate", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity validate(@PathVariable String id, @RequestBody String json) {
-        System.out.println("*** validate notification: " + id + "  data: " + json);
+        System.out.println("*** validate activity: " + id + "  data: " + json);
         // TODO validation
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -161,7 +173,7 @@ public class CustomActivityController {
      */
     @RequestMapping(value = "{id}/stop", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity stop(@PathVariable String id, @RequestBody String json) {
-        System.out.println("*** stop notification: " + id + "  data: " + json);
+        System.out.println("*** stop activity: " + id + "  data: " + json);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -320,9 +332,7 @@ public class CustomActivityController {
      */
     @PostMapping(value = "/delete/{id}")
     public ResponseEntity deleteConfig(@PathVariable String id) {
-        return new ResponseEntity("OK", HttpStatus.OK);
-
-        //return new ResponseEntity(customActivityService.deleteConfigById(id), HttpStatus.OK);
+        return new ResponseEntity(customActivityService.deleteConfigById(id), HttpStatus.OK);
     }
 
 }

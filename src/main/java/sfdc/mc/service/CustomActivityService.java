@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import sfdc.mc.model.ConfigType;
 import sfdc.mc.model.CustomActivityConfig;
 import sfdc.mc.repository.CustomActivityRepository;
-import sfdc.mc.util.Helpers;
 
 /**
  * Custom Activity Service
@@ -50,10 +49,11 @@ public class CustomActivityService {
     public String executeActivity(String id) throws Exception {
         try {
             CustomActivityConfig config = getConfigById(id);
+            System.out.println("*** execute activity: " + config.toString());
             ConfigType cType = ConfigType.valueOf(config.getType().toUpperCase());
             switch (cType) {
                 case REST:
-                    return "OK";
+                    return "{\"result\":\"OK\"}";
                 case RESTDECISION:
                     return customActivityRepository.getSplitResult();
                 default:
@@ -75,10 +75,23 @@ public class CustomActivityService {
         // additional validation
         // checks and corrects endpoint url
         Boolean isNew = config.getId() == null;
-        String endpoint = config.getEndpointUrl().trim();
-        if (endpoint.endsWith("/"))
-            endpoint = Helpers.removeLastChar(config.getEndpointUrl());
-        config.setEndpointUrl(endpoint);
+
+//        String endpoint = config.getEndpointUrl().trim();
+//        if (endpoint.endsWith("/"))
+//            endpoint = Helpers.removeLastChar(config.getEndpointUrl());
+//        config.setEndpointUrl(endpoint);
+
+        // add number of step to ui url
+//        String editUrl = config.getEditUrl().trim();
+//        int idx = editUrl.indexOf("?numSteps=");
+//        if (idx != -1)
+//            editUrl = editUrl.substring(0, idx);
+//
+//        if (!editUrl.contains("numSteps"))
+//            editUrl += "?numSteps=" + config.getSteps().size();
+//        config.setEditUrl(editUrl);
+
+        // save
         CustomActivityConfig savedConfig = customActivityRepository.save(config);
         // update with id
         if (isNew) {
