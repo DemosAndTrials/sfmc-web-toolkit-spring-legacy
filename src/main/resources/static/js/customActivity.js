@@ -20,8 +20,8 @@ define(['postmonger'], function(Postmonger) {
 
     // get the # of steps
 	// get it from hidden field
-    var numSteps = $('#numSteps').val();
-    //var numSteps = getUrlParameter('numSteps');
+    //var numSteps = $('#numSteps').val();
+    var numSteps = getUrlParameter('numSteps');
     // do some error checking on the inbound num steps
     console.log("numSteps: " + numSteps);
 
@@ -226,7 +226,11 @@ define(['postmonger'], function(Postmonger) {
         );
     }
 
-    // TODO ???
+    /**
+     * Get parameter
+     * @param name
+     * @returns {string}
+     */
     function getUrlParameter(name) {
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
