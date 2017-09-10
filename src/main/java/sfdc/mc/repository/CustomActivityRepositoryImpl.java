@@ -82,7 +82,11 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                             .add("configModal", Json.createObjectBuilder()
                                     .add("height", config.getEditHeight())
                                     .add("width", config.getEditWidth())
-                                    .add("url", config.getEditUrl() + "?numSteps=" + config.getSteps().size())))
+                                    .add("url", config.getEditUrl() + "?numSteps=" + config.getSteps().size()))
+                            .add("runningModal", Json.createObjectBuilder()
+                                    .add("url", config.getEndpointUrl() + "/ui/modal"))
+                            .add("runningHover", Json.createObjectBuilder()
+                                    .add("url", config.getEndpointUrl() + "/ui/hover")))
                     .build();
 
             String result = value.toString();
@@ -157,9 +161,9 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                     // (configuration modal, running mode hover, running mode details modal).
                     .add("userInterfaces", Json.createObjectBuilder()
                             .add("runningModal", Json.createObjectBuilder()
-                                    .add("url", "https://sfmc-examples.herokuapp.com/ca/ui/modal"))
+                                    .add("url", config.getEndpointUrl() + "/ui/modal"))
                             .add("runningHover", Json.createObjectBuilder()
-                                    .add("url", "https://sfmc-examples.herokuapp.com/ca/ui/hover")))
+                                    .add("url", config.getEndpointUrl() + "/ui/hover")))
                     .add("edit", Json.createObjectBuilder()
                             .add("url", config.getEditUrl() + "?numSteps=" + config.getSteps().size())
                             .add("height", config.getEditHeight())
@@ -219,7 +223,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
     public String getSplitResult() {
         // TODO add decision logic
         JsonObject value = Json.createObjectBuilder()
-                .add("branchResult", "path_2_key")
+                .add("branchResult", "key_path_2")
                 .build();
         String result = value.toString();
         return result;

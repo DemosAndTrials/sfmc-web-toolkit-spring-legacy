@@ -97,6 +97,9 @@ public class CustomActivityService {
         if (isNew) {
             Integer id = savedConfig.getId();
             savedConfig.setEndpointUrl(savedConfig.getEndpointUrl() + "/" + id.toString());
+            if(savedConfig.getEditUrl().contains("ca/ui"))
+                savedConfig.setEditUrl(savedConfig.getEndpointUrl() + "/ui/edit");
+
             savedConfig = customActivityRepository.save(savedConfig);
         }
         return savedConfig;

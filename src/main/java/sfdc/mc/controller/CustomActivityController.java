@@ -34,9 +34,9 @@ public class CustomActivityController {
      *
      * @return
      */
-    @RequestMapping(value = {"ui", "ui/edit"})
-    public String editModal(@RequestParam(value = "numSteps", defaultValue = "0") String numSteps) {
-        System.out.println("*** UI with " + numSteps + "steps ***");
+    @RequestMapping(value = {"{id}/ui", "{id}/ui/edit", "{id}/ui/config"})
+    public String editModal(@PathVariable String id, @RequestParam(value = "numSteps", defaultValue = "0") String numSteps) {
+        System.out.println("*** UI for: " + id + " with " + numSteps + " steps ***");
         return "ca/ui/editModal";
     }
 
@@ -45,9 +45,9 @@ public class CustomActivityController {
      *
      * @return
      */
-    @RequestMapping(value = "ui/hover")
-    public String runningHover() {
-        System.out.println("*** running hover ***");
+    @RequestMapping(value = "{id}/ui/hover")
+    public String runningHover(@PathVariable String id) {
+        System.out.println("*** running hover: " + id + " ***");
         return "ca/ui/runningHover";
     }
 
@@ -56,9 +56,9 @@ public class CustomActivityController {
      *
      * @return
      */
-    @RequestMapping(value = "ui/modal")
-    public String runningModal() {
-        System.out.println("*** running modal ***");
+    @RequestMapping(value = "{id}/ui/modal")
+    public String runningModal(@PathVariable String id) {
+        System.out.println("*** running modal: " + id + " ***");
         return "ca/ui/runningModal";
     }
 
