@@ -173,8 +173,8 @@ public class CustomActivityConfig {
         this.setEditWidth(800);
         this.Steps.add(new CustomActivityStep("Step 1", "step_1"));
         if (!host.isEmpty()) {
-            this.EndpointUrl = host + "/ca/";
-            this.EditUrl = host + "/ca/ui/";
+            this.EndpointUrl = host + "/ca";
+            this.EditUrl = host + "/ca/ui";
             this.BigImageUrl = host + "/images/ca/icon.png";
             this.SmallImageUrl= host + "/images/ca/icon_small.png";
         }
