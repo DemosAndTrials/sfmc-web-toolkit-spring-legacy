@@ -58,10 +58,20 @@ public class ApiController {
         return "api/sdk/de-list";
     }
 
+    /**
+     * Data Extension details
+     * TODO Column's names order doesn't match records columns!!!
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping(value = "/sdk/de-details/{id}")
     public String deDetails(@PathVariable String id, Model model) {
         System.out.println("*** de details: " + id + " ***");
-        model.addAttribute("data_extensions", apiService.GetDataExtensionDetails(id));
+        ETDataExtension ext = apiService.GetDataExtensionDetails(id);
+        model.addAttribute("ext", ext);
+        List<ETDataExtensionRow> rows = apiService.GetDataExtensionRecordsByKey(ext.getKey());
+        model.addAttribute("records", rows);
         return "api/sdk/de-details";
     }
 

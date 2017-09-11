@@ -13,39 +13,72 @@
     <div class="slds-shrink-none">
         <div class="slds-page-header"><h2 class="slds-text-heading--medium">Data Extension Details</h2></div>
     </div>
-
+    <!--style="border: 1px solid black;"-->
     <div class="slds-box">
-        details here
+        <div class="slds-grid slds-grid_vertical-align-start">
+            <div class="slds-size_1-of-2" >
+                <dl class="slds-list_horizontal slds-wrap">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Name" >Name:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="Name" th:text="${ext.Name}">Name</dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Key">EXTERNAL KEY:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="Key" th:text="${ext.Key}">Key</dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Created Date">Created Date:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="Created Date" th:text="${#dates.format(ext.CreatedDate, 'dd MMMM yyyy HH:mm')}">Day</dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Modified Date">Modified Date:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="Modified Date" th:text="${#dates.format(ext.ModifiedDate, 'dd MMMM yyyy HH:mm')}">Day</dd>
+                </dl>
+            </div>
+            <div class="slds-size_1-of-2">
+                <dl class="slds-list_horizontal slds-wrap">
+                    <dt class="slds-item_label slds-text-color_weak" title="USED FOR SENDING">USED FOR SENDING:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="USED FOR SENDING">
+                        <div class="slds-truncate" th:if="${ext.isSendable}">Yes</div>
+                        <div class="slds-truncate" th:unless="${ext.isSendable}">No</div>
+                    </dd>
+                    <dt class="slds-item_label slds-text-color_weak" title="USED FOR TESTING">USED FOR TESTING:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="USED FOR TESTING">
+                        <div class="slds-truncate" th:if="${ext.isTestable}">Yes</div>
+                        <div class="slds-truncate" th:unless="${ext.isTestable}">No</div>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
     </div>
 
     <table class="slds-table slds-table_bordered slds-table_striped">
         <thead>
         <tr class="slds-text-title_caps">
-            <th scope="col" class="">
-                <div class="slds-truncate" title="Id">Name</div>
+
+            <th scope="col" class="" th:each="col : ${ext.Columns}" th:id="@{'extColumnName_' + ${col.Id}}">
+                <div class="slds-truncate" th:title="${col.Name}" th:text="${col.Name}">Name</div>
             </th>
-            <th scope="col" class="">
-                <div class="slds-truncate" title="Id">External Key</div>
-            </th>
-            <th scope="col" class="">
-                <div class="slds-truncate" title="Name">Description</div>
-            </th>
-            <th scope="col" class="">
-                <div class="slds-truncate" title="Description">Sendable</div>
-            </th>
-            <th scope="col" class="">
-                <div class="slds-truncate" title="Description">Used For Testing</div>
-            </th>
-            <th scope="col" class="">
-                <div class="slds-truncate" title="Description">Folder</div>
-            </th>
-            <th scope="col" class="">
-                <div class="slds-truncate" title="Number of steps">Actions</div>
-            </th>
+            <!--<th scope="col" class="">-->
+                <!--<div class="slds-truncate" title="Id">External Key</div>-->
+            <!--</th>-->
+            <!--<th scope="col" class="">-->
+                <!--<div class="slds-truncate" title="Name">Description</div>-->
+            <!--</th>-->
+            <!--<th scope="col" class="">-->
+                <!--<div class="slds-truncate" title="Description">Sendable</div>-->
+            <!--</th>-->
+            <!--<th scope="col" class="">-->
+                <!--<div class="slds-truncate" title="Description">Used For Testing</div>-->
+            <!--</th>-->
+            <!--<th scope="col" class="">-->
+                <!--<div class="slds-truncate" title="Description">Folder</div>-->
+            <!--</th>-->
+            <!--<th scope="col" class="">-->
+                <!--<div class="slds-truncate" title="Number of steps">Actions</div>-->
+            <!--</th>-->
         </tr>
         </thead>
         <tbody>
-
+        <tr th:each="row : ${records}" th:id="@{'extRecord_' + ${row.Id}}">
+            <td data-label="Key" class="" th:each="col : ${row.columns}" th:id="@{'extColumnValue_' + ${col.Key}}">
+                <div class="slds-truncate" th:text="${col.Value}">Value</div>
+            </td>
+        </tr>
         </tbody>
     </table>
 

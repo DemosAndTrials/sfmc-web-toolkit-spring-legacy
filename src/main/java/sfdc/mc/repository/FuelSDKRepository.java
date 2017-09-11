@@ -27,9 +27,11 @@ public class FuelSDKRepository {
      */
     private void InitSDKClient() {
         ETConfiguration configuration = new ETConfiguration();
-        // TODO move configuration out
-        configuration.set("clientId", "i7o8igw9j38ncdnhwjnvlajv");
-        configuration.set("clientSecret", "06sChaYgzOIw9tuk5Y2LfMlU");
+        // get config from heroku
+        String clientId = System.getenv("CLIENT_ID");
+        String clientSecret = System.getenv("CLIENT_SECRET");
+        configuration.set("clientId", clientId);
+        configuration.set("clientSecret", clientSecret);
 
         try {
             client = new ETClient(configuration);
@@ -73,28 +75,30 @@ public class FuelSDKRepository {
         return null;
     }
 
+    /**
+     * Get data extension by id
+     *
+     * @param id
+     * @return
+     */
     public ETDataExtension GetDataExtensionDetails(String id) {
 
         EnsureClientInitialization();
-
-        ETExpression expression = new ETExpression();
-        expression.setProperty("id");
-        expression.setOperator(ETExpression.Operator.EQUALS);
-        expression.setValue(id);
-
-        ETFilter filter = new ETFilter();
-        filter.setExpression(expression);
-        ETResponse<ETDataExtension> response = null;
         try {
-            response = client.retrieve(ETDataExtension.class, filter);
-            if (response.getObjects().size() > 0)
-                return response.getObjects().get(0);
-//            for (ETDataExtension ext : response.getObjects()) {
-//                System.out.println(ext);
-//                List<ETDataExtensionColumn> columns = ext.retrieveColumns();
-//                for (ETDataExtensionColumn col : columns)
-//                    System.out.println(col);
-//            }
+            ETExpression expression = new ETExpression();
+            expression.setProperty("id");
+            expression.setOperator(ETExpression.Operator.EQUALS);
+            expression.setValue(id);
+
+            ETFilter filter = new ETFilter();
+            filter.setExpression(expression);
+
+            ETResponse<ETDataExtension> response = client.retrieve(ETDataExtension.class, filter);
+            if (response.getObjects().size() > 0) {
+                ETDataExtension ext = response.getObjects().get(0);
+                ext.retrieveColumns();
+                return ext;
+            }
         } catch (ETSdkException e) {
             e.printStackTrace();
         }
@@ -123,23 +127,37 @@ public class FuelSDKRepository {
 //        }
 //    }
 
-    public void GetDataExtensionData(String key) {
+    /**
+     * Get records by data extension key
+     *
+     * @param key
+     */
+    public List<ETDataExtensionRow> GetDataExtensionRecordsByKey(String key) {
         EnsureClientInitialization();
-        // expression
-        ETExpression expression = new ETExpression();
-        expression.setProperty("CustomerKey");
-        expression.setOperator(ETExpression.Operator.EQUALS);
-        expression.setValue(key);
-        // filter
-        ETFilter filter = new ETFilter();
-        filter.setExpression(expression);
+//        // expression
+//        ETExpression expression = new ETExpression();
+//        expression.setProperty("CustomerKey");
+//        expression.setOperator(ETExpression.Operator.EQUALS);
+//        expression.setValue(key);
+//        // filter
+//        ETFilter filter = new ETFilter();
+//        filter.setExpression(expression);
 
+        return GetDataExtensionRecords("key=" + key, new ETFilter());
+    }
+
+    private List<ETDataExtensionRow> GetDataExtensionRecords(String dataExtension, ETFilter filter) {
         try {
-            ETResponse<ETDataExtensionRow> res = ETDataExtension.select(client, "key=" + key, new ETFilter());
-            for (ETDataExtensionRow row : res.getObjects())
+            List<ETDataExtensionRow> records = new ArrayList<>();
+            ETResponse<ETDataExtensionRow> res = ETDataExtension.select(client, dataExtension, filter);
+            for (ETDataExtensionRow row : res.getObjects()) {
                 System.out.println(row);
+                records.add(row);
+            }
+            return records;
         } catch (ETSdkException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
