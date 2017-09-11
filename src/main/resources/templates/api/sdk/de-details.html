@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SDK</title>
+    <div th:replace="fragments/header :: header-css" th:remove="tag"/>
+</head>
+<body>
+
+<section class="stage slds-grid slds-grid--vertical slds-nowrap">
+
+    <div th:replace="fragments/header :: header">.</div>
+
+    <div class="slds-shrink-none">
+        <div class="slds-page-header"><h2 class="slds-text-heading--medium">Data Extension Details</h2></div>
+    </div>
+
+    <div class="slds-box">
+        details here
+    </div>
+
+    <table class="slds-table slds-table_bordered slds-table_striped">
+        <thead>
+        <tr class="slds-text-title_caps">
+            <th scope="col" class="">
+                <div class="slds-truncate" title="Id">Name</div>
+            </th>
+            <th scope="col" class="">
+                <div class="slds-truncate" title="Id">External Key</div>
+            </th>
+            <th scope="col" class="">
+                <div class="slds-truncate" title="Name">Description</div>
+            </th>
+            <th scope="col" class="">
+                <div class="slds-truncate" title="Description">Sendable</div>
+            </th>
+            <th scope="col" class="">
+                <div class="slds-truncate" title="Description">Used For Testing</div>
+            </th>
+            <th scope="col" class="">
+                <div class="slds-truncate" title="Description">Folder</div>
+            </th>
+            <th scope="col" class="">
+                <div class="slds-truncate" title="Number of steps">Actions</div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</section>
+
+<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+
+</body>
+</html>
