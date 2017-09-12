@@ -20,25 +20,25 @@
             <thead>
             <tr class="slds-text-title_caps">
                 <th scope="col" class="">
-                    <div class="slds-truncate" title="Id">Name</div>
+                    <div class="slds-truncate" title="Name">Name</div>
                 </th>
                 <th scope="col" class="">
-                    <div class="slds-truncate" title="Id">External Key</div>
+                    <div class="slds-truncate" title="Key">External Key</div>
                 </th>
                 <th scope="col" class="">
-                    <div class="slds-truncate" title="Name">Description</div>
+                    <div class="slds-truncate" title="Description">Description</div>
                 </th>
                 <th scope="col" class="">
-                    <div class="slds-truncate" title="Description">Sendable</div>
+                    <div class="slds-truncate" title="Sendable">Sendable</div>
                 </th>
                 <th scope="col" class="">
-                    <div class="slds-truncate" title="Description">Used For Testing</div>
+                    <div class="slds-truncate" title="Used For Testing">Used For Testing</div>
                 </th>
                 <th scope="col" class="">
-                    <div class="slds-truncate" title="Description">Folder</div>
+                    <div class="slds-truncate" title="Folder">Folder</div>
                 </th>
                 <th scope="col" class="">
-                    <div class="slds-truncate" title="Number of steps">Actions</div>
+                    <div class="slds-truncate" title="Actions">Actions</div>
                 </th>
             </tr>
             </thead>
@@ -66,7 +66,7 @@
                 <td data-label="FolderId" class="">
                     <div class="slds-truncate" th:text="${ext.FolderId}">Testable</div>
                 </td>
-                <td data-label="Delete" class="">
+                <td data-label="Actions" class="">
 
                     <button th:id="@{'copyBtn_' + ${ext.Id}}" th:name="${ext.Id}"
                             class="slds-button slds-button_icon"

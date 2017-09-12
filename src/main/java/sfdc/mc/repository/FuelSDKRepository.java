@@ -1,11 +1,9 @@
 package sfdc.mc.repository;
 
 import com.exacttarget.fuelsdk.*;
-import com.exacttarget.fuelsdk.internal.DataExtension;
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -97,6 +95,7 @@ public class FuelSDKRepository {
             if (response.getObjects().size() > 0) {
                 ETDataExtension ext = response.getObjects().get(0);
                 ext.retrieveColumns();
+                ext.getColumns().sort(Comparator.comparing(o -> o.getCreatedDate()));
                 return ext;
             }
         } catch (ETSdkException e) {

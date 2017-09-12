@@ -60,7 +60,7 @@ public class ApiController {
 
     /**
      * Data Extension details
-     * TODO Column's names order doesn't match records columns!!!
+     *
      * @param id
      * @param model
      * @return
