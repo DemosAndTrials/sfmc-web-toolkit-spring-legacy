@@ -16,9 +16,9 @@ public class FuelSDKRepository {
 
     private ETClient client;
 
-    public FuelSDKRepository() {
-        InitSDKClient();
-    }
+//    public FuelSDKRepository() {
+//        InitSDKClient();
+//    }
 
     /**
      * Instantiates an sdk client
@@ -26,10 +26,8 @@ public class FuelSDKRepository {
     private void InitSDKClient() {
         ETConfiguration configuration = new ETConfiguration();
         // get config from heroku
-        String clientId = System.getenv("CLIENT_ID");
-        String clientSecret = System.getenv("CLIENT_SECRET");
-        configuration.set("clientId", clientId);
-        configuration.set("clientSecret", clientSecret);
+        configuration.set("clientId",  System.getenv("CLIENT_ID"));
+        configuration.set("clientSecret", System.getenv("CLIENT_SECRET"));
 
         try {
             client = new ETClient(configuration);

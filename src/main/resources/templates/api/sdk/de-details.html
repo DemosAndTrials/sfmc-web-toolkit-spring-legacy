@@ -68,7 +68,9 @@
         <!--th:id="@{'extRecord_' + ${row.Id}}"-->
         <tr th:each="row,iterStat : ${records}">
             <td data-label="Key" class="" th:each="col : ${ext.columns}" th:id="@{'extColumnValue_' + ${col.Key}}">
+
                 <div class="slds-truncate" th:text="${row.columns[__${col.Name}__]}">Value</div>
+
             </td>
             <!--Actions-->
             <td data-label="Actions" class="">

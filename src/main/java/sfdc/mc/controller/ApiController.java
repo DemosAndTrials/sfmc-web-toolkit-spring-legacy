@@ -1,7 +1,6 @@
 package sfdc.mc.controller;
 
 import com.exacttarget.fuelsdk.*;
-import com.exacttarget.fuelsdk.internal.DataExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,14 +30,12 @@ public class ApiController {
      */
     @GetMapping(value = {"/", "/index"})
     public String index() {
-        //apiService.GetDataExtensionData("23AC1A36-5E45-4FE5-BF4B-7AFBE434C1AB");
-        //apiService.GetDataExtensionDetails("23AC1A36-5E45-4FE5-BF4B-7AFBE434C1AB");
         apiService.GetDataExtensionsDetails();
         return "api/index";
     }
 
     /**
-     * SDK page
+     * SDK index page
      *
      * @return
      */
@@ -74,6 +71,7 @@ public class ApiController {
         model.addAttribute("records", rows);
         return "api/sdk/de-details";
     }
+
 
     /**
      * Index page - Getting Started
