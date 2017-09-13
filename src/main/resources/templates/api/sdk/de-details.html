@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SDK</title>
+    <div th:replace="fragments/header :: header-css" th:remove="tag"/>
+</head>
+<body>
+
+<section class="stage slds-grid slds-grid--vertical slds-nowrap">
+
+    <div th:replace="fragments/header :: header">.</div>
+
+    <div class="slds-shrink-none">
+        <div class="slds-page-header"><h2 class="slds-text-heading--medium">Data Extension Details</h2></div>
+    </div>
+    <!--style="border: 1px solid black;"-->
+    <div class="slds-box">
+        <div class="slds-grid slds-grid_vertical-align-start">
+            <div class="slds-size_1-of-2">
+                <dl class="slds-list_horizontal slds-wrap">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Name">Name:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="Name" th:text="${ext.Name}">Name</dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Key">EXTERNAL KEY:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="Key" th:text="${ext.Key}">Key</dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Created Date">Created Date:
+                    </dt>
+                    <dd class="slds-item_detail slds-truncate" title="Created Date"
+                        th:text="${#dates.format(ext.CreatedDate, 'dd MMMM yyyy HH:mm')}">Day
+                    </dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Modified Date">Modified
+                        Date:
+                    </dt>
+                    <dd class="slds-item_detail slds-truncate" title="Modified Date"
+                        th:text="${#dates.format(ext.ModifiedDate, 'dd MMMM yyyy HH:mm')}">Day
+                    </dd>
+                </dl>
+            </div>
+            <div class="slds-size_1-of-2">
+                <dl class="slds-list_horizontal slds-wrap">
+                    <dt class="slds-item_label slds-text-color_weak" title="USED FOR SENDING">USED FOR SENDING:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="USED FOR SENDING">
+                        <div class="slds-truncate" th:if="${ext.isSendable}">Yes</div>
+                        <div class="slds-truncate" th:unless="${ext.isSendable}">No</div>
+                    </dd>
+                    <dt class="slds-item_label slds-text-color_weak" title="USED FOR TESTING">USED FOR TESTING:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="USED FOR TESTING">
+                        <div class="slds-truncate" th:if="${ext.isTestable}">Yes</div>
+                        <div class="slds-truncate" th:unless="${ext.isTestable}">No</div>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+    </div>
+
+    <table class="slds-table slds-table_bordered slds-table_striped">
+        <thead>
+        <tr class="slds-text-title_caps">
+            <th scope="col" class="" th:each="col : ${ext.Columns}">
+                <div class="slds-truncate" th:title="${col.Name}" th:text="${col.Name}">Name</div>
+            </th>
+            <th scope="col" class="">
+                <div class="slds-truncate" title="Actions">Actions</div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--th:id="@{'extRecord_' + ${row.Id}}"-->
+        <tr th:each="row,iterStat : ${records}">
+            <td data-label="Key" class="" th:each="col : ${ext.columns}" th:id="@{'extColumnValue_' + ${col.Key}}">
+
+                <div class="slds-truncate" th:text="${row.columns[__${col.Name}__]}">Value</div>
+
+            </td>
+            <!--Actions-->
+            <td data-label="Actions" class="">
+
+                <button th:id="@{'copyBtn_' + ${iterStat.index}}" th:name="${iterStat.index}"
+                        class="slds-button slds-button_icon"
+                        aria-pressed="false" title="Copy">
+                    <svg class="slds-button__icon slds-icon-text-default" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                             xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+                <button th:id="@{'deleteBtn_' + ${iterStat.index}}" th:name="${iterStat.index}"
+                        class="slds-button slds-button_icon"
+                        aria-pressed="false" title="Delete">
+                    <svg class="slds-button__icon slds-icon-text-error" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                             xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</section>
+
+<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+
+</body>
+</html>
