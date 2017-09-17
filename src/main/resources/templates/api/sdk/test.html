@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SDK</title>
+    <div th:replace="fragments/header :: header-css" th:remove="tag"/>
+</head>
+<body>
+
+<section class="stage slds-grid slds-grid--vertical slds-nowrap">
+
+    <div th:replace="fragments/header :: header">.</div>
+
+    <div class="slds-shrink-none">
+        <div class="slds-page-header"><h2 class="slds-text-heading--medium">Data Extension Details</h2></div>
+    </div>
+    <!--style="border: 1px solid black;"-->
+    <div class="slds-box">
+        <div class="slds-grid slds-grid_vertical-align-start">
+            <div class="slds-size_1-of-2">
+                <dl class="slds-list_horizontal slds-wrap">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Name">Name:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="Name">CustomerSignUpEvent</dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Key">EXTERNAL KEY:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="Key">10A5AE1A-7A12-4E69-8D86-B74ED725F407</dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Created Date">Created Date:
+                    </dt>
+                    <dd class="slds-item_detail slds-truncate" title="Created Date">30 August 2017 04:39
+                    </dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Modified Date">Modified
+                        Date:
+                    </dt>
+                    <dd class="slds-item_detail slds-truncate" title="Modified Date">30 August 2017 04:39
+                    </dd>
+                </dl>
+            </div>
+            <div class="slds-size_1-of-2">
+                <dl class="slds-list_horizontal slds-wrap">
+                    <dt class="slds-item_label slds-text-color_weak" title="USED FOR SENDING">USED FOR SENDING:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="USED FOR SENDING">
+                        <div class="slds-truncate">Yes</div>
+                        <!--<div class="slds-truncate" th:unless="${ext.isSendable}">No</div>-->
+                    </dd>
+                    <dt class="slds-item_label slds-text-color_weak" title="USED FOR TESTING">USED FOR TESTING:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="USED FOR TESTING">
+                        <!--<div class="slds-truncate" th:if="${ext.isTestable}">Yes</div>-->
+                        <div class="slds-truncate">No</div>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <a class="slds-button slds-button_brand slds-button_neutral slds-not-selected slds-m-around_medium slds-float_right"
+           aria-live="assertive" id="addRecordBtn">
+                                <span class="slds-text-not-selected">
+                                    <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
+                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                          xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#remove"></use>
+                                </svg>Add Record</span>
+        </a>
+    </div>
+
+    <table id="deRecords" class="slds-table slds-table_bordered slds-table_striped">
+        <thead>
+        <tr class="slds-text-title_caps">
+            <th class="" scope="col">
+                <div class="slds-truncate" title="subscriberkey">subscriberkey</div>
+            </th>
+            <th class="" scope="col">
+                <div class="slds-truncate" title="emailaddress">emailaddress</div>
+            </th>
+            <th class="" scope="col">
+                <div class="slds-truncate" title="date">date</div>
+            </th>
+            <th class="" scope="col">
+                <div class="slds-truncate" title="Actions">Actions</div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--th:id="@{'extRecord_' + ${row.Id}}"-->
+        <span id="stepPlaceholder"/>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[10A5AE1A-7A12-4E69-8D86-B74ED725F407].[SubscriberKey]">
+
+                <div class="slds-truncate">matrostik@gmail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[10A5AE1A-7A12-4E69-8D86-B74ED725F407].[EmailAddress]">
+
+                <div class="slds-truncate">matrostik@gmail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[10A5AE1A-7A12-4E69-8D86-B74ED725F407].[Date]">
+
+                <div class="slds-truncate">9/6/2017 1:19:05 PM</div>
+
+            </td>
+            <!--Actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_0" name="0">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_0"
+                        name="0">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue0_[10A5AE1A-7A12-4E69-8D86-B74ED725F407].[SubscriberKey]">
+
+                <div class="slds-truncate">matrostik@hotmail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue0_[10A5AE1A-7A12-4E69-8D86-B74ED725F407].[EmailAddress]">
+
+                <div class="slds-truncate">matrostik@hotmail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue0_[10A5AE1A-7A12-4E69-8D86-B74ED725F407].[Date]">
+
+                <div class="slds-truncate">9/6/2017 1:19:06 PM</div>
+
+            </td>
+            <!--Actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_1" name="1">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_1"
+                        name="1">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue1_[10A5AE1A-7A12-4E69-8D86-B74ED725F407].[SubscriberKey]">
+
+                <div class="slds-truncate">matrostik1@gmail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue1_[10A5AE1A-7A12-4E69-8D86-B74ED725F407].[EmailAddress]">
+
+                <div class="slds-truncate">matrostik1@gmail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue1_[10A5AE1A-7A12-4E69-8D86-B74ED725F407].[Date]">
+
+                <div class="slds-truncate">9/17/2017 5:07:45 AM</div>
+
+            </td>
+            <!--Actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_2" name="2">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_2"
+                        name="2">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</section>
+
+<table id="templateNewRow" style="display: none">
+    <tr id="tempRow" class="row">
+        <td class="" data-label="Key" id="rowColumnValue_[SubscriberKey]">
+            <div class="slds-truncate">matrostik5@gmail.com</div>
+        </td>
+        <td class="" data-label="Key" id="rowColumnValue_[EmailAddress]">
+            <div class="slds-truncate">matrostik5@gmail.com</div>
+        </td>
+        <td class="" data-label="Key" id="rowColumnValue_[Date]">
+            <div class="slds-truncate">15/5/2017 2:20:00 PM</div>
+        </td>
+        <!--Actions-->
+        <td class="" data-label="Actions">
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="saveRowBtn" name="0">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                    <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                </svg>
+                <span class="slds-assistive-text">Save</span>
+            </button>
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="cancelRowBtn" name="0">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                    <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                </svg>
+                <span class="slds-assistive-text">Cancel</span>
+            </button>
+
+        </td>
+    </tr>
+</table>
+
+<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+    j$ = jQuery.noConflict();
+
+    /**
+     * Add record
+     */
+    j$('#addRecordBtn').click(function () {
+        console.log('add clicked');
+        createRowTemplate();
+//        // disable add split button
+//        if (numOfSplits == 5)
+//            j$(this).attr("disabled", "");
+//        // enable remove spit button
+//        if (numOfSplits > 2)
+//            j$('#removeSplitBtn').removeAttr('disabled');
+    });
+
+    /**
+     * Create new row template
+     */
+    function createRowTemplate() {
+        console.log('create template');
+        var temp = j$("#templateNewRow tr.row").clone();
+        console.log(temp.html());
+        //var row='<tr><td>val</td><td>val2</td></tr>';
+        //j$('#deRecords tr:first').after(temp);
+        j$(temp).prependTo("table#deRecords > tbody");
+//        var lbl = temp.find('#tempLabel');
+//        lbl.attr("id", "steps" + numOfSteps + ".label");
+//        lbl.attr("name", "steps[" + numOfSteps + "].label");
+//        lbl.val("Step " + (numOfSteps + 1));
+//        var val = temp.find('#tempValue');
+//        val.attr("id", "steps" + numOfSteps + ".key");
+//        val.attr("name", "steps[" + numOfSteps + "].key");
+//        val.val("step_" + (numOfSteps + 1));
+        //numOfSteps++;
+        //console.log(numOfSteps);
+        //then add the new code to the holding area
+    }
+
+</script>
+
+</body>
+</html>

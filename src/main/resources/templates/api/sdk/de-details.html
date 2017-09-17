@@ -52,7 +52,16 @@
         </div>
 
     </div>
-
+    <div>
+        <a class="slds-button slds-button_brand slds-button_neutral slds-not-selected slds-m-around_medium slds-float_right"
+           aria-live="assertive" id="addRecordBtn">
+                                <span class="slds-text-not-selected">
+                                    <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
+                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                          xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#remove"></use>
+                                </svg>Add Record</span>
+        </a>
+    </div>
     <table class="slds-table slds-table_bordered slds-table_striped">
         <thead>
         <tr class="slds-text-title_caps">
@@ -82,7 +91,7 @@
                         <use xmlns:xlink="http://www.w3.org/1999/xlink"
                              xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone"></use>
                     </svg>
-                    <span class="slds-assistive-text">Delete</span>
+                    <span class="slds-assistive-text">Clone</span>
                 </button>
                 <button th:id="@{'deleteBtn_' + ${iterStat.index}}" th:name="${iterStat.index}"
                         class="slds-button slds-button_icon"

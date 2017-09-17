@@ -72,6 +72,39 @@ public class ApiController {
         return "api/sdk/de-details";
     }
 
+    /**
+     * TODO FOR TESTING PURPOSE ONLY
+     * @param model
+     * @return
+     */
+    @GetMapping(value = "/sdk/test")
+    public String deTest( Model model) {
+        System.out.println("*** test ***");
+        return "api/sdk/test";
+    }
+
+    @PostMapping(value = "/sdk/create")
+    public String createRow() {
+        // save
+        ETDataExtensionRow row = new ETDataExtensionRow();
+        row.setDataExtensionKey("10A5AE1A-7A12-4E69-8D86-B74ED725F407");
+        row.setColumn("SUBSCRIBERKEY","matrostik1@gmail.com");
+        row.setColumn("EMAILADDRESS","matrostik1@gmail.com");
+
+        apiService.Create(row);
+        return "OK";
+    }
+
+    @PostMapping(value = "/sdk/delete")
+    public String deleteRow() {
+        // save
+        ETDataExtensionRow row = new ETDataExtensionRow();
+        row.setDataExtensionKey("10A5AE1A-7A12-4E69-8D86-B74ED725F407");
+        row.setColumn("SUBSCRIBERKEY","matrostik1@gmail.com");
+        apiService.Delete(row);
+        return "OK";
+    }
+
 
     /**
      * Index page - Getting Started

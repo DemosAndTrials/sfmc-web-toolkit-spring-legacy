@@ -28,4 +28,12 @@ public class ApiService {
     public ETDataExtension GetDataExtensionDetails(String id) {
        return sdkRepository.GetDataExtensionDetails(id);
     }
+
+    public void Create(ETDataExtensionRow row){
+        sdkRepository.CreateDataExtensionRow(row);
+    }
+
+    public void Delete(ETDataExtensionRow row){
+        sdkRepository.DeleteDataExtensionRow(row);
+    }
 }

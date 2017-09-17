@@ -157,4 +157,24 @@ public class FuelSDKRepository {
         }
         return null;
     }
+
+    public ETDataExtensionRow CreateDataExtensionRow(ETDataExtensionRow record){
+        try {
+            ETResponse<ETDataExtensionRow> res = client.create(record);
+            return res.getObject();
+        } catch (ETSdkException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ETDataExtensionRow DeleteDataExtensionRow(ETDataExtensionRow record){
+        try {
+            ETResponse<ETDataExtensionRow> res = client.delete(record);
+            return res.getObject();
+        } catch (ETSdkException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
