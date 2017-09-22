@@ -29,8 +29,8 @@ public class ApiService {
        return sdkRepository.GetDataExtensionDetails(id);
     }
 
-    public void Create(ETDataExtensionRow row){
-        sdkRepository.CreateDataExtensionRow(row);
+    public ETDataExtensionRow Create(ETDataExtensionRow row){
+        return sdkRepository.CreateDataExtensionRow(row);
     }
 
     public void Delete(ETDataExtensionRow row){

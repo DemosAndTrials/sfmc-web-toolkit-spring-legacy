@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import sfdc.mc.service.ApiService;
 
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.System.out;
 
@@ -74,25 +75,35 @@ public class ApiController {
 
     /**
      * TODO FOR TESTING PURPOSE ONLY
+     *
      * @param model
      * @return
      */
     @GetMapping(value = "/sdk/test")
-    public String deTest( Model model) {
+    public String deTest(Model model) {
         System.out.println("*** test ***");
         return "api/sdk/test";
     }
 
-    @PostMapping(value = "/sdk/create")
-    public String createRow() {
+    /**
+     * Create new record
+     * @param key
+     * @param data
+     * @return
+     */
+    @PostMapping(value = "/sdk/create/{key}", headers = "Accept=application/json")
+    public ResponseEntity createRow(@PathVariable String key, @RequestBody Map<String, String> data) {
         // save
         ETDataExtensionRow row = new ETDataExtensionRow();
-        row.setDataExtensionKey("10A5AE1A-7A12-4E69-8D86-B74ED725F407");
-        row.setColumn("SUBSCRIBERKEY","matrostik1@gmail.com");
-        row.setColumn("EMAILADDRESS","matrostik1@gmail.com");
+        row.setDataExtensionKey(key);
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            row.setColumn(entry.getKey(), entry.getValue());
+        }
 
-        apiService.Create(row);
-        return "OK";
+        ETDataExtensionRow result = apiService.Create(row);
+        if (result != null)
+            return new ResponseEntity(result, HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(value = "/sdk/delete")
@@ -100,7 +111,7 @@ public class ApiController {
         // save
         ETDataExtensionRow row = new ETDataExtensionRow();
         row.setDataExtensionKey("10A5AE1A-7A12-4E69-8D86-B74ED725F407");
-        row.setColumn("SUBSCRIBERKEY","matrostik1@gmail.com");
+        row.setColumn("SUBSCRIBERKEY", "matrostik1@gmail.com");
         apiService.Delete(row);
         return "OK";
     }

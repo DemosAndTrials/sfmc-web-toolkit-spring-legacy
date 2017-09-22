@@ -21,7 +21,9 @@
                     <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Name">Name:</dt>
                     <dd class="slds-item_detail slds-truncate" title="Name">CustomerSignUpEvent</dd>
                     <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Key">EXTERNAL KEY:</dt>
-                    <dd class="slds-item_detail slds-truncate" title="Key">10A5AE1A-7A12-4E69-8D86-B74ED725F407</dd>
+                    <dd class="slds-item_detail slds-truncate" id="deKey" title="Key">
+                        10A5AE1A-7A12-4E69-8D86-B74ED725F407
+                    </dd>
                     <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Created Date">Created Date:
                     </dt>
                     <dd class="slds-item_detail slds-truncate" title="Created Date">30 August 2017 04:39
@@ -80,7 +82,6 @@
         </thead>
         <tbody>
         <!--th:id="@{'extRecord_' + ${row.Id}}"-->
-        <span id="stepPlaceholder"/>
         <tr>
             <td class="" data-label="Key" id="extColumnValue_[10A5AE1A-7A12-4E69-8D86-B74ED725F407].[SubscriberKey]">
 
@@ -97,7 +98,7 @@
                 <div class="slds-truncate">9/6/2017 1:19:05 PM</div>
 
             </td>
-            <!--Actions-->
+            <!--actions-->
             <td class="" data-label="Actions">
 
                 <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_0" name="0">
@@ -134,7 +135,7 @@
                 <div class="slds-truncate">9/6/2017 1:19:06 PM</div>
 
             </td>
-            <!--Actions-->
+            <!--actions-->
             <td class="" data-label="Actions">
 
                 <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_1" name="1">
@@ -157,21 +158,15 @@
         </tr>
         <tr>
             <td class="" data-label="Key" id="extColumnValue1_[10A5AE1A-7A12-4E69-8D86-B74ED725F407].[SubscriberKey]">
-
                 <div class="slds-truncate">matrostik1@gmail.com</div>
-
             </td>
             <td class="" data-label="Key" id="extColumnValue1_[10A5AE1A-7A12-4E69-8D86-B74ED725F407].[EmailAddress]">
-
                 <div class="slds-truncate">matrostik1@gmail.com</div>
-
             </td>
             <td class="" data-label="Key" id="extColumnValue1_[10A5AE1A-7A12-4E69-8D86-B74ED725F407].[Date]">
-
                 <div class="slds-truncate">9/17/2017 5:07:45 AM</div>
-
             </td>
-            <!--Actions-->
+            <!--actions-->
             <td class="" data-label="Actions">
 
                 <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_2" name="2">
@@ -199,31 +194,72 @@
 </section>
 
 <table id="templateNewRow" style="display: none">
-    <tr id="tempRow" class="row">
-        <td class="" data-label="Key" id="rowColumnValue_[SubscriberKey]">
-            <div class="slds-truncate">matrostik5@gmail.com</div>
+    <tr class="row">
+        <td class="slds-form-element" scope="col">
+            <div class="slds-form-element  slds-p-right_x-small">
+                <abbr class="slds-required" title="required">*</abbr>
+                <input class="slds-input" type="text" placeholder="subscriberkey" title="subscriberkey"
+                       name="subscriberkey" valuetype="TEXT">
+            </div>
         </td>
-        <td class="" data-label="Key" id="rowColumnValue_[EmailAddress]">
-            <div class="slds-truncate">matrostik5@gmail.com</div>
+        <td class="" scope="col">
+            <div class="slds-form-element  slds-p-right_x-small">
+                <input class="slds-input" type="text" placeholder="emailaddress" title="emailaddress"
+                       name="emailaddress" valuetype="EMAIL_ADDRESS">
+            </div>
         </td>
-        <td class="" data-label="Key" id="rowColumnValue_[Date]">
-            <div class="slds-truncate">15/5/2017 2:20:00 PM</div>
+        <td class="" scope="col">
+            <div class="slds-form-element  slds-p-right_x-small">
+                <input class="slds-input" type="text" placeholder="date" title="date" name="date" valuetype="DATE">
+            </div>
         </td>
         <!--Actions-->
         <td class="" data-label="Actions">
-            <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="saveRowBtn" name="0">
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Save" id="saveRowTempBtn" name="0">
                 <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
-                    <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone"
+                    <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#approval"
                          xmlns:xlink="http://www.w3.org/1999/xlink"></use>
                 </svg>
                 <span class="slds-assistive-text">Save</span>
             </button>
-            <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="cancelRowBtn" name="0">
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Cancel" id="cancelRowTempBtn"
+                    name="0">
                 <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
-                    <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete"
+                    <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#remove"
                          xmlns:xlink="http://www.w3.org/1999/xlink"></use>
                 </svg>
                 <span class="slds-assistive-text">Cancel</span>
+            </button>
+
+        </td>
+    </tr>
+</table>
+
+<table id="templateViewRow" style="display: none">
+    <tr class="row">
+        <td class="slds-form-element" scope="col">
+            <div class="slds-truncate" name="subscriberkey" title="subscriberkey">subscriberkey</div>
+        </td>
+        <td class="slds-form-element" scope="col">
+            <div class="slds-truncate" name="emailaddress" title="emailaddress">emailaddress</div>
+        </td>
+        <td class="slds-form-element" scope="col">
+            <div class="slds-truncate" name="date" title="date">date</div>
+        </td>
+        <!--Actions-->
+        <td class="" data-label="Actions">
+
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                    <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                </svg>
+                <span class="slds-assistive-text">Clone</span>
+            </button>
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                    <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                </svg>
+                <span class="slds-assistive-text">Delete</span>
             </button>
 
         </td>
@@ -235,42 +271,96 @@
     j$ = jQuery.noConflict();
 
     /**
-     * Add record
+     * Add new record form
      */
     j$('#addRecordBtn').click(function () {
         console.log('add clicked');
+        if (isDisabled(this))
+            return;
+        j$(this).attr("disabled", "");
         createRowTemplate();
-//        // disable add split button
-//        if (numOfSplits == 5)
-//            j$(this).attr("disabled", "");
-//        // enable remove spit button
-//        if (numOfSplits > 2)
-//            j$('#removeSplitBtn').removeAttr('disabled');
+    });
+
+    /**
+    * Cancel record creation
+    */
+    j$('#deRecords').on('click', '#cancelRowBtn', function () {
+        console.log("cancelRowBtn");
+        j$('table#deRecords > tbody tr:first').remove();
+        j$('#addRecordBtn').removeAttr('disabled');
+    });
+
+    /**
+     * Save new record
+     */
+    j$('#deRecords').on('click', '#saveRowBtn', function () {
+        console.log("saveRowBtn");
+        // get de key
+        var key = j$('#deKey').text().trim();
+        // get columns
+        var dataObject = new Map();
+        j$("#extNewRow :input.slds-input").each(function (index, element) {
+            dataObject[j$(this).attr('name')] = j$(this).val();
+        });
+        createRow(key, JSON.stringify(dataObject));
     });
 
     /**
      * Create new row template
      */
     function createRowTemplate() {
-        console.log('create template');
         var temp = j$("#templateNewRow tr.row").clone();
-        console.log(temp.html());
-        //var row='<tr><td>val</td><td>val2</td></tr>';
-        //j$('#deRecords tr:first').after(temp);
+        temp.attr("id", "extNewRow");
+        var btnSave = temp.find('#saveRowTempBtn');
+        btnSave.attr("id", "saveRowBtn");
+        var btnCancel = temp.find('#cancelRowTempBtn');
+        btnCancel.attr("id", "cancelRowBtn");
         j$(temp).prependTo("table#deRecords > tbody");
-//        var lbl = temp.find('#tempLabel');
-//        lbl.attr("id", "steps" + numOfSteps + ".label");
-//        lbl.attr("name", "steps[" + numOfSteps + "].label");
-//        lbl.val("Step " + (numOfSteps + 1));
-//        var val = temp.find('#tempValue');
-//        val.attr("id", "steps" + numOfSteps + ".key");
-//        val.attr("name", "steps[" + numOfSteps + "].key");
-//        val.val("step_" + (numOfSteps + 1));
-        //numOfSteps++;
-        //console.log(numOfSteps);
-        //then add the new code to the holding area
     }
 
+    /**
+     * Post to controller amd handle result
+     */
+    function createRow(key, dataObject) {
+        j$.ajax({
+            url: "/api/sdk/create/" + key,
+            type: 'POST',
+            data: dataObject,
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (res) {
+                console.log("it works! " + JSON.stringify(res));
+                var columns = res.columns;
+                // remove template row
+                j$('table#deRecords > tbody tr:first').remove();
+                j$('#addRecordBtn').removeAttr('disabled');
+                // add row
+                var view = j$("#templateViewRow tr.row").clone();
+                view.attr("id", "extViewRow");
+                j$(view).prependTo("table#deRecords > tbody");
+                j$("#extViewRow div.slds-truncate").each(function (index, element) {
+                    j$(this).text(columns[j$(this).attr('name')]);
+                });
+                j$("#extViewRow").removeAttr("id");
+            },
+            error: function (res) {
+                console.log(res);
+                console.log("Bad thing happend! " + JSON.stringify(res));
+            }
+        });
+    }
+
+    /**
+     * Checks if element has disable attribute
+     * @param element
+     */
+    function isDisabled(element) {
+        var attr = j$(element).attr('disabled');
+        if (typeof attr !== typeof undefined && attr !== false) {
+            return true;
+        }
+        return false;
+    }
 </script>
 
 </body>

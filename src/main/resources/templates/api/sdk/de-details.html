@@ -13,7 +13,6 @@
     <div class="slds-shrink-none">
         <div class="slds-page-header"><h2 class="slds-text-heading--medium">Data Extension Details</h2></div>
     </div>
-    <!--style="border: 1px solid black;"-->
     <div class="slds-box">
         <div class="slds-grid slds-grid_vertical-align-start">
             <div class="slds-size_1-of-2">
@@ -21,7 +20,7 @@
                     <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Name">Name:</dt>
                     <dd class="slds-item_detail slds-truncate" title="Name" th:text="${ext.Name}">Name</dd>
                     <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Key">EXTERNAL KEY:</dt>
-                    <dd class="slds-item_detail slds-truncate" title="Key" th:text="${ext.Key}">Key</dd>
+                    <dd class="slds-item_detail slds-truncate" id="deKey" title="Key" th:text="${ext.Key}">Key</dd>
                     <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Created Date">Created Date:
                     </dt>
                     <dd class="slds-item_detail slds-truncate" title="Created Date"
@@ -62,7 +61,7 @@
                                 </svg>Add Record</span>
         </a>
     </div>
-    <table class="slds-table slds-table_bordered slds-table_striped">
+    <table id="deRecords" class="slds-table slds-table_bordered slds-table_striped">
         <thead>
         <tr class="slds-text-title_caps">
             <th scope="col" class="" th:each="col : ${ext.Columns}">
@@ -74,14 +73,13 @@
         </tr>
         </thead>
         <tbody>
-        <!--th:id="@{'extRecord_' + ${row.Id}}"-->
         <tr th:each="row,iterStat : ${records}">
             <td data-label="Key" class="" th:each="col : ${ext.columns}" th:id="@{'extColumnValue_' + ${col.Key}}">
 
                 <div class="slds-truncate" th:text="${row.columns[__${col.Name}__]}">Value</div>
 
             </td>
-            <!--Actions-->
+            <!--actions-->
             <td data-label="Actions" class="">
 
                 <button th:id="@{'copyBtn_' + ${iterStat.index}}" th:name="${iterStat.index}"
@@ -111,8 +109,161 @@
     <div th:replace="fragments/footer :: footer"></div>
 </section>
 
+<table id="templateNewRow" style="display: none">
+    <tr class="row">
+        <td scope="col" class="slds-form-element" th:each="col : ${ext.Columns}">
+            <div class="slds-form-element  slds-p-right_x-small">
+                <abbr th:if="${col.IsRequired}" class="slds-required" title="required">*</abbr>
+                <input class="slds-input" type="text" th:placeholder="${col.Name}" th:title="${col.Name}"
+                       th:name="${col.Name}" th:valuetype="${col.Type}">
+            </div>
+        </td>
+        <!--actions-->
+        <td class="" data-label="Actions">
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Save" id="saveRowTempBtn" name="0">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                    <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#approval"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                </svg>
+                <span class="slds-assistive-text">Save</span>
+            </button>
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Cancel" id="cancelRowTempBtn"
+                    name="0">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                    <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#remove"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                </svg>
+                <span class="slds-assistive-text">Cancel</span>
+            </button>
+
+        </td>
+    </tr>
+</table>
+
+<table id="templateViewRow" style="display: none">
+    <tr class="row">
+        <td scope="col" class="slds-form-element" th:each="col : ${ext.Columns}">
+            <div class="slds-truncate" th:name="${col.Name}" th:title="${col.Name}" th:text="${col.Name}">Name</div>
+        </td>
+        <!--actions-->
+        <td data-label="Actions" class="">
+
+            <button class="slds-button slds-button_icon"
+                    aria-pressed="false" title="Copy">
+                <svg class="slds-button__icon slds-icon-text-default" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                         xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone"></use>
+                </svg>
+                <span class="slds-assistive-text">Clone</span>
+            </button>
+            <button class="slds-button slds-button_icon"
+                    aria-pressed="false" title="Delete">
+                <svg class="slds-button__icon slds-icon-text-error" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                         xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete"></use>
+                </svg>
+                <span class="slds-assistive-text">Delete</span>
+            </button>
+
+        </td>
+    </tr>
+</table>
+
 <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript">
+    j$ = jQuery.noConflict();
+
+    /**
+     * Add new record form
+     */
+    j$('#addRecordBtn').click(function () {
+        console.log('add clicked');
+        if (isDisabled(this))
+            return;
+        j$(this).attr("disabled", "");
+        createRowTemplate();
+    });
+
+    /**
+     * Cancel record creation
+     */
+    j$('#deRecords').on('click', '#cancelRowBtn', function () {
+        console.log("cancelRowBtn");
+        j$('table#deRecords > tbody tr:first').remove();
+        j$('#addRecordBtn').removeAttr('disabled');
+    });
+
+    /**
+     * Save new record
+     */
+    j$('#deRecords').on('click', '#saveRowBtn', function () {
+        console.log("saveRowBtn");
+        // get de key
+        var key = j$('#deKey').text().trim();
+        // get columns
+        var dataObject = new Map();
+        j$("#extNewRow :input.slds-input").each(function (index, element) {
+            dataObject[j$(this).attr('name')] = j$(this).val();
+        });
+        createRow(key, JSON.stringify(dataObject));
+    });
+
+    /**
+     * Create new row template
+     */
+    function createRowTemplate() {
+        var temp = j$("#templateNewRow tr.row").clone();
+        temp.attr("id", "extNewRow");
+        var btnSave = temp.find('#saveRowTempBtn');
+        btnSave.attr("id", "saveRowBtn");
+        var btnCancel = temp.find('#cancelRowTempBtn');
+        btnCancel.attr("id", "cancelRowBtn");
+        j$(temp).prependTo("table#deRecords > tbody");
+    }
+
+    /**
+     * Post to controller amd handle result
+     */
+    function createRow(key, dataObject) {
+        j$.ajax({
+            url: "/api/sdk/create/" + key,
+            type: 'POST',
+            data: dataObject,
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (res) {
+                console.log("it works! " + JSON.stringify(res));
+                var columns = res.columns;
+                // remove template row
+                j$('table#deRecords > tbody tr:first').remove();
+                j$('#addRecordBtn').removeAttr('disabled');
+                // add row
+                var view = j$("#templateViewRow tr.row").clone();
+                view.attr("id", "extViewRow");
+                j$(view).prependTo("table#deRecords > tbody");
+                j$("#extViewRow div.slds-truncate").each(function (index, element) {
+                    j$(this).text(columns[j$(this).attr('name')]);
+                });
+                j$("#extViewRow").removeAttr("id");
+            },
+            error: function (res) {
+                console.log(res);
+                console.log("Bad thing happend! " + JSON.stringify(res));
+            }
+        });
+    }
+
+    /**
+     * Checks if element has disable attribute
+     * @param element
+     */
+    function isDisabled(element) {
+        var attr = j$(element).attr('disabled');
+        if (typeof attr !== typeof undefined && attr !== false) {
+            return true;
+        }
+        return false;
+    }
 </script>
 
 </body>
