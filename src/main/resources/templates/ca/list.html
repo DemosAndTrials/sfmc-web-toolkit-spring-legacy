@@ -271,7 +271,6 @@
 
     // post to controller
     function deleteConfig(id) {
-        //j$.post("/ca/delete/" + id);
         j$.post("/ca/delete/" + id, function (result) {
             if (result == true)
                 j$('#config_' + id).remove();

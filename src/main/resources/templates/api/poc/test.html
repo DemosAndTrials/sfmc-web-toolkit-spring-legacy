@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SDK</title>
+    <div th:replace="fragments/header :: header-css" th:remove="tag"/>
+</head>
+<body>
+
+<section class="stage slds-grid slds-grid--vertical slds-nowrap">
+
+    <div th:replace="fragments/header :: header">.</div>
+
+    <div class="slds-shrink-none">
+        <div class="slds-page-header"><h2 class="slds-text-heading--medium">Data Extension Details</h2></div>
+    </div>
+    <!--style="border: 1px solid black;"-->
+    <div class="slds-box">
+        <div class="slds-grid slds-grid_vertical-align-start">
+            <div class="slds-size_1-of-2">
+                <dl class="slds-list_horizontal slds-wrap">
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Name">Name:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="Name">CustomerSignUpEvent</dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Key">EXTERNAL KEY:</dt>
+                    <dd class="slds-item_detail slds-truncate" id="deKey" title="Key">
+                        F0692A03-5FF6-4F84-B715-B519EEA64CA7
+                    </dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Created Date">Created Date:
+                    </dt>
+                    <dd class="slds-item_detail slds-truncate" title="Created Date">30 August 2017 04:39
+                    </dd>
+                    <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Modified Date">Modified
+                        Date:
+                    </dt>
+                    <dd class="slds-item_detail slds-truncate" title="Modified Date">30 August 2017 04:39
+                    </dd>
+                </dl>
+            </div>
+            <div class="slds-size_1-of-2">
+                <dl class="slds-list_horizontal slds-wrap">
+                    <dt class="slds-item_label slds-text-color_weak" title="USED FOR SENDING">USED FOR SENDING:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="USED FOR SENDING">
+                        <div class="slds-truncate">Yes</div>
+                        <!--<div class="slds-truncate" th:unless="${ext.isSendable}">No</div>-->
+                    </dd>
+                    <dt class="slds-item_label slds-text-color_weak" title="USED FOR TESTING">USED FOR TESTING:</dt>
+                    <dd class="slds-item_detail slds-truncate" title="USED FOR TESTING">
+                        <!--<div class="slds-truncate" th:if="${ext.isTestable}">Yes</div>-->
+                        <div class="slds-truncate">No</div>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+    </div>
+    <div>
+        <a class="slds-button slds-button_brand slds-button_neutral slds-not-selected slds-m-around_medium slds-float_right"
+           aria-live="assertive" id="addRecordBtn">
+                                <span class="slds-text-not-selected">
+                                    <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
+                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                          xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#remove"></use>
+                                </svg>Add Record</span>
+        </a>
+    </div>
+
+    <table class="slds-table slds-table_bordered slds-table_striped" id="deRecords">
+        <thead>
+        <tr class="slds-text-title_caps">
+            <th class="" scope="col">
+                <div class="slds-truncate" title="subscriberkey">subscriberkey</div>
+            </th>
+            <th class="" scope="col">
+                <div class="slds-truncate" title="emailaddress">emailaddress</div>
+            </th>
+            <th class="" scope="col">
+                <div class="slds-truncate" title="Actions">Actions</div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">matrostik@gmail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">matrostik@gmail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_0" name="0">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_0" name="0">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">hrostik@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">hrostik@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_1" name="1">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_1" name="1">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">menash@yamin.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">menash@yamin.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_2" name="2">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_2" name="2">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">ros@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">ros@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_3" name="3">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_3" name="3">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">test01@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">test01@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_4" name="4">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_4" name="4">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">test02@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">test02@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_5" name="5">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_5" name="5">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">test03@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">test03@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_6" name="6">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_6" name="6">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">test04@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">test04@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_7" name="7">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_7" name="7">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">test05@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">test05@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_8" name="8">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_8" name="8">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">test06@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">test06@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_9" name="9">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_9" name="9">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">test07@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">test07@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_10" name="10">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_10" name="10">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">test08@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">test08@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_11" name="11">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_11" name="11">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">test09@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">test09@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_12" name="12">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_12" name="12">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">test10@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">test10@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_13" name="13">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_13" name="13">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">test11@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">test11@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_14" name="14">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_14" name="14">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        <tr>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[SubscriberKey]">
+
+                <div class="slds-truncate" name="subscriberkey">test12@mail.com</div>
+
+            </td>
+            <td class="" data-label="Key" id="extColumnValue_[F0692A03-5FF6-4F84-B715-B519EEA64CA7].[EmailAddress]">
+
+                <div class="slds-truncate" name="emailaddress">test12@mail.com</div>
+
+            </td>
+            <!--actions-->
+            <td class="" data-label="Actions">
+
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy" id="copyBtn_15" name="15">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Clone</span>
+                </button>
+                <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete" id="deleteBtn_15" name="15">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Delete</span>
+                </button>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</section>
+
+<table id="templateNewRow" style="display: none">
+    <tr class="row">
+        <td class="slds-form-element" scope="col">
+            <div class="slds-form-element  slds-p-right_x-small">
+                <abbr class="slds-required" title="required">*</abbr>
+                <input class="slds-input" type="text" placeholder="subscriberkey" title="subscriberkey"
+                       name="subscriberkey" valuetype="TEXT">
+            </div>
+        </td>
+        <td class="" scope="col">
+            <div class="slds-form-element  slds-p-right_x-small">
+                <input class="slds-input" type="text" placeholder="emailaddress" title="emailaddress"
+                       name="emailaddress" valuetype="EMAIL_ADDRESS">
+            </div>
+        </td>
+        <td class="" scope="col">
+            <div class="slds-form-element  slds-p-right_x-small">
+                <input class="slds-input" type="text" placeholder="date" title="date" name="date" valuetype="DATE">
+            </div>
+        </td>
+        <!--Actions-->
+        <td class="" data-label="Actions">
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Save" id="saveRowTempBtn" name="0">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                    <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#approval"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                </svg>
+                <span class="slds-assistive-text">Save</span>
+            </button>
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Cancel" id="cancelRowTempBtn"
+                    name="0">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                    <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#remove"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                </svg>
+                <span class="slds-assistive-text">Cancel</span>
+            </button>
+
+        </td>
+    </tr>
+</table>
+
+<table id="templateViewRow" style="display: none">
+    <tr class="row">
+        <td class="slds-form-element" scope="col">
+            <div class="slds-truncate" name="subscriberkey" title="subscriberkey">subscriberkey</div>
+        </td>
+        <td class="slds-form-element" scope="col">
+            <div class="slds-truncate" name="emailaddress" title="emailaddress">emailaddress</div>
+        </td>
+        <td class="slds-form-element" scope="col">
+            <div class="slds-truncate" name="date" title="date">date</div>
+        </td>
+        <!--Actions-->
+        <td class="" data-label="Actions">
+
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Copy">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                    <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                </svg>
+                <span class="slds-assistive-text">Clone</span>
+            </button>
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Delete">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                    <use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                </svg>
+                <span class="slds-assistive-text">Delete</span>
+            </button>
+
+        </td>
+    </tr>
+</table>
+
+<div id="confirmPromt" style="display:none;">
+<section role="dialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-fade-in-open" aria-modal="true">
+    <div class="slds-modal__container">
+        <header class="slds-modal__header slds-modal__header_empty">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" name="Close">
+                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#close" />
+                </svg>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <!--<h2 class="slds-text-heading_medium" id="prompt-heading-id">Confirmation</h2>-->
+        </header>
+        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" name="Close">
+            <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#close" />
+            </svg>
+            <span class="slds-assistive-text">Close</span>
+        </button>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <p class="detail slds-text-align--center">Are you sure you want to delete this record?</p>
+        </div>
+        <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral" name="Close">Cancel</button>
+            <button class="slds-button slds-button_brand" name="Ok">Delete</button>
+        </footer>
+    </div>
+</section>
+<div class="slds-backdrop slds-backdrop_open"></div>
+</div>
+
+<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script src="/js/api/poc.js"></script>
+
+<script type="text/javascript">
+
+</script>
+
+</body>
+</html>

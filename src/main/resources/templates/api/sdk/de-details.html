@@ -13,7 +13,6 @@
     <div class="slds-shrink-none">
         <div class="slds-page-header"><h2 class="slds-text-heading--medium">Data Extension Details</h2></div>
     </div>
-    <!--style="border: 1px solid black;"-->
     <div class="slds-box">
         <div class="slds-grid slds-grid_vertical-align-start">
             <div class="slds-size_1-of-2">
@@ -21,7 +20,7 @@
                     <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Name">Name:</dt>
                     <dd class="slds-item_detail slds-truncate" title="Name" th:text="${ext.Name}">Name</dd>
                     <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Key">EXTERNAL KEY:</dt>
-                    <dd class="slds-item_detail slds-truncate" title="Key" th:text="${ext.Key}">Key</dd>
+                    <dd class="slds-item_detail slds-truncate" id="deKey" title="Key" th:text="${ext.Key}">Key</dd>
                     <dt class="slds-item_label slds-text-color_weak slds-truncate" title="Created Date">Created Date:
                     </dt>
                     <dd class="slds-item_detail slds-truncate" title="Created Date"
@@ -52,8 +51,17 @@
         </div>
 
     </div>
-
-    <table class="slds-table slds-table_bordered slds-table_striped">
+    <div>
+        <a class="slds-button slds-button_brand slds-button_neutral slds-not-selected slds-m-around_medium slds-float_right"
+           aria-live="assertive" id="addRecordBtn">
+                                <span class="slds-text-not-selected">
+                                    <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
+                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                          xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#remove"></use>
+                                </svg>Add Record</span>
+        </a>
+    </div>
+    <table id="deRecords" class="slds-table slds-table_bordered slds-table_striped">
         <thead>
         <tr class="slds-text-title_caps">
             <th scope="col" class="" th:each="col : ${ext.Columns}">
@@ -65,14 +73,13 @@
         </tr>
         </thead>
         <tbody>
-        <!--th:id="@{'extRecord_' + ${row.Id}}"-->
         <tr th:each="row,iterStat : ${records}">
             <td data-label="Key" class="" th:each="col : ${ext.columns}" th:id="@{'extColumnValue_' + ${col.Key}}">
 
-                <div class="slds-truncate" th:text="${row.columns[__${col.Name}__]}">Value</div>
+                <div class="slds-truncate" th:name="${col.Name}" th:text="${row.columns[__${col.Name}__]}">Value</div>
 
             </td>
-            <!--Actions-->
+            <!--actions-->
             <td data-label="Actions" class="">
 
                 <button th:id="@{'copyBtn_' + ${iterStat.index}}" th:name="${iterStat.index}"
@@ -82,7 +89,7 @@
                         <use xmlns:xlink="http://www.w3.org/1999/xlink"
                              xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone"></use>
                     </svg>
-                    <span class="slds-assistive-text">Delete</span>
+                    <span class="slds-assistive-text">Clone</span>
                 </button>
                 <button th:id="@{'deleteBtn_' + ${iterStat.index}}" th:name="${iterStat.index}"
                         class="slds-button slds-button_icon"
@@ -102,8 +109,100 @@
     <div th:replace="fragments/footer :: footer"></div>
 </section>
 
+<table id="templateNewRow" style="display: none">
+    <tr class="row">
+        <td scope="col" class="slds-form-element" th:each="col : ${ext.Columns}">
+            <div class="slds-form-element  slds-p-right_x-small">
+                <abbr th:if="${col.IsRequired}" class="slds-required" title="required">*</abbr>
+                <input class="slds-input" type="text" th:placeholder="${col.Name}" th:title="${col.Name}"
+                       th:name="${col.Name}" th:valuetype="${col.Type}">
+            </div>
+        </td>
+        <!--actions-->
+        <td class="" data-label="Actions">
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Save" id="saveRowTempBtn" name="0">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                    <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#approval"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                </svg>
+                <span class="slds-assistive-text">Save</span>
+            </button>
+            <button aria-pressed="false" class="slds-button slds-button_icon" title="Cancel" id="cancelRowTempBtn"
+                    name="0">
+                <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                    <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#remove"
+                         xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                </svg>
+                <span class="slds-assistive-text">Cancel</span>
+            </button>
+
+        </td>
+    </tr>
+</table>
+
+<table id="templateViewRow" style="display: none">
+    <tr class="row">
+        <td scope="col" class="slds-form-element" th:each="col : ${ext.Columns}">
+            <div class="slds-truncate" th:name="${col.Name}" th:title="${col.Name}" th:text="${col.Name}">Name</div>
+        </td>
+        <!--actions-->
+        <td data-label="Actions" class="">
+
+            <button class="slds-button slds-button_icon"
+                    aria-pressed="false" title="Copy">
+                <svg class="slds-button__icon slds-icon-text-default" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                         xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone"></use>
+                </svg>
+                <span class="slds-assistive-text">Clone</span>
+            </button>
+            <button class="slds-button slds-button_icon"
+                    aria-pressed="false" title="Delete">
+                <svg class="slds-button__icon slds-icon-text-error" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                         xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete"></use>
+                </svg>
+                <span class="slds-assistive-text">Delete</span>
+            </button>
+
+        </td>
+    </tr>
+</table>
+
+<div id="confirmPromt" style="display:none;">
+    <section role="dialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-fade-in-open" aria-modal="true">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header slds-modal__header_empty">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" name="Close">
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#close" />
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <!--<h2 class="slds-text-heading_medium" id="prompt-heading-id">Confirmation</h2>-->
+            </header>
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" name="Close">
+                <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#close" />
+                </svg>
+                <span class="slds-assistive-text">Close</span>
+            </button>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <p class="detail slds-text-align--center">Are you sure you want to delete this record?</p>
+            </div>
+            <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" name="Close">Cancel</button>
+                <button class="slds-button slds-button_brand" name="Ok">Delete</button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</div>
+
 <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script src="/js/api/de-details.js"></script>
 <script type="text/javascript">
+
 </script>
 
 </body>
