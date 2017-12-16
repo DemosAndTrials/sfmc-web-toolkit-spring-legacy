@@ -95,7 +95,7 @@ public class BlackoutSplitController {
                             .add("configModal", Json.createObjectBuilder()
                                     .add("height", 600)
                                     .add("width", 800)
-                                    .add("url", host + "/edit" + "?numSteps=" + 1))
+                                    .add("url", host + "/ui/edit" + "?numSteps=" + 1))
                             .add("runningModal", Json.createObjectBuilder()
                                     .add("url", host + "/ui/modal"))
                             .add("runningHover", Json.createObjectBuilder()
