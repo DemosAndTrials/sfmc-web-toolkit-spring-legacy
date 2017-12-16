@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Custom Activity Demo</title>
+    <link rel="icon" href="/images/fav.ico" type="image/x-icon"/>
+    <script data-main="/js/blackout/main.js" src="/js/require.js"></script>
+    <link rel='stylesheet prefetch'
+          href='/webjars/salesforce-lightning-design-system/2.1.4/assets/styles/salesforce-lightning-design-system.min.css'/>
+    <style>
+    </style>
+</head>
+<body>
+
+
+<section class="stage slds-grid slds-grid--vertical slds-nowrap">
+
+    <div class="slds-shrink-none">
+        <div class="slds-page-header">
+            Custom Activity Header
+        </div>
+    </div>
+
+    <!--<input type="hidden" id="numSteps" th:value="${numSteps}">-->
+
+    <form id="genericActivity">
+        <!-- Stage Main -->
+        <div id="step1"
+             class="step slds-grid slds-wrap slds-container--medium slds-container--center slds-order-1 slds-medium-order--2 slds-p-vertical--large">
+            <div class="slds-col--padded slds-col-rule--right slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--8-of-12 slds-p-bottom--x-large">
+                <article class="slds-text-longform">
+                    <h2 class="slds-text-heading--large">Primary Content</h2>
+
+                    <div class="slds-form slds-form_stacked">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="input-id-01">Text Input</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="input-id-01" class="slds-input" placeholder="Placeholder Text">
+                            </div>
+                        </div>
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="input-id-02">Textarea Label</label>
+                            <div class="slds-form-element__control">
+                                <textarea id="input-id-02" class="slds-textarea"
+                                          placeholder="Placeholder Text"></textarea>
+                            </div>
+                        </div>
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="select-01">Select Label</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-select_container">
+                                    <select class="slds-select" id="select-01">
+                                        <option>Option One</option>
+                                        <option>Option Two</option>
+                                        <option>Option Three</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </article>
+            </div>
+
+            <div class="slds-col--padded slds-size--1-of-1 slds-small-size--1-of-2 slds-m-bottom--large">
+                <div class="slds-box">
+                    <h2 class="slds-text-heading--label">Notes</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et quasi deleniti laborum nobis sed
+                        assumenda itaque optio unde eius corporis, repellat ea ducimus magni, quos fugit, nihil error
+                        quis
+                        tempora.</p>
+                </div>
+            </div>
+
+        </div>
+        <div id="step2" class="step" style="display:none;">
+
+            <div class="slds-box">
+                <div class="slds-grid slds-wrap slds-container--medium slds-container--center slds-order-1 slds-medium-order--2 slds-p-vertical--none">
+                    <div class="slds-col--padded slds-col-rule--right slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--8-of-12 slds-p-bottom--medium">
+                        <article class="slds-text-longform">
+                            <h2 class="slds-text-heading--label">Test step 2</h2>
+                            <ul class="slds-list_dotted">
+                                <li>
+                                    Additional information here.
+                                </li>
+                                <li>
+                                    Additional information here.
+                                </li>
+                            </ul>
+                            <p>
+                                Note: some note.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="step3" class="step" style="display:none;">
+
+            <div class="slds-box">
+                <div class="slds-grid slds-wrap slds-container--medium slds-container--center slds-order-1 slds-medium-order--2 slds-p-vertical--none">
+                    <div class="slds-col--padded slds-col-rule--right slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--8-of-12 slds-p-bottom--medium">
+                        <article class="slds-text-longform">
+                            <h2 class="slds-text-heading--label">Test step 3</h2>
+                            <ul class="slds-list_dotted">
+                                <li>
+                                    Additional information here.
+                                </li>
+                                <li>
+                                    Additional information here.
+                                </li>
+                            </ul>
+                            <p>
+                                Note: some note.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</section>
+
+<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+</script>
+</body>
+</html>
