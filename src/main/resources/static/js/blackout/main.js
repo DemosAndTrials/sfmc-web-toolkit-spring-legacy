@@ -1,13 +1,13 @@
 requirejs.config({
     paths: {
-        vendor: '../vendor',
+        vendor: '/vendor',
 		postmonger: 'vendor/postmonger'
     },
     shim: {
         'vendor/jquery.min': {
             exports: '$'
         },
-		'customActivity': {
+		'blackout': {
 			deps: ['vendor/jquery.min', 'vendor/postmonger']
 		}
     }

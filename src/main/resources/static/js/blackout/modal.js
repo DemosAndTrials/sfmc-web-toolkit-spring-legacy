@@ -9,6 +9,7 @@ requirejs.config({
 define(['postmonger'], function (Postmonger) {
     'use strict';
 
+    console.log('*** blackout script ***');
     console.log('*** ' + window.location.href + ' ***');
 
     var connection = new Postmonger.Session();
