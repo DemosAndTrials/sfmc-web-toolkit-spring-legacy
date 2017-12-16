@@ -8,7 +8,7 @@ requirejs.config({
 // https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/using-postmonger.htm
 define(['postmonger'], function(Postmonger) {
     'use strict';
-
+    console.log('*** blackout script ***');
     console.log('*** ' + window.location.href  + ' ***');
 
     var connection = new Postmonger.Session();

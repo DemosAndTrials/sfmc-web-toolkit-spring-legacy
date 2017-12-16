@@ -1,6 +1,6 @@
 requirejs.config({
     paths: {
-        vendor: '../vendor',
+        vendor: '/vendor',
         postmonger: 'vendor/postmonger'
     },
     shim: {
