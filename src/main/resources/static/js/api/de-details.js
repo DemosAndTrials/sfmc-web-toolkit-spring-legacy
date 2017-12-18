@@ -1,8 +1,25 @@
 j$ = jQuery.noConflict();
 
+// var y;
+// var pageCtrl = (function () {
+//     var x = 1;
+//     function incX(num) {
+//         x+=num;
+//     }
+//     function getX() {
+//         return x;
+//     }
+//
+//     return {
+//         incX : incX,
+//         getX : getX
+//     };
+// })();
+// pageCtrl.incX(5);
 /**
  * Add new record form
  */
+//j$('#addRecordBtn').click(pageCtrl.incX)
 j$('#addRecordBtn').click(function () {
     console.log('add clicked');
     if (isDisabled(this))
@@ -136,18 +153,69 @@ function deleteRow(row, key, dataObject) {
  * Edit record
  */
 j$('#deRecords').on('click', '[id^=editBtn_]', function () {
+    // disable add record button
+    j$('#addRecordBtn').attr("disabled", "");
     // store selected row
     var row = j$(this).closest("tr");
 
-    j$(row).find('div.slds-truncate').each(function (index, element) {
-        //j$(this).text(res[j$(this).attr('name')]);
-        // div
-        var value = this.textContent;
-    // <input class="slds-input" type="text" name="subscriberkey" placeholder="subscriberkey" title="subscriberkey" valuetype="TEXT">
-        var input = '<input class="slds-input" type="text" value="'+ value +'">';
-        j$(this).replaceWith(input)
-        console.log(value);
+    j$(row).find('.slds-truncate, .slds-input, .slds-button').each(function (index, element) {
+        if(this.nodeName == 'DIV'){
+            j$(this).hide();
+        }
+        else if (this.nodeName == "INPUT"){
+            j$(this).show();
+        }
+        else{// BUTTON
+            if(!this.classList.contains("edit")) //
+                j$(this).hide();
+            else
+                j$(this).show();
+        }
     });
+});
+/**
+ * Cancel edit
+ */
+j$('#deRecords').on('click', '[id^=cancelBtn_]', function () {
+    var row = j$(this).closest("tr");
+    j$(row).find('.slds-truncate, .slds-input, .slds-button').each(function (index, element) {
+        if(this.nodeName == 'DIV'){
+            j$(this).show();
+        }
+        else if (this.nodeName == "INPUT"){
+            j$(this).hide();
+        }
+        else{// BUTTON
+            if(this.classList.contains("edit")) //
+                j$(this).hide();
+            else
+                j$(this).show();
+        }
+    });
+    // show add record button
+    j$('#addRecordBtn').removeAttr('disabled');
+});
+/**
+ * Save edit
+ */
+j$('#deRecords').on('click', '[id^=okBtn_]', function () {
+    var row = j$(this).closest("tr");
+    j$(row).find('.slds-truncate, .slds-input, .slds-button').each(function (index, element) {
+        if(this.nodeName == 'DIV'){
+            j$(this).show();
+        }
+        else if (this.nodeName == "INPUT"){
+            j$(this).hide();
+        }
+        else{// BUTTON
+            if(this.classList.contains("edit")) //
+                j$(this).hide();
+            else
+                j$(this).show();
+        }
+    });
+    // show add record button
+    j$('#addRecordBtn').removeAttr('disabled');
 });
 
 /**

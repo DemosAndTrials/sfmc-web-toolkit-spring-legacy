@@ -76,7 +76,8 @@
         <tr th:each="row,iterStat : ${records}" class="row">
             <td data-label="Key" class="" th:each="col : ${ext.columns}" th:id="@{'extColumnValue_' + ${col.Key}}">
 
-                <div class="slds-truncate" th:name="${col.Name}" th:text="${row.columns[__${col.Name}__]}">Value</div>
+                <div class="slds-truncate read-only" th:name="${col.Name}" th:text="${row.columns[__${col.Name}__]}">Value</div>
+                <input class="slds-input" type="text" th:name="${col.Name}" th:value="${row.columns[__${col.Name}__]}" style="display: none">
 
             </td>
             <!--actions-->
@@ -99,6 +100,22 @@
                              xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete"></use>
                     </svg>
                     <span class="slds-assistive-text">Delete</span>
+                </button>
+                <button th:id="@{'okBtn_' + ${iterStat.index}}" aria-pressed="false" class="slds-button slds-button_icon edit"
+                        title="Save" th:name="${iterStat.index}" style="display: none">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#approval"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Save</span>
+                </button>
+                <button th:id="@{'cancelBtn_' + ${iterStat.index}}" aria-pressed="false" class="slds-button slds-button_icon edit"
+                        title="Cancel" th:name="${iterStat.index}" style="display: none">
+                    <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
+                        <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#remove"
+                             xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Cancel</span>
                 </button>
 
             </td>
