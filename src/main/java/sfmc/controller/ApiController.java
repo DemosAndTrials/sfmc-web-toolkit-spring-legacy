@@ -55,7 +55,7 @@ public class ApiController {
         model.addAttribute("data_extensions", apiService.GetDataExtensionsDetails());
         return "api/sdk/de-list";
     }
-
+    ETDataExtension selectedDE;
     /**
      * Data Extension details
      *
@@ -66,9 +66,9 @@ public class ApiController {
     @GetMapping(value = "/sdk/de-details/{id}")
     public String deDetails(@PathVariable String id, Model model) {
         System.out.println("*** de details: " + id + " ***");
-        ETDataExtension ext = apiService.GetDataExtensionDetails(id);
-        model.addAttribute("ext", ext);
-        List<ETDataExtensionRow> rows = apiService.GetDataExtensionRecordsByKey(ext.getKey());
+        selectedDE = apiService.GetDataExtensionDetails(id);
+        model.addAttribute("ext", selectedDE);
+        List<ETDataExtensionRow> rows = apiService.GetDataExtensionRecordsByKey(selectedDE.getKey());
         model.addAttribute("records", rows);
         return "api/sdk/de-details";
     }
@@ -105,6 +105,23 @@ public class ApiController {
         {
             return new ResponseEntity(data, HttpStatus.OK);
         }
+     return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping(value = "/sdk/update/{key}", headers = "Accept=application/json")
+    public ResponseEntity updateRow(@PathVariable String key, @RequestBody Map<String, String> data) {
+        // save
+        ETDataExtensionRow row = new ETDataExtensionRow();
+        row.setDataExtensionKey(key);
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            row.setColumn(entry.getKey(), entry.getValue());
+        }
+
+        ETDataExtensionRow result = apiService.Update(selectedDE, row);
+        if (result != null)
+        {
+            return new ResponseEntity(data, HttpStatus.OK);
+        }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
@@ -116,10 +133,13 @@ public class ApiController {
         for (Map.Entry<String, String> entry : data.entrySet()) {
             row.setColumn(entry.getKey(), entry.getValue());
         }
-        // TODO not working!!!
-        //apiService.Delete(row);
+        apiService.Delete(selectedDE, row);
         return new ResponseEntity(true, HttpStatus.OK);
     }
+
+
+
+
 
 
     /**

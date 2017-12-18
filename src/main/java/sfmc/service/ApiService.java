@@ -5,7 +5,6 @@ import com.exacttarget.fuelsdk.ETDataExtensionRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sfmc.repository.FuelSDKRepository;
-
 import java.util.List;
 
 /**
@@ -33,7 +32,11 @@ public class ApiService {
         return sdkRepository.CreateDataExtensionRow(row);
     }
 
-    public void Delete(ETDataExtensionRow row){
-        sdkRepository.DeleteDataExtensionRow(row);
+    public ETDataExtensionRow Update(ETDataExtension de, ETDataExtensionRow row){
+        return sdkRepository.UpdateDataExtensionRow(de, row);
+    }
+
+    public void Delete(ETDataExtension de, ETDataExtensionRow row){
+        sdkRepository.DeleteDataExtensionRow(de, row);
     }
 }

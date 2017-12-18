@@ -1,7 +1,6 @@
 package sfmc.repository;
 
 import com.exacttarget.fuelsdk.*;
-import com.exacttarget.fuelsdk.internal.*;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -162,7 +161,7 @@ public class FuelSDKRepository {
 
     public ETDataExtensionRow CreateDataExtensionRow(ETDataExtensionRow record){
         try {
-            ETResponse<ETDataExtensionRow> res = client.create(record);
+            ETResponse<ETDataExtensionRow> res = client.create(record);// TODO use de.insert?!
             return res.getObject();
         } catch (ETSdkException e) {
             e.printStackTrace();
@@ -170,11 +169,22 @@ public class FuelSDKRepository {
         return null;
     }
 
-    public ETDataExtensionRow DeleteDataExtensionRow(ETDataExtensionRow record){
+    public ETDataExtensionRow DeleteDataExtensionRow(ETDataExtension de, ETDataExtensionRow record){
         EnsureClientInitialization();
         try {
-            ETResponse<ETDataExtensionRow> res = client.delete(record);
+            ETResponse<ETDataExtensionRow> res = de.delete(record);
 
+            return res.getObject();
+        } catch (ETSdkException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ETDataExtensionRow UpdateDataExtensionRow(ETDataExtension de,ETDataExtensionRow record){
+        EnsureClientInitialization();
+        try {
+            ETResponse<ETDataExtensionRow> res = de.update(record);
             return res.getObject();
         } catch (ETSdkException e) {
             e.printStackTrace();

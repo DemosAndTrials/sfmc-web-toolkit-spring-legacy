@@ -74,7 +74,7 @@ function createRow(key, dataObject) {
         },
         error: function (res) {
             console.log(res);
-            console.log("Bad thing happend! " + JSON.stringify(res));
+            console.log("Bad thing happened! " + JSON.stringify(res));
         }
     });
 }
@@ -104,7 +104,10 @@ j$('#confirmPromt').on('click', '.slds-button', function () {
             console.log("row value: " + this.textContent);
         });
         deleteRow(selectedRow, key, JSON.stringify(dataObject));
+    }else {
+        selectedRow = null;
     }
+
     j$('#confirmPromt').hide();
 });
 
@@ -128,6 +131,24 @@ function deleteRow(row, key, dataObject) {
         }
     });
 }
+
+/**
+ * Edit record
+ */
+j$('#deRecords').on('click', '[id^=editBtn_]', function () {
+    // store selected row
+    var row = j$(this).closest("tr");
+
+    j$(row).find('div.slds-truncate').each(function (index, element) {
+        //j$(this).text(res[j$(this).attr('name')]);
+        // div
+        var value = this.textContent;
+    // <input class="slds-input" type="text" name="subscriberkey" placeholder="subscriberkey" title="subscriberkey" valuetype="TEXT">
+        var input = '<input class="slds-input" type="text" value="'+ value +'">';
+        j$(this).replaceWith(input)
+        console.log(value);
+    });
+});
 
 /**
  * Checks if element has disable attribute
