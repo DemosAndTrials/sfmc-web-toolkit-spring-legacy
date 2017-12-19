@@ -125,7 +125,7 @@ public class ApiController {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
-    @PostMapping(value = "/sdk/delete")
+    @PostMapping(value = "/sdk/delete/{key}")
     public ResponseEntity deleteRow(@PathVariable String key, @RequestBody Map<String, String> data) {
         // delete
           ETDataExtensionRow row = new ETDataExtensionRow();
@@ -133,8 +133,8 @@ public class ApiController {
         for (Map.Entry<String, String> entry : data.entrySet()) {
             row.setColumn(entry.getKey(), entry.getValue());
         }
-        apiService.Delete(selectedDE, row);
-        return new ResponseEntity(true, HttpStatus.OK);
+        boolean res = apiService.Delete(selectedDE, row);
+        return new ResponseEntity(res, HttpStatus.OK);
     }
 
 

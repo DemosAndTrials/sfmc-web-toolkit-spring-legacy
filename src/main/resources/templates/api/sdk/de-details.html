@@ -74,23 +74,28 @@
         </thead>
         <tbody>
         <tr th:each="row,iterStat : ${records}" class="row">
-            <td data-label="Key" class="" th:each="col : ${ext.columns}" th:id="@{'extColumnValue_' + ${col.Key}}">
+            <td data-label="Key" th:each="col : ${ext.columns}" th:id="@{'extColumnValue_' + ${col.Key}}">
 
-                <div class="slds-truncate read-only" th:name="${col.Name}" th:text="${row.columns[__${col.Name}__]}">Value</div>
-                <input class="slds-input" type="text" th:name="${col.Name}" th:value="${row.columns[__${col.Name}__]}" style="display: none">
-
+                <!--<div class="slds-form-element__control">-->
+                <!--<abbr th:if="${col.IsRequired}" class="slds-required slds-hidden" title="required">*</abbr>-->
+                    <span class="slds-truncate read-only" th:name="${col.Name}" th:text="${row.columns[__${col.Name}__]}">Value</span>
+                    <input th:unless="${col.IsPrimaryKey}" class="slds-input slds-hide" type="text"
+                       th:name="${col.Name}" th:value="${row.columns[__${col.Name}__]}">
+                    <input th:if="${col.IsPrimaryKey}" disabled="" class="slds-input slds-hide" type="text"
+                       th:name="${col.Name}" th:value="${row.columns[__${col.Name}__]}">
+                 <!--</div>-->
             </td>
             <!--actions-->
             <td data-label="Actions" class="">
 
                 <button th:id="@{'editBtn_' + ${iterStat.index}}" th:name="${iterStat.index}"
                         class="slds-button slds-button_icon"
-                        aria-pressed="false" title="Copy">
+                        aria-pressed="false" title="Edit">
                     <svg class="slds-button__icon slds-icon-text-default" aria-hidden="true">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink"
                              xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#edit"></use>
                     </svg>
-                    <span class="slds-assistive-text">Clone</span>
+                    <span class="slds-assistive-text">Edit</span>
                 </button>
                 <button th:id="@{'deleteBtn_' + ${iterStat.index}}" th:name="${iterStat.index}"
                         class="slds-button slds-button_icon"
@@ -101,7 +106,8 @@
                     </svg>
                     <span class="slds-assistive-text">Delete</span>
                 </button>
-                <button th:id="@{'okBtn_' + ${iterStat.index}}" aria-pressed="false" class="slds-button slds-button_icon edit"
+                <button th:id="@{'okBtn_' + ${iterStat.index}}" aria-pressed="false"
+                        class="slds-button slds-button_icon edit"
                         title="Save" th:name="${iterStat.index}" style="display: none">
                     <svg aria-hidden="true" class="slds-button__icon slds-icon-text-default">
                         <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#approval"
@@ -109,7 +115,8 @@
                     </svg>
                     <span class="slds-assistive-text">Save</span>
                 </button>
-                <button th:id="@{'cancelBtn_' + ${iterStat.index}}" aria-pressed="false" class="slds-button slds-button_icon edit"
+                <button th:id="@{'cancelBtn_' + ${iterStat.index}}" aria-pressed="false"
+                        class="slds-button slds-button_icon edit"
                         title="Cancel" th:name="${iterStat.index}" style="display: none">
                     <svg aria-hidden="true" class="slds-button__icon slds-icon-text-error">
                         <use xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#remove"
@@ -165,15 +172,15 @@
         <!--actions-->
         <td data-label="Actions" class="">
 
-            <button class="slds-button slds-button_icon"
-                    aria-pressed="false" title="Copy">
+            <button class="slds-button slds-button_icon" id="editBtn_"
+                    aria-pressed="false" title="Edit">
                 <svg class="slds-button__icon slds-icon-text-default" aria-hidden="true">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                         xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone"></use>
+                         xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#edit"></use>
                 </svg>
-                <span class="slds-assistive-text">Clone</span>
+                <span class="slds-assistive-text">Edit</span>
             </button>
-            <button class="slds-button slds-button_icon"
+            <button class="slds-button slds-button_icon" id="deleteBtn_"
                     aria-pressed="false" title="Delete">
                 <svg class="slds-button__icon slds-icon-text-error" aria-hidden="true">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -187,12 +194,15 @@
 </table>
 
 <div id="confirmPromt" style="display:none;">
-    <section role="dialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper" class="slds-modal slds-fade-in-open" aria-modal="true">
+    <section role="dialog" tabindex="-1" aria-labelledby="prompt-heading-id" aria-describedby="prompt-message-wrapper"
+             class="slds-modal slds-fade-in-open" aria-modal="true">
         <div class="slds-modal__container">
             <header class="slds-modal__header slds-modal__header_empty">
-                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" name="Close">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                        name="Close">
                     <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#close" />
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                             xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#close"/>
                     </svg>
                     <span class="slds-assistive-text">Close</span>
                 </button>

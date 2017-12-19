@@ -2,6 +2,7 @@ package sfmc.repository;
 
 import com.exacttarget.fuelsdk.*;
 import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -27,7 +28,7 @@ public class FuelSDKRepository {
     private void InitSDKClient() {
         ETConfiguration configuration = new ETConfiguration();
         // get config from heroku
-        configuration.set("clientId",  System.getenv("CLIENT_ID"));
+        configuration.set("clientId", System.getenv("CLIENT_ID"));
         configuration.set("clientSecret", System.getenv("CLIENT_SECRET"));
 
         try {
@@ -159,7 +160,7 @@ public class FuelSDKRepository {
         return null;
     }
 
-    public ETDataExtensionRow CreateDataExtensionRow(ETDataExtensionRow record){
+    public ETDataExtensionRow CreateDataExtensionRow(ETDataExtensionRow record) {
         try {
             ETResponse<ETDataExtensionRow> res = client.create(record);// TODO use de.insert?!
             return res.getObject();
@@ -169,23 +170,25 @@ public class FuelSDKRepository {
         return null;
     }
 
-    public ETDataExtensionRow DeleteDataExtensionRow(ETDataExtension de, ETDataExtensionRow record){
+    public boolean DeleteDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
         EnsureClientInitialization();
         try {
             ETResponse<ETDataExtensionRow> res = de.delete(record);
-
-            return res.getObject();
+            if (res.getStatus() == ETResult.Status.OK)
+                return true;
         } catch (ETSdkException e) {
             e.printStackTrace();
         }
-        return null;
+        return false;
     }
 
-    public ETDataExtensionRow UpdateDataExtensionRow(ETDataExtension de,ETDataExtensionRow record){
+    public ETDataExtensionRow UpdateDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
         EnsureClientInitialization();
         try {
             ETResponse<ETDataExtensionRow> res = de.update(record);
-            return res.getObject();
+            if (res.getStatus() == ETResult.Status.OK)
+                return res.getObject();
+            return null; // TODO throw exception
         } catch (ETSdkException e) {
             e.printStackTrace();
         }
