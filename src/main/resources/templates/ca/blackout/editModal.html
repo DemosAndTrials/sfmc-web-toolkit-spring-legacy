@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Custom Activity Demo</title>
+    <title>Blackout Activity</title>
     <link rel="icon" href="/images/fav.ico" type="image/x-icon"/>
     <script data-main="/js/blackout/main.js" src="/js/require.js"></script>
     <link rel='stylesheet prefetch'
@@ -16,7 +16,15 @@
 
     <div class="slds-shrink-none">
         <div class="slds-page-header">
-            Custom Activity Header
+            Blackout Activity
+            <button class="slds-button slds-button_icon" id="saveBtn"
+                    aria-pressed="false" title="Edit">
+                <svg class="slds-button__icon slds-icon-text-default" aria-hidden="true">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                         xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#edit"></use>
+                </svg>
+                <span class="slds-assistive-text">Save</span>
+            </button>
         </div>
     </div>
 
@@ -26,32 +34,41 @@
         <!-- Stage Main -->
         <div id="step1"
              class="step slds-grid slds-wrap slds-container--medium slds-container--center slds-order-1 slds-medium-order--2 slds-p-vertical--large">
+
             <div class="slds-col--padded slds-col-rule--right slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--8-of-12 slds-p-bottom--x-large">
                 <article class="slds-text-longform">
-                    <h2 class="slds-text-heading--large">Primary Content</h2>
+                    <h2 class="slds-text-heading--large">Configuration</h2>
 
                     <div class="slds-form slds-form_stacked">
-                        <div class="slds-form-element">
-                            <label class="slds-form-element__label" for="input-id-01">Text Input</label>
-                            <div class="slds-form-element__control">
-                                <input type="text" id="input-id-01" class="slds-input" placeholder="Placeholder Text">
+
+                        <div class="slds-form-element slds-m-bottom_large">
+                            <div class="slds-box">
+                                <h2 class="slds-text-heading--label">Notes</h2>
+                                <p>Please select source and destination data extension.</p>
                             </div>
                         </div>
-                        <div class="slds-form-element">
-                            <label class="slds-form-element__label" for="input-id-02">Textarea Label</label>
-                            <div class="slds-form-element__control">
-                                <textarea id="input-id-02" class="slds-textarea"
-                                          placeholder="Placeholder Text"></textarea>
-                            </div>
-                        </div>
-                        <div class="slds-form-element">
-                            <label class="slds-form-element__label" for="select-01">Select Label</label>
+                        <br/>
+                        <div class="slds-form-element slds-m-bottom_small">
+                            <label class="slds-form-element__label" for="source_de">Select Data Extension</label>
                             <div class="slds-form-element__control">
                                 <div class="slds-select_container">
-                                    <select class="slds-select" id="select-01">
-                                        <option>Option One</option>
-                                        <option>Option Two</option>
-                                        <option>Option Three</option>
+                                    <select class="slds-select" id="source_de">
+                                        <option value="0">Select Data Extension</option>
+                                        <option th:each="de : ${data_extensions}" th:value="${de.Id}"
+                                                th:text="${de.Name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="destination_de">Select Data Extension</label>
+                            <div class="slds-form-element__control">
+                                <div class="slds-select_container">
+                                    <select class="slds-select" id="destination_de">
+                                        <option value="0">Select Data Extension</option>
+                                        <option th:each="de : ${data_extensions}" th:value="${de.Id}"
+                                                th:text="${de.Name}"></option>
                                     </select>
                                 </div>
                             </div>
@@ -62,62 +79,6 @@
                 </article>
             </div>
 
-            <div class="slds-col--padded slds-size--1-of-1 slds-small-size--1-of-2 slds-m-bottom--large">
-                <div class="slds-box">
-                    <h2 class="slds-text-heading--label">Notes</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et quasi deleniti laborum nobis sed
-                        assumenda itaque optio unde eius corporis, repellat ea ducimus magni, quos fugit, nihil error
-                        quis
-                        tempora.</p>
-                </div>
-            </div>
-
-        </div>
-        <div id="step2" class="step" style="display:none;">
-
-            <div class="slds-box">
-                <div class="slds-grid slds-wrap slds-container--medium slds-container--center slds-order-1 slds-medium-order--2 slds-p-vertical--none">
-                    <div class="slds-col--padded slds-col-rule--right slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--8-of-12 slds-p-bottom--medium">
-                        <article class="slds-text-longform">
-                            <h2 class="slds-text-heading--label">Test step 2</h2>
-                            <ul class="slds-list_dotted">
-                                <li>
-                                    Additional information here.
-                                </li>
-                                <li>
-                                    Additional information here.
-                                </li>
-                            </ul>
-                            <p>
-                                Note: some note.
-                            </p>
-                        </article>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="step3" class="step" style="display:none;">
-
-            <div class="slds-box">
-                <div class="slds-grid slds-wrap slds-container--medium slds-container--center slds-order-1 slds-medium-order--2 slds-p-vertical--none">
-                    <div class="slds-col--padded slds-col-rule--right slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--8-of-12 slds-p-bottom--medium">
-                        <article class="slds-text-longform">
-                            <h2 class="slds-text-heading--label">Test step 3</h2>
-                            <ul class="slds-list_dotted">
-                                <li>
-                                    Additional information here.
-                                </li>
-                                <li>
-                                    Additional information here.
-                                </li>
-                            </ul>
-                            <p>
-                                Note: some note.
-                            </p>
-                        </article>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </form>

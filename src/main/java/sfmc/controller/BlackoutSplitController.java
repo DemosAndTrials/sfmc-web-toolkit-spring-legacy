@@ -1,10 +1,16 @@
 package sfmc.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import sfmc.model.CustomActivityExecuteArgs;
+import sfmc.service.ApiService;
+import sfmc.service.BlackoutService;
+
 import javax.json.Json;
 import javax.json.JsonObject;
 
@@ -14,6 +20,10 @@ import javax.json.JsonObject;
 @Controller
 @RequestMapping("/bll")
 public class BlackoutSplitController {
+
+    @Autowired
+    BlackoutService blackoutService;
+
     /**
      * Creation of config.json
      * Every custom Journey Builder activity must include a config.json in the root of its endpoint.
@@ -111,11 +121,36 @@ public class BlackoutSplitController {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * execute - The API calls this method for each contact processed by the journey.
+     *
+     * example of request's body:
+     * {
+     * "inArguments":
+     * [
+     * {"source_de": "ad59f02e-f93b-e711-af11-78e3b50b7f0c"},
+     * {"destination_de": "7c08723b-f93b-e711-af11-78e3b50b7f0c"},
+     * "activityObjectID": "5d88fd34-ba45-42ef-abda-d4a1f5830171",
+     * ],
+     * "journeyId": "8baa72eb-cc91-4c19-b053-e869a5bd5e42",
+     * "activityId": "5d88fd34-ba45-42ef-abda-d4a1f5830171",
+     * "definitionInstanceId": "45e3ec68-7b70-4e0d-9c13-218344f90fcb",
+     * "activityInstanceId": "b8f5640b-ecbe-411e-a143-29d21a89159a",
+     * "keyValue": "contact_emai@mail.com",
+     * "mode": 0
+     * }
+     *
+     * @param args
+     * @return
+     */
     @RequestMapping(value = "execute", method = RequestMethod.POST, headers = "Accept=application/json")
-    public ResponseEntity execute(@RequestBody String json) {
-        System.out.println("*** execute activity with payload: " + json);
+    public ResponseEntity execute(@RequestBody CustomActivityExecuteArgs args) {
+        System.out.println("*** execute activity with payload: " + args);
         String result = null;
         try {
+
+            boolean isBlackout = blackoutService.CheckBlackout(args);
+
             result = "key_path_1";
             System.out.println("*** execute activity with result: " + result);
             return new ResponseEntity(result, HttpStatus.OK);
@@ -160,9 +195,16 @@ public class BlackoutSplitController {
      * Endpoint for the UI displayed to marketers while configuring this activity.
      */
     @RequestMapping(value = {"ui", "ui/edit", "ui/config"})
-    public String editModal(@RequestParam(value = "numSteps", defaultValue = "0") String numSteps) {
+    public String editModal(@RequestParam(value = "numSteps", defaultValue = "0") String numSteps, Model model) {
+        model.addAttribute("data_extensions", blackoutService.GetDataExtensionsDetails());
         System.out.println("*** UI Configuration with " + numSteps + " steps ***");
         return "ca/blackout/editModal";
+    }
+
+    @RequestMapping(value = {"ui", "ui/save"}, method = RequestMethod.POST, headers = "Accept=application/json")
+    public ResponseEntity saveModal(@RequestBody String json) {
+        System.out.println("*** save activity: " + json);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
