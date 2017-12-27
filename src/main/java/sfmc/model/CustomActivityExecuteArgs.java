@@ -69,11 +69,30 @@ public class CustomActivityExecuteArgs {
         this.mode = mode;
     }
 
-    public  List<Map<String, String>> getInArguments() {
+    public List<Map<String, String>> getInArguments() {
         return inArguments;
     }
 
-    public void setInArguments (List<Map<String, String>> inArguments) {
+    public void setInArguments(List<Map<String, String>> inArguments) {
         this.inArguments = inArguments;
+    }
+
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"inArguments\":" +
+                "[" +
+                "{\"source_de\": \"" + inArguments.get(0).get("source_de") + "\"}," +
+                "{\"destination_de\": \"" + inArguments.get(1).get("destination_de") + "\"}" +
+                "]," +
+                "\"activityObjectID\": \"" + activityObjectID + "\"," +
+                "\"journeyId\": \"" + journeyId + "\"," +
+                "\"activityId\": \"" + activityId + "\"," +
+                "\"definitionInstanceId\": \"" + definitionInstanceId + "\"," +
+                "\"activityInstanceId\": \"" + activityInstanceId + "\"," +
+                "\"keyValue\": \"" + keyValue + "\"," +
+                "\"mode\": "+ mode +
+                "}";
     }
 }

@@ -219,7 +219,7 @@ public class FuelSDKRepository {
      * @param record
      * @return
      */
-    public ETDataExtensionRow UpdateDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
+    public ETDataExtensionRow updateDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
         EnsureClientInitialization();
         try {
             ETResponse<ETDataExtensionRow> res = de.update(record);
@@ -238,7 +238,7 @@ public class FuelSDKRepository {
      * @param record
      * @return
      */
-    public ETDataExtensionRow UpdateDataExtensionRow(ETDataExtensionRow record) {
+    public ETDataExtensionRow updateDataExtensionRow(ETDataExtensionRow record) {
 
         try {
             ETResponse<ETDataExtensionRow> res = ETDataExtensionRow.update(client, Arrays.asList(record));

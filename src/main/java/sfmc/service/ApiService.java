@@ -34,7 +34,7 @@ public class ApiService {
     }
 
     public ETDataExtensionRow Update(ETDataExtension de, ETDataExtensionRow row) {
-        return sdkRepository.UpdateDataExtensionRow(de, row);
+        return sdkRepository.updateDataExtensionRow(de, row);
     }
 
     public boolean Delete(ETDataExtension de, ETDataExtensionRow row) {
