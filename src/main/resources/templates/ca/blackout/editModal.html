@@ -17,14 +17,14 @@
     <div class="slds-shrink-none">
         <div class="slds-page-header">
             Blackout Activity
-            <button class="slds-button slds-button_icon" id="saveBtn"
-                    aria-pressed="false" title="Edit">
-                <svg class="slds-button__icon slds-icon-text-default" aria-hidden="true">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                         xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#edit"></use>
-                </svg>
-                <span class="slds-assistive-text">Save</span>
-            </button>
+            <!--<button class="slds-button slds-button_icon" id="saveBtn"-->
+                    <!--aria-pressed="false" title="Edit">-->
+                <!--<svg class="slds-button__icon slds-icon-text-default" aria-hidden="true">-->
+                    <!--<use xmlns:xlink="http://www.w3.org/1999/xlink"-->
+                         <!--xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#edit"></use>-->
+                <!--</svg>-->
+                <!--<span class="slds-assistive-text">Save</span>-->
+            <!--</button>-->
         </div>
     </div>
 
@@ -54,7 +54,7 @@
                                 <div class="slds-select_container">
                                     <select class="slds-select" id="source_de">
                                         <option value="0">Select Data Extension</option>
-                                        <option th:each="de : ${data_extensions}" th:value="${de.Id}"
+                                        <option th:each="de : ${data_extensions}" th:value="${de.Key}"
                                                 th:text="${de.Name}"></option>
                                     </select>
                                 </div>
@@ -67,7 +67,7 @@
                                 <div class="slds-select_container">
                                     <select class="slds-select" id="destination_de">
                                         <option value="0">Select Data Extension</option>
-                                        <option th:each="de : ${data_extensions}" th:value="${de.Id}"
+                                        <option th:each="de : ${data_extensions}" th:value="${de.Key}"
                                                 th:text="${de.Name}"></option>
                                     </select>
                                 </div>

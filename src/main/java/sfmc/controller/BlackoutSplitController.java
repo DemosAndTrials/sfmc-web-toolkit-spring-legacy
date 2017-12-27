@@ -8,9 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sfmc.model.CustomActivityExecuteArgs;
-import sfmc.service.ApiService;
 import sfmc.service.BlackoutService;
-
 import javax.json.Json;
 import javax.json.JsonObject;
 
@@ -123,7 +121,7 @@ public class BlackoutSplitController {
 
     /**
      * execute - The API calls this method for each contact processed by the journey.
-     *
+     * <p>
      * example of request's body:
      * {
      * "inArguments":
@@ -146,18 +144,14 @@ public class BlackoutSplitController {
     @RequestMapping(value = "execute", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity execute(@RequestBody CustomActivityExecuteArgs args) {
         System.out.println("*** execute activity with payload: " + args);
-        String result = null;
         try {
-
-            boolean isBlackout = blackoutService.CheckBlackout(args);
-
-            result = "key_path_1";
+            String result = blackoutService.CheckBlackout(args) ? "key_path_2" : "key_path_2";//TODO ??
             System.out.println("*** execute activity with result: " + result);
             return new ResponseEntity(result, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ResponseEntity(result, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
     @RequestMapping(value = "save", method = RequestMethod.POST, headers = "Accept=application/json")
@@ -184,7 +178,6 @@ public class BlackoutSplitController {
         System.out.println("*** stop activity: " + json);
         return new ResponseEntity(HttpStatus.OK);
     }
-
 
     /*
      * UI

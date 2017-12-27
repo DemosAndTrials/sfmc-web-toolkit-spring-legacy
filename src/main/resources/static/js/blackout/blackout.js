@@ -182,22 +182,22 @@ define(['postmonger'], function(Postmonger) {
         console.log('*** getEndpoints ***', data);
     });
 
-    $('#saveBtn').click(function () {
-        console.log('saveBtn clicked');
-
-        $('#genericActivity *').filter(':input').each(function(){
-            console.log("ID: " + this.id + " Name: " + this.name + " Value: " + this.value); //your code here
-            var key;
-
-            this.id ? key = this.id : key = this.name;
-
-            var formArg = {};
-            formArg[key] = this.value;
-
-            //inArgPayload['arguments'].execute.inArguments.push(formArg);
-        });
-        console.log('end saveBtn clicked');
-    });
+    // $('#saveBtn').click(function () {
+    //     console.log('saveBtn clicked');
+    //
+    //     $('#genericActivity *').filter(':input').each(function(){
+    //         console.log("ID: " + this.id + " Name: " + this.name + " Value: " + this.value); //your code here
+    //         var key;
+    //
+    //         this.id ? key = this.id : key = this.name;
+    //
+    //         var formArg = {};
+    //         formArg[key] = this.value;
+    //
+    //         //inArgPayload['arguments'].execute.inArguments.push(formArg);
+    //     });
+    //     console.log('end saveBtn clicked');
+    // });
 
 
     //
