@@ -26,14 +26,18 @@ public class ApiService {
     }
 
     public ETDataExtension GetDataExtensionDetails(String id) {
-       return sdkRepository.GetDataExtensionDetails(id);
+        return sdkRepository.GetDataExtensionDetails(id);
     }
 
-    public ETDataExtensionRow Create(ETDataExtensionRow row){
+    public ETDataExtensionRow Create(ETDataExtensionRow row) {
         return sdkRepository.CreateDataExtensionRow(row);
     }
 
-    public void Delete(ETDataExtensionRow row){
-        sdkRepository.DeleteDataExtensionRow(row);
+    public ETDataExtensionRow Update(ETDataExtension de, ETDataExtensionRow row) {
+        return sdkRepository.UpdateDataExtensionRow(de, row);
+    }
+
+    public boolean Delete(ETDataExtension de, ETDataExtensionRow row) {
+        return sdkRepository.DeleteDataExtensionRow(de, row);
     }
 }

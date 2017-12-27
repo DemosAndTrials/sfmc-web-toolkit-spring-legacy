@@ -81,7 +81,7 @@ public class CustomActivityController {
      * "activityId": "5d88fd34-ba45-42ef-abda-d4a1f5830171",
      * "definitionInstanceId": "45e3ec68-7b70-4e0d-9c13-218344f90fcb",
      * "activityInstanceId": "b8f5640b-ecbe-411e-a143-29d21a89159a",
-     * "keyValue": "matrostik@gmail.com",
+     * "keyValue": "contact_emai@mail.com",
      * "mode": 0
      * }
      *
