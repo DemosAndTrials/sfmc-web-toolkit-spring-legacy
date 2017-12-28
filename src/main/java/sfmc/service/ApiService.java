@@ -17,27 +17,27 @@ public class ApiService {
     @Autowired
     FuelSDKRepository sdkRepository;
 
-    public List<ETDataExtensionRow> GetDataExtensionRecordsByKey(String key) {
-        return sdkRepository.GetDataExtensionRecordsByKey(key);
+    public List<ETDataExtensionRow> getDataExtensionRecordsByKey(String key) {
+        return sdkRepository.getDataExtensionRecordsByKey(key);
     }
 
-    public List<ETDataExtension> GetDataExtensionsDetails() {
-        return sdkRepository.GetDataExtensionsDetails();
+    public List<ETDataExtension> getDataExtensionsDetails() {
+        return sdkRepository.getDataExtensionsDetails();
     }
 
-    public ETDataExtension GetDataExtensionDetails(String id) {
-        return sdkRepository.GetDataExtensionDetails(id);
+    public ETDataExtension getDataExtensionDetails(String id) {
+        return sdkRepository.getDataExtensionDetails(id);
     }
 
-    public ETDataExtensionRow Create(ETDataExtensionRow row) {
-        return sdkRepository.CreateDataExtensionRow(row);
+    public ETDataExtensionRow create(ETDataExtensionRow row) {
+        return sdkRepository.createDataExtensionRow(row);
     }
 
-    public ETDataExtensionRow Update(ETDataExtension de, ETDataExtensionRow row) {
+    public ETDataExtensionRow update(ETDataExtension de, ETDataExtensionRow row) {
         return sdkRepository.updateDataExtensionRow(de, row);
     }
 
-    public boolean Delete(ETDataExtension de, ETDataExtensionRow row) {
-        return sdkRepository.DeleteDataExtensionRow(de, row);
+    public boolean delete(ETDataExtension de, ETDataExtensionRow row) {
+        return sdkRepository.deleteDataExtensionRow(de, row);
     }
 }

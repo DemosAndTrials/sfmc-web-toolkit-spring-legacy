@@ -42,10 +42,10 @@ public class BlackoutService {
 
         try {
             // check if today is holiday or weekend
-            ETDataExtensionRow holiday = sdkRepository.GetDataExtensionRecord(sourceKey, df.format(date));
+            ETDataExtensionRow holiday = sdkRepository.getDataExtensionRecord(sourceKey, df.format(date));
             if (holiday != null) {
                 // update wait attribute
-                ETDataExtensionRow contact = sdkRepository.GetDataExtensionRowByEmail(destinationKey, args.getKeyValue());
+                ETDataExtensionRow contact = sdkRepository.getDataExtensionRowByEmail(destinationKey, args.getKeyValue());
                 if (contact != null) {
                     contact.setDataExtensionKey(destinationKey);
                     contact.setColumn("WaitDate", holiday.getColumn("EndDate"));
@@ -65,7 +65,7 @@ public class BlackoutService {
     }
 
     public List<ETDataExtension> getDataExtensionsDetails() {
-        return sdkRepository.GetDataExtensionsDetails();
+        return sdkRepository.getDataExtensionsDetails();
     }
 
     private String buildSplitResult(String path) {

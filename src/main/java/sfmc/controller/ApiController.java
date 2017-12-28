@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sfmc.service.ApiService;
-
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public class ApiController {
      */
     @GetMapping(value = {"/", "/index"})
     public String index() {
-        apiService.GetDataExtensionsDetails();
+        apiService.getDataExtensionsDetails();
         return "api/index";
     }
 
@@ -52,7 +51,7 @@ public class ApiController {
      */
     @GetMapping(value = "/sdk/de-list")
     public String deList(Model model) {
-        model.addAttribute("data_extensions", apiService.GetDataExtensionsDetails());
+        model.addAttribute("data_extensions", apiService.getDataExtensionsDetails());
         return "api/sdk/de-list";
     }
     ETDataExtension selectedDE;
@@ -66,9 +65,9 @@ public class ApiController {
     @GetMapping(value = "/sdk/de-details/{id}")
     public String deDetails(@PathVariable String id, Model model) {
         System.out.println("*** de details: " + id + " ***");
-        selectedDE = apiService.GetDataExtensionDetails(id);
+        selectedDE = apiService.getDataExtensionDetails(id);
         model.addAttribute("ext", selectedDE);
-        List<ETDataExtensionRow> rows = apiService.GetDataExtensionRecordsByKey(selectedDE.getKey());
+        List<ETDataExtensionRow> rows = apiService.getDataExtensionRecordsByKey(selectedDE.getKey());
         model.addAttribute("records", rows);
         return "api/sdk/de-details";
     }
@@ -86,7 +85,7 @@ public class ApiController {
     }
 
     /**
-     * Create new record
+     * create new record
      * @param key
      * @param data
      * @return
@@ -100,7 +99,7 @@ public class ApiController {
             row.setColumn(entry.getKey(), entry.getValue());
         }
 
-        ETDataExtensionRow result = apiService.Create(row);
+        ETDataExtensionRow result = apiService.create(row);
         if (result != null)
         {
             return new ResponseEntity(data, HttpStatus.OK);
@@ -117,7 +116,7 @@ public class ApiController {
             row.setColumn(entry.getKey(), entry.getValue());
         }
 
-        ETDataExtensionRow result = apiService.Update(selectedDE, row);
+        ETDataExtensionRow result = apiService.update(selectedDE, row);
         if (result != null)
         {
             return new ResponseEntity(data, HttpStatus.OK);
@@ -133,7 +132,7 @@ public class ApiController {
         for (Map.Entry<String, String> entry : data.entrySet()) {
             row.setColumn(entry.getKey(), entry.getValue());
         }
-        boolean res = apiService.Delete(selectedDE, row);
+        boolean res = apiService.delete(selectedDE, row);
         return new ResponseEntity(res, HttpStatus.OK);
     }
 

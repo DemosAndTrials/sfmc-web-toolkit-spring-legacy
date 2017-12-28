@@ -127,7 +127,7 @@ public class CustomActivityService {
     }
 
     /**
-     * Delete config
+     * delete config
      *
      * @param idStr
      * @return
