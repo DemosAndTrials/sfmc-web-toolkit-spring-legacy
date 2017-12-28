@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Blackout custom activity</title>
     <link rel="icon" href="/images/fav.ico" type="image/x-icon"/>
@@ -27,8 +27,10 @@
                             Related date field update.
                         </li>
                     </ul>
-                    <p>
-                        Note: some note.
+                    <p th:remove="${holiday == null}? all:none">
+                        <p>Name: <span th:text="${holiday?.key}">Sebastian</span></p>
+                        <p>Start: <span th:text="*{holiday?.StartDate}">Pepper</span></p>
+                        <p>End: <span th:text="*{holiday?.EndDate}">Saturn</span></p>
                     </p>
                 </article>
             </div>
