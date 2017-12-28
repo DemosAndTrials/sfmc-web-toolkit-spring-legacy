@@ -441,7 +441,7 @@ img {
   box-shadow: 0 -2px 4px #F4F6F9; }
 
 /**
- * @summary Create each activity timeline item in a list
+ * @summary create each activity timeline item in a list
  *
  * @name base
  * @selector .slds-timeline__media
@@ -575,7 +575,7 @@ img {
   background: #4bc076; }
 
 /**
- * @summary Create badge component
+ * @summary create badge component
  *
  * @name base
  * @selector .slds-badge
@@ -601,7 +601,7 @@ img {
   padding: 0; }
 
 /**
- * @summary Create breadcrumbs component
+ * @summary create breadcrumbs component
  *
  * @name base
  * @selector .slds-breadcrumb
@@ -4810,7 +4810,7 @@ a.slds-button--inverse:focus {
   border-radius: 0;
   background-clip: padding-box;
   /**
-   * Create styled button when adjacent to the input[radio] element
+   * create styled button when adjacent to the input[radio] element
    *
    * @selector .slds-radio_faux
    * @restrict .slds-radio_button span

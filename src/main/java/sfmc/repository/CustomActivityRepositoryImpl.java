@@ -168,7 +168,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
     }
 
     /**
-     * Create json array for wizard steps
+     * create json array for wizard steps
      * TODO dynamic creation
      *
      * @param config
@@ -185,7 +185,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
     }
 
     /**
-     * Create json array for splits
+     * create json array for splits
      *
      * @param config
      * @return
@@ -211,7 +211,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
     public String getSplitResult() {
         // TODO add decision logic
         JsonObject value = Json.createObjectBuilder()
-                .add("branchResult", "key_path_2")
+                .add("branchResult", "key_path_3")
                 .build();
         String result = value.toString();
         return result;

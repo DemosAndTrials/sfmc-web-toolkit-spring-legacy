@@ -30,7 +30,7 @@ public class ApiPocController {
      */
     @GetMapping(value = {"/", "/index"})
     public String index() {
-        //apiService.GetDataExtensionsDetails();
+        //apiService.getDataExtensionsDetails();
         return "api/poc/test";
     }
 
@@ -43,7 +43,7 @@ public class ApiPocController {
 //            row.setColumn(entry.getKey(), entry.getValue());
 //        }
 //
-//        ETDataExtensionRow result = apiService.Create(row);
+//        ETDataExtensionRow result = apiService.create(row);
 //        if (result != null)
 //        {
 //            return new ResponseEntity(data, HttpStatus.OK);
@@ -64,7 +64,7 @@ public class ApiPocController {
 //            row.setColumn(entry.getKey(), entry.getValue());
 //        }
         // TODO not working!!!
-        //apiService.Delete(row);
+        //apiService.delete(row);
 
         out.println("************** delete: " + key + " *****************");
         return new ResponseEntity(true, HttpStatus.OK);

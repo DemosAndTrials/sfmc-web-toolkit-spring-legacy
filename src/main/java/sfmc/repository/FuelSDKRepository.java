@@ -20,13 +20,13 @@ public class FuelSDKRepository {
     private ETClient client;
 
 //    public FuelSDKRepository() {
-//        InitSDKClient();
+//        initSDKClient();
 //    }
 
     /**
      * Instantiates an sdk client
      */
-    private void InitSDKClient() {
+    private void initSDKClient() {
         ETConfiguration configuration = new ETConfiguration();
         // get config from heroku
         configuration.set("clientId", System.getenv("CLIENT_ID"));
@@ -42,15 +42,15 @@ public class FuelSDKRepository {
     /**
      * Check if client initiated
      */
-    private void EnsureClientInitialization() {
+    private void ensureClientInitialization() {
         if (client == null)
-            InitSDKClient();
+            initSDKClient();
     }
 
     /**
      * Gets access token
      */
-    public void GetToken() {
+    public void getToken() {
         String token = client.getAccessToken();
         System.out.println("*** TOKEN: " + token);
     }
@@ -58,9 +58,9 @@ public class FuelSDKRepository {
     /**
      * Gets list of data extensions
      */
-    public List<ETDataExtension> GetDataExtensionsDetails() {
+    public List<ETDataExtension> getDataExtensionsDetails() {
         try {
-            EnsureClientInitialization();
+            ensureClientInitialization();
             List<ETDataExtension> exts = new ArrayList<>();
             ETResponse<ETDataExtension> response = client.retrieve(ETDataExtension.class);
             for (ETDataExtension ext : response.getObjects()) {
@@ -83,9 +83,9 @@ public class FuelSDKRepository {
      * @param id
      * @return
      */
-    public ETDataExtension GetDataExtensionDetails(String id) {
+    public ETDataExtension getDataExtensionDetails(String id) {
 
-        EnsureClientInitialization();
+        ensureClientInitialization();
         try {
             ETExpression expression = new ETExpression();
             expression.setProperty("id");
@@ -108,7 +108,7 @@ public class FuelSDKRepository {
         return null;
     }
 
-    public ETDataExtensionRow GetDataExtensionRowByEmail(String deKey, String email) {
+    public ETDataExtensionRow getDataExtensionRowByEmail(String deKey, String email) {
         ETExpression expression = new ETExpression();
         expression.setProperty("Email");
         expression.setOperator(ETExpression.Operator.EQUALS);
@@ -117,7 +117,7 @@ public class FuelSDKRepository {
         ETFilter filter = new ETFilter();
         filter.setExpression(expression);
 
-        List<ETDataExtensionRow> res = GetDataExtensionRecords("key=" + deKey, filter);
+        List<ETDataExtensionRow> res = getDataExtensionRecords("key=" + deKey, filter);
         return res.size() > 0 ? res.get(0) : null;
     }
 
@@ -128,7 +128,7 @@ public class FuelSDKRepository {
      * @return
      * @throws ETSdkException
      */
-    public ETDataExtensionRow GetDataExtensionRecord(String key, String today) throws ETSdkException {
+    public ETDataExtensionRow getDataExtensionRecord(String key, String today) throws ETSdkException {
         // create expression
         // property on left side, value on right side
         ETExpression ex1 = ETExpression.parse("StartDate <= '" + today + "'");
@@ -141,7 +141,7 @@ public class FuelSDKRepository {
         ETFilter filter = new ETFilter();
         filter.setExpression(exp);
         // get record
-        List<ETDataExtensionRow> res = GetDataExtensionRecords("key=" + key, filter);
+        List<ETDataExtensionRow> res = getDataExtensionRecords("key=" + key, filter);
         return res.size() > 0 ? res.get(0) : null;
     }
 
@@ -150,8 +150,8 @@ public class FuelSDKRepository {
      *
      * @param key
      */
-    public List<ETDataExtensionRow> GetDataExtensionRecordsByKey(String key) {
-        return GetDataExtensionRecords("key=" + key, new ETFilter());
+    public List<ETDataExtensionRow> getDataExtensionRecordsByKey(String key) {
+        return getDataExtensionRecords("key=" + key, new ETFilter());
     }
 
     /**
@@ -161,8 +161,8 @@ public class FuelSDKRepository {
      * @param filter
      * @return
      */
-    private List<ETDataExtensionRow> GetDataExtensionRecords(String dataExtension, ETFilter filter) {
-        EnsureClientInitialization();
+    private List<ETDataExtensionRow> getDataExtensionRecords(String dataExtension, ETFilter filter) {
+        ensureClientInitialization();
         List<ETDataExtensionRow> records = new ArrayList<>();
         try {
             ETResponse<ETDataExtensionRow> res = ETDataExtension.select(client, dataExtension, filter);
@@ -178,13 +178,13 @@ public class FuelSDKRepository {
     }
 
     /**
-     * Create DE Row
+     * create DE Row
      *
      * @param record
      * @return
      */
-    public ETDataExtensionRow CreateDataExtensionRow(ETDataExtensionRow record) {
-        EnsureClientInitialization();
+    public ETDataExtensionRow createDataExtensionRow(ETDataExtensionRow record) {
+        ensureClientInitialization();
         try {
             ETResponse<ETDataExtensionRow> res = client.create(record);// TODO use de.insert?!
             return res.getObject();
@@ -195,13 +195,13 @@ public class FuelSDKRepository {
     }
 
     /**
-     * Delete DE Row
+     * delete DE Row
      *
      * @param de
      * @param record
      * @return
      */
-    public boolean DeleteDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
+    public boolean deleteDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
         try {
             ETResponse<ETDataExtensionRow> res = de.delete(record);
             if (res.getStatus() == ETResult.Status.OK)
@@ -213,14 +213,14 @@ public class FuelSDKRepository {
     }
 
     /**
-     * Update DE Row
+     * update DE Row
      *
      * @param de
      * @param record
      * @return
      */
     public ETDataExtensionRow updateDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
-        EnsureClientInitialization();
+        ensureClientInitialization();
         try {
             ETResponse<ETDataExtensionRow> res = de.update(record);
             if (res.getStatus() == ETResult.Status.OK)
@@ -233,7 +233,7 @@ public class FuelSDKRepository {
     }
 
     /**
-     * Update DE row
+     * update DE row
      * row should include de key
      * @param record
      * @return

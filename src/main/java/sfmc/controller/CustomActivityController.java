@@ -235,7 +235,7 @@ public class CustomActivityController {
     }
 
     /**
-     * Create config
+     * create config
      *
      * @param model
      * @return
@@ -265,7 +265,7 @@ public class CustomActivityController {
     }
 
     /**
-     * Create config or return back to the list
+     * create config or return back to the list
      * Notice how the BindingResult has to be immediately after the object I have annotated with @Valid.
      *
      * @param config
@@ -325,7 +325,7 @@ public class CustomActivityController {
     }
 
     /**
-     * Delete config using jquery
+     * delete config using jquery
      *
      * @param id
      * @return
