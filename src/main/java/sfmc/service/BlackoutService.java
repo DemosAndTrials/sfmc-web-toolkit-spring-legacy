@@ -30,38 +30,46 @@ public class BlackoutService {
      * @return
      */
     public String checkBlackout(CustomActivityExecuteArgs args) {
-        // get local time
-        Date date = new Date();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        df.setTimeZone(TimeZone.getTimeZone("Israel"));
-        System.out.println("*** current time: " + df.format(date));
-
         // check if there is weekend or holiday
         String sourceKey = args.getInArguments().get(0).get("source_de");
         String destinationKey = args.getInArguments().get(1).get("destination_de");
 
+        // check if today is holiday or weekend
+        ETDataExtensionRow holiday = getHolidayRow(sourceKey);
+        if (holiday != null) {
+            // update wait attribute
+            ETDataExtensionRow contact = sdkRepository.getDataExtensionRowByEmail(destinationKey, args.getKeyValue());
+            if (contact != null) {
+                contact.setDataExtensionKey(destinationKey);
+                contact.setColumn("WaitDate", holiday.getColumn("EndDate"));
+                ETDataExtensionRow result = sdkRepository.updateDataExtensionRow(contact);
+                if (result != null)
+                    System.out.println("*** updated contact: " + result);
+                else
+                    System.out.println("*** updated contact failed ***");
+                return buildSplitResult("key_path_2");
+            }
+        }
+
+        // update wait by attribute field
+        return buildSplitResult("key_path_1");
+    }
+
+    public ETDataExtensionRow getHolidayRow(String deKey) {
+        // get local time
+        Date date = new Date();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        df.setTimeZone(TimeZone.getTimeZone("Israel"));
+        System.out.println("*** current datetime: " + df.format(date));
+
         try {
             // check if today is holiday or weekend
-            ETDataExtensionRow holiday = sdkRepository.getDataExtensionRecord(sourceKey, df.format(date));
-            if (holiday != null) {
-                // update wait attribute
-                ETDataExtensionRow contact = sdkRepository.getDataExtensionRowByEmail(destinationKey, args.getKeyValue());
-                if (contact != null) {
-                    contact.setDataExtensionKey(destinationKey);
-                    contact.setColumn("WaitDate", holiday.getColumn("EndDate"));
-                    ETDataExtensionRow result = sdkRepository.updateDataExtensionRow(contact);
-                    if (result != null)
-                        System.out.println("*** updated contact: " + result);
-                    else
-                        System.out.println("*** updated contact failed ***");
-                    return buildSplitResult("key_path_2");
-                }
-            }
+            ETDataExtensionRow holiday = sdkRepository.getDataExtensionRecord(deKey, df.format(date));
+            return holiday;
         } catch (ETSdkException e) {
             e.printStackTrace();
         }
-        // update wait by attribute field
-        return buildSplitResult("key_path_1");
+        return null;
     }
 
     public List<ETDataExtension> getDataExtensionsDetails() {
@@ -89,7 +97,7 @@ public class BlackoutService {
                         .add("category", "message")
                         .add("isConfigured", true))
                 // type - String property representing the type of activity. This value must include one of the Marketing Cloud-provided types
-                .add("type", "REST")
+                .add("type", "RESTDECISION")
                 // lang - Used to define i18n (internationalization) strings, such as the name and description as used within the application.
                 .add("lang", Json.createObjectBuilder()
                         .add("en-US", Json.createObjectBuilder()

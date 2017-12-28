@@ -211,7 +211,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
     public String getSplitResult() {
         // TODO add decision logic
         JsonObject value = Json.createObjectBuilder()
-                .add("branchResult", "key_path_3")
+                .add("branchResult", "key_path_2")
                 .build();
         String result = value.toString();
         return result;
