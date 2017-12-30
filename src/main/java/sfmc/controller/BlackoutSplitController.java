@@ -1,5 +1,6 @@
 package sfmc.controller;
 
+import com.exacttarget.fuelsdk.ETDataExtension;
 import com.exacttarget.fuelsdk.ETDataExtensionRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -181,7 +182,10 @@ public class BlackoutSplitController {
     public String runningHover(Model model) {
         System.out.println("*** running hover ***");
         // TODO remove hardcoded key
-        ETDataExtensionRow holiday = blackoutService.getHolidayRow("ad59f02e-f93b-e711-af11-78e3b50b7f0c");
+        String key = "1B5E2C69-7B08-4E0D-BF21-F7A6821C6179";
+        ETDataExtension selectedDE = blackoutService.getDataExtensionDetails(key);
+        model.addAttribute("ext", selectedDE);
+        ETDataExtensionRow holiday = blackoutService.getHolidayRow(key);
         model.addAttribute("holiday", holiday);
         return "ca/blackout/runningHover";
     }

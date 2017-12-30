@@ -26,7 +26,7 @@ public class ApiService {
     }
 
     public ETDataExtension getDataExtensionDetails(String id) {
-        return sdkRepository.getDataExtensionDetails(id);
+        return sdkRepository.getDataExtensionById(id);
     }
 
     public ETDataExtensionRow create(ETDataExtensionRow row) {
