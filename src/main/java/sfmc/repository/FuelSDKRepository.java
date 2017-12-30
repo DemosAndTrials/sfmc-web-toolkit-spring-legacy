@@ -83,7 +83,7 @@ public class FuelSDKRepository {
      * @param id
      * @return
      */
-    public ETDataExtension getDataExtensionDetails(String id) {
+    public ETDataExtension getDataExtensionById(String id) {
 
         ensureClientInitialization();
         try {
@@ -99,9 +99,25 @@ public class FuelSDKRepository {
             if (response.getObjects().size() > 0) {
                 ETDataExtension ext = response.getObjects().get(0);
                 ext.retrieveColumns();
-                ext.getColumns().sort(Comparator.comparing(o -> o.getCreatedDate()));
+                ext.getColumns().sort(Comparator.comparing(o -> o.getCreatedDate()));// TODO ????
                 return ext;
             }
+        } catch (ETSdkException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ETDataExtension getDataExtensionByKey(String key) {
+        ensureClientInitialization();
+
+        try {
+            ETResponse<ETDataExtension> result = client.retrieve(ETDataExtension.class, "key=" + key);
+            ETDataExtension de = result.getObject();
+            if (de != null) {
+                de.retrieveColumns();
+            }
+            return de;
         } catch (ETSdkException e) {
             e.printStackTrace();
         }
@@ -123,6 +139,7 @@ public class FuelSDKRepository {
 
     /**
      * Get Row
+     *
      * @param key
      * @param today
      * @return
@@ -235,6 +252,7 @@ public class FuelSDKRepository {
     /**
      * update DE row
      * row should include de key
+     *
      * @param record
      * @return
      */

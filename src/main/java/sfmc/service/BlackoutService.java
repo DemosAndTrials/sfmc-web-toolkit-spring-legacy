@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sfmc.model.CustomActivityExecuteArgs;
 import sfmc.repository.FuelSDKRepository;
-
 import javax.json.Json;
 import javax.json.JsonObject;
 import java.text.DateFormat;
@@ -74,6 +73,10 @@ public class BlackoutService {
 
     public List<ETDataExtension> getDataExtensionsDetails() {
         return sdkRepository.getDataExtensionsDetails();
+    }
+
+    public ETDataExtension getDataExtensionDetails(String key) {
+        return sdkRepository.getDataExtensionByKey(key);
     }
 
     private String buildSplitResult(String path) {
@@ -150,14 +153,14 @@ public class BlackoutService {
                 // userInterfaces - Contains endpoints and UI configurations for the user interfaces for the activity
                 // (configuration modal, running mode hover, running mode details modal).
                 .add("userInterfaces", Json.createObjectBuilder()
-                        .add("configModal", Json.createObjectBuilder()
-                                .add("height", 600)
-                                .add("width", 800)
-                                .add("url", host + "/ui/edit" + "?numSteps=" + 1))
                         .add("runningModal", Json.createObjectBuilder()
                                 .add("url", host + "/ui/modal"))
                         .add("runningHover", Json.createObjectBuilder()
                                 .add("url", host + "/ui/hover")))
+                .add("edit", Json.createObjectBuilder()
+                        .add("url", host + "/ui/edit" + "?numSteps=" + 1)
+                        .add("height", 600)
+                        .add("width", 800))
                 .build();
 
         return value.toString();
