@@ -2,7 +2,6 @@ package sfmc.repository;
 
 import com.exacttarget.fuelsdk.*;
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -17,6 +16,7 @@ import java.util.List;
 @Repository
 public class FuelSDKRepository {
 
+    private static final String REFRESH_TOKEN_NULL = "refreshToken == null";
     private ETClient client;
 
 //    public FuelSDKRepository() {
@@ -31,6 +31,8 @@ public class FuelSDKRepository {
         // get config from heroku
         configuration.set("clientId", System.getenv("CLIENT_ID"));
         configuration.set("clientSecret", System.getenv("CLIENT_SECRET"));
+        //configuration.set("accessType", System.getenv("ACCESS_TYPE"));
+        //configuration.set("requestLegacyToken", "false");
 
         try {
             client = new ETClient(configuration);
@@ -45,14 +47,6 @@ public class FuelSDKRepository {
     private void ensureClientInitialization() {
         if (client == null)
             initSDKClient();
-    }
-
-    /**
-     * Gets access token
-     */
-    public void getToken() {
-        String token = client.getAccessToken();
-        System.out.println("*** TOKEN: " + token);
     }
 
     /**
@@ -72,7 +66,8 @@ public class FuelSDKRepository {
             }
             return exts;
         } catch (ETSdkException e) {
-            e.printStackTrace();
+            if (HandleTokenExpiration(e))
+                getDataExtensionsDetails();
         }
         return null;
     }
@@ -103,7 +98,8 @@ public class FuelSDKRepository {
                 return ext;
             }
         } catch (ETSdkException e) {
-            e.printStackTrace();
+            if (HandleTokenExpiration(e))
+                getDataExtensionById(id);
         }
         return null;
     }
@@ -119,14 +115,15 @@ public class FuelSDKRepository {
             }
             return de;
         } catch (ETSdkException e) {
-            e.printStackTrace();
+            if (HandleTokenExpiration(e))
+                getDataExtensionByKey(key);
         }
         return null;
     }
 
     public ETDataExtensionRow getDataExtensionRowByEmail(String deKey, String email) {
         ETExpression expression = new ETExpression();
-        expression.setProperty("Email");
+        expression.setProperty("Key");
         expression.setOperator(ETExpression.Operator.EQUALS);
         expression.setValue(email);
 
@@ -189,7 +186,8 @@ public class FuelSDKRepository {
             }
             return records;
         } catch (ETSdkException e) {
-            e.printStackTrace();
+            if (HandleTokenExpiration(e))
+                getDataExtensionRecords(dataExtension, filter);
         }
         return records;
     }
@@ -206,7 +204,8 @@ public class FuelSDKRepository {
             ETResponse<ETDataExtensionRow> res = client.create(record);// TODO use de.insert?!
             return res.getObject();
         } catch (ETSdkException e) {
-            e.printStackTrace();
+            if (HandleTokenExpiration(e))
+                createDataExtensionRow(record);
         }
         return null;
     }
@@ -224,7 +223,8 @@ public class FuelSDKRepository {
             if (res.getStatus() == ETResult.Status.OK)
                 return true;
         } catch (ETSdkException e) {
-            e.printStackTrace();
+            if (HandleTokenExpiration(e))
+                deleteDataExtensionRow(de, record);
         }
         return false;
     }
@@ -244,7 +244,8 @@ public class FuelSDKRepository {
                 return res.getObject();
             return null; // TODO throw exception
         } catch (ETSdkException e) {
-            e.printStackTrace();
+            if (HandleTokenExpiration(e))
+                updateDataExtensionRow(de, record);
         }
         return null;
     }
@@ -264,8 +265,28 @@ public class FuelSDKRepository {
                 return res.getObject();
             return null; // TODO throw exception
         } catch (ETSdkException e) {
-            e.printStackTrace();
+            if (HandleTokenExpiration(e))
+                updateDataExtensionRow(record);
         }
         return null;
+    }
+
+    /**
+     * Request new token if old one already expired
+     * @param ex
+     * @return
+     */
+    private Boolean HandleTokenExpiration(ETSdkException ex) {
+        ex.printStackTrace();
+        if (!ex.getMessage().equals(REFRESH_TOKEN_NULL))
+            return false;
+        System.out.println("*** Token expired ***");
+        try {
+            client.requestToken();
+            return true;
+        } catch (ETSdkException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

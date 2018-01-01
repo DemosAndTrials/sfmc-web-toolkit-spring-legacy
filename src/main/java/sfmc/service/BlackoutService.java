@@ -30,6 +30,8 @@ public class BlackoutService {
      */
     public String checkBlackout(CustomActivityExecuteArgs args) {
         // check if there is weekend or holiday
+        if (args.getInArguments() == null || args.getInArguments().size() < 2)
+            return "key_path_1";
         String sourceKey = args.getInArguments().get(0).get("source_de");
         String destinationKey = args.getInArguments().get(1).get("destination_de");
 
@@ -49,7 +51,6 @@ public class BlackoutService {
                 return buildSplitResult("key_path_2");
             }
         }
-
         // update wait by attribute field
         return buildSplitResult("key_path_1");
     }
