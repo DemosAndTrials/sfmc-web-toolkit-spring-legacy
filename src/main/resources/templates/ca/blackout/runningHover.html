@@ -16,36 +16,11 @@
         <div class="slds-grid slds-wrap slds-container--medium slds-container--center slds-order-1 slds-medium-order--2 slds-p-vertical--none">
             <div class="slds-col--padded slds-col-rule--right slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--8-of-12 slds-p-bottom--medium">
                 <article class="slds-text-longform">
-                    <p>
-                        Blackout custom activity
-                    </p>
                     <ul class="slds-list_dotted">
-                        <li>
-                            Current day generation.
-                        </li>
-                        <li>
-                            Related date field update.
+                        <li th:if="${holiday == null}">
+                            No holiday now!
                         </li>
                     </ul>
-                    <p scope="col" class="" th:each="col : ${holiday?.columns}">
-                        <div class="slds-truncate" th:title="${col}" th:text="${col?.key}">Name</div>
-                    </p>
-
-
-                    <p data-label="Key" th:each="col : ${ext.columns}" th:id="@{'extColumnValue_' + ${col.Key}}">
-
-                        <!--<div class="slds-form-element__control">-->
-                        <!--<abbr th:if="${col.IsRequired}" class="slds-required slds-hidden" title="required">*</abbr>-->
-                        <span class="slds-truncate read-only" th:name="${col.Name}" th:text="${col.Name}">Value</span>
-
-                        <span class="slds-truncate read-only" th:name="${col.Name}" th:text="${holiday.columns[__${col.Name}__]}">Value</span>
-
-                        <input th:unless="${col.IsPrimaryKey}" class="slds-input slds-hide" type="text"
-                               th:name="${col.Name}" th:value="${holiday.columns[__${col.Name}__]}">
-                        <input th:if="${col.IsPrimaryKey}" disabled="" class="slds-input slds-hide" type="text"
-                               th:name="${col.Name}" th:value="${holiday.columns[__${col.Name}__]}">
-
-                    </p>
 
                     <div th:each="instance : ${holiday?.columns}">
                         <div th:text="${#strings.toUpperCase(instance?.key)}">key</div>
@@ -53,9 +28,9 @@
                     </div>
 
                     <!--<p th:remove="${holiday == null}? all:none">-->
-                        <!--<p>Name: <span th:text="${holiday?.Columns?['key']}">Sebastian</span></p>-->
-                        <!--<p>Start: <span th:text="*{holiday?.Columns?['StartDate']}">Pepper</span></p>-->
-                        <!--<p>End: <span th:text="*{holiday?.Columns?['EndDate']}">Saturn</span></p>-->
+                    <!--<p>Name: <span th:text="${holiday?.Columns?['key']}">Sebastian</span></p>-->
+                    <!--<p>Start: <span th:text="*{holiday?.Columns?['StartDate']}">Pepper</span></p>-->
+                    <!--<p>End: <span th:text="*{holiday?.Columns?['EndDate']}">Saturn</span></p>-->
                     <!--</p>-->
                 </article>
             </div>

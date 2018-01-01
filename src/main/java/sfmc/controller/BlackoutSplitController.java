@@ -183,8 +183,6 @@ public class BlackoutSplitController {
         System.out.println("*** running hover ***");
         // TODO remove hardcoded key
         String key = "1B5E2C69-7B08-4E0D-BF21-F7A6821C6179";
-        ETDataExtension selectedDE = blackoutService.getDataExtensionDetails(key);
-        model.addAttribute("ext", selectedDE);
         ETDataExtensionRow holiday = blackoutService.getHolidayRow(key);
         model.addAttribute("holiday", holiday);
         return "ca/blackout/runningHover";
