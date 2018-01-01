@@ -1,4 +1,4 @@
-package sfmc.controller;
+package sfmc.controller.api;
 
 import com.exacttarget.fuelsdk.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sfmc.service.ApiService;
+
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class ApiController {
      *
      * @return
      */
-    @GetMapping(value = {"/", "/index"})
+    @GetMapping(value = {"", "/", "/index"})
     public String index() {
         apiService.getDataExtensionsDetails();
         return "api/index";
@@ -54,7 +55,9 @@ public class ApiController {
         model.addAttribute("data_extensions", apiService.getDataExtensionsDetails());
         return "api/sdk/de-list";
     }
+
     ETDataExtension selectedDE;
+
     /**
      * Data Extension details
      *
@@ -86,6 +89,7 @@ public class ApiController {
 
     /**
      * create new record
+     *
      * @param key
      * @param data
      * @return
@@ -100,11 +104,10 @@ public class ApiController {
         }
 
         ETDataExtensionRow result = apiService.create(row);
-        if (result != null)
-        {
+        if (result != null) {
             return new ResponseEntity(data, HttpStatus.OK);
         }
-     return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping(value = "/sdk/update/{key}", headers = "Accept=application/json")
@@ -117,8 +120,7 @@ public class ApiController {
         }
 
         ETDataExtensionRow result = apiService.update(selectedDE, row);
-        if (result != null)
-        {
+        if (result != null) {
             return new ResponseEntity(data, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -127,7 +129,7 @@ public class ApiController {
     @PostMapping(value = "/sdk/delete/{key}")
     public ResponseEntity deleteRow(@PathVariable String key, @RequestBody Map<String, String> data) {
         // delete
-          ETDataExtensionRow row = new ETDataExtensionRow();
+        ETDataExtensionRow row = new ETDataExtensionRow();
         row.setDataExtensionKey(key);
         for (Map.Entry<String, String> entry : data.entrySet()) {
             row.setColumn(entry.getKey(), entry.getValue());
@@ -135,10 +137,6 @@ public class ApiController {
         boolean res = apiService.delete(selectedDE, row);
         return new ResponseEntity(res, HttpStatus.OK);
     }
-
-
-
-
 
 
     /**
