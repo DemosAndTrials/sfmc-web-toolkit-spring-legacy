@@ -14,6 +14,19 @@
         <div class="slds-page-header"><h2 class="slds-text-heading--medium">Create Data Extension</h2></div>
     </div>
 
+    <div id="tab-default-1" class="slds-tabs_default__content slds-show slds-m-right_medium slds-m-left_medium" role="tabpanel" aria-labelledby="tab-default-1__item">
+        <div class="slds-tabs_scoped">
+            <ul class="slds-tabs_scoped__nav" role="tablist">
+                <li class="slds-tabs_scoped__item slds-is-active" title="Properties" role="presentation"><a class="slds-tabs_scoped__link" href="javascript:void(0);" role="tab" tabindex="0" aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">1 Properties</a></li>
+                <li class="slds-tabs_scoped__item" title="Retention" role="presentation"><a class="slds-tabs_scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-2" id="tab-scoped-2__item">2 Data Retention Policy</a></li>
+                <li class="slds-tabs_scoped__item" title="Attributes" role="presentation"><a class="slds-tabs_scoped__link" href="javascript:void(0);" role="tab" tabindex="-1" aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">3 Attributes</a></li>
+            </ul>
+            <div id="tab-scoped-1" class="slds-tabs_scoped__content slds-show" role="tabpanel" aria-labelledby="tab-scoped-1__item">1 Properties Content</div>
+            <div id="tab-scoped-2" class="slds-tabs_scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-2__item">2 Data Retention Policy Content</div>
+            <div id="tab-scoped-3" class="slds-tabs_scoped__content slds-hide" role="tabpanel" aria-labelledby="tab-scoped-3__item">3 Attributes</div>
+        </div>
+    </div>
+
     <div th:replace="fragments/footer :: footer"></div>
 </section>
 

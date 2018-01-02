@@ -103,6 +103,16 @@ public class SdkController {
         return new ResponseEntity(res, HttpStatus.OK);
     }
 
+    /**
+     * Create Data Extensions
+     *
+     * @return
+     */
+    @GetMapping(value = "/de-create")
+    public String deCreate() {
+        return "api/sdk/de-create";
+    }
+
 
     /**
      * TODO FOR TESTING PURPOSE ONLY
