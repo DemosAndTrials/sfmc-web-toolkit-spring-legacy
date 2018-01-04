@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sfmc.service.ApiService;
+
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +54,7 @@ public class SdkController {
     }
 
     /**
-     * create new record
+     * Create new row
      *
      * @param key
      * @param data
@@ -68,13 +69,20 @@ public class SdkController {
             row.setColumn(entry.getKey(), entry.getValue());
         }
 
-        ETDataExtensionRow result = apiService.create(row);
+        ETDataExtensionRow result = apiService.createDataExtensionRow(row);
         if (result != null) {
             return new ResponseEntity(data, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Update data extension row
+     *
+     * @param key
+     * @param data
+     * @return
+     */
     @PostMapping(value = "/row-update/{key}", headers = "Accept=application/json")
     public ResponseEntity updateRow(@PathVariable String key, @RequestBody Map<String, String> data) {
         // save
@@ -84,13 +92,20 @@ public class SdkController {
             row.setColumn(entry.getKey(), entry.getValue());
         }
 
-        ETDataExtensionRow result = apiService.update(selectedDE, row);
+        ETDataExtensionRow result = apiService.updateDataExtensionRow(row);
         if (result != null) {
             return new ResponseEntity(data, HttpStatus.OK);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Delete data extension row
+     *
+     * @param key
+     * @param data
+     * @return
+     */
     @PostMapping(value = "/row-delete/{key}")
     public ResponseEntity deleteRow(@PathVariable String key, @RequestBody Map<String, String> data) {
         // delete
@@ -99,8 +114,9 @@ public class SdkController {
         for (Map.Entry<String, String> entry : data.entrySet()) {
             row.setColumn(entry.getKey(), entry.getValue());
         }
-        boolean res = apiService.delete(selectedDE, row);
-        return new ResponseEntity(res, HttpStatus.OK);
+        if (apiService.deleteDataExtensionRow(selectedDE, row))
+            return new ResponseEntity(true, HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     /**
@@ -111,6 +127,13 @@ public class SdkController {
     @GetMapping(value = "/de-create")
     public String deCreate() {
         return "api/sdk/de-create";
+    }
+
+    @PostMapping(value = "/de-delete/{key}")
+    public ResponseEntity deleteDe(@PathVariable String key) {
+        // delete
+        boolean res = apiService.deleteDataExtension(key);
+        return new ResponseEntity(res, HttpStatus.OK);
     }
 
 

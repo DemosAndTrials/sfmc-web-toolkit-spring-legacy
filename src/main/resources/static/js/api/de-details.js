@@ -105,8 +105,10 @@ function showPromt(isOpen) {
         j$('#confirmPromt').hide();
 }
 
+/**
+ * Delete row
+ */
 j$('#confirmPromt').on('click', '.slds-button', function () {
-
     var btn = j$(this).attr("name");
     console.log('modal clicked: ', btn);
     if (btn == 'Ok') {
@@ -114,7 +116,7 @@ j$('#confirmPromt').on('click', '.slds-button', function () {
         console.log("key: " + key);
 
         var dataObject = new Map();
-        selectedRow.find('div.slds-truncate').each(function () {
+        selectedRow.find('span.slds-truncate').each(function () {
             dataObject[this.getAttribute('name')] = this.textContent;
             console.log("row column: " + this.getAttribute('name'));
             console.log("row value: " + this.textContent);

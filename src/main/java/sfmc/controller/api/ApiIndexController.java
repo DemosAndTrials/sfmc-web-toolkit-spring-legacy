@@ -36,8 +36,6 @@ public class ApiIndexController {
         return "api/sdk";
     }
 
-
-
     /**
      * REST Index page
      *
