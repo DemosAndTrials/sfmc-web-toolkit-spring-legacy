@@ -46,8 +46,10 @@ public class CustomActivityController {
      * @return
      */
     @RequestMapping(value = "{id}/ui/hover")
-    public String runningHover(@PathVariable String id) {
+    public String runningHover(@PathVariable String id, Model model) {
         System.out.println("*** running hover: " + id + " ***");
+        CustomActivityConfig config = customActivityService.getConfigById(id);
+        model.addAttribute("config", config != null ? config : new CustomActivityConfig());
         return "ca/ui/runningHover";
     }
 
@@ -57,8 +59,10 @@ public class CustomActivityController {
      * @return
      */
     @RequestMapping(value = "{id}/ui/modal")
-    public String runningModal(@PathVariable String id) {
+    public String runningModal(@PathVariable String id, Model model) {
         System.out.println("*** running modal: " + id + " ***");
+        CustomActivityConfig config = customActivityService.getConfigById(id);
+        model.addAttribute("config", config != null ? config : new CustomActivityConfig());
         return "ca/ui/runningModal";
     }
 

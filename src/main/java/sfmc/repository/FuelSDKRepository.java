@@ -2,6 +2,7 @@ package sfmc.repository;
 
 import com.exacttarget.fuelsdk.*;
 import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -121,6 +122,27 @@ public class FuelSDKRepository {
         return null;
     }
 
+    /**
+     * delete DE
+     *
+     * @param key
+     * @return
+     */
+    public boolean deleteDataExtension(String key) {
+        ensureClientInitialization();
+        try {
+            ETDataExtension de = new ETDataExtension();
+            de.setKey(key);
+            ETResponse<ETDataExtension> res = client.delete(de);
+            if (res.getStatus() == ETResult.Status.OK)
+                return true;
+        } catch (ETSdkException e) {
+            if (HandleTokenExpiration(e))
+                deleteDataExtension(key);
+        }
+        return false;
+    }
+
     public ETDataExtensionRow getDataExtensionRowByEmail(String deKey, String email) {
         ETExpression expression = new ETExpression();
         expression.setProperty("Key");
@@ -212,7 +234,8 @@ public class FuelSDKRepository {
 
     /**
      * delete DE Row
-     *
+     * row should include primary key
+     * TODO use expressions
      * @param de
      * @param record
      * @return
@@ -229,26 +252,26 @@ public class FuelSDKRepository {
         return false;
     }
 
-    /**
-     * update DE Row
-     *
-     * @param de
-     * @param record
-     * @return
-     */
-    public ETDataExtensionRow updateDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
-        ensureClientInitialization();
-        try {
-            ETResponse<ETDataExtensionRow> res = de.update(record);
-            if (res.getStatus() == ETResult.Status.OK)
-                return res.getObject();
-            return null; // TODO throw exception
-        } catch (ETSdkException e) {
-            if (HandleTokenExpiration(e))
-                updateDataExtensionRow(de, record);
-        }
-        return null;
-    }
+//    /**
+//     * update DE Row
+//     *
+//     * @param de
+//     * @param record
+//     * @return
+//     */
+//    public ETDataExtensionRow updateDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
+//        ensureClientInitialization();
+//        try {
+//            ETResponse<ETDataExtensionRow> res = de.update(record);
+//            if (res.getStatus() == ETResult.Status.OK)
+//                return res.getObject();
+//            return null; // TODO throw exception
+//        } catch (ETSdkException e) {
+//            if (HandleTokenExpiration(e))
+//                updateDataExtensionRow(de, record);
+//        }
+//        return null;
+//    }
 
     /**
      * update DE row
@@ -273,6 +296,7 @@ public class FuelSDKRepository {
 
     /**
      * Request new token if old one already expired
+     *
      * @param ex
      * @return
      */

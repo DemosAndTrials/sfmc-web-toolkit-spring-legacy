@@ -13,7 +13,16 @@
     <div class="slds-shrink-none">
         <div class="slds-page-header"><h2 class="slds-text-heading--medium">SDK</h2></div>
     </div>
-
+    <div>
+        <a class="slds-button slds-button_brand slds-button_neutral slds-not-selected slds-m-around_medium slds-float_right"
+           href="de-create.html" aria-live="assertive" id="addRecordBtn">
+                                <span class="slds-text-not-selected">
+                                    <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
+                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                          xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#new"></use>
+                                </svg>Create</span>
+        </a>
+    </div>
     <div class="slds-m-around_small slds-m-top_medium">
 
         <table class="slds-table slds-table_bordered slds-table_striped">
@@ -68,16 +77,16 @@
                 </td>
                 <td data-label="Actions" class="">
 
-                    <button th:id="@{'copyBtn_' + ${ext.Id}}" th:name="${ext.Id}"
+                    <button th:id="@{'editBtn_' + ${ext.Id}}" th:name="${ext.Key}"
                             class="slds-button slds-button_icon"
                             aria-pressed="false" title="Copy">
                         <svg class="slds-button__icon slds-icon-text-default" aria-hidden="true">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                 xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#clone"></use>
+                                 xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#edit"></use>
                         </svg>
                         <span class="slds-assistive-text">Delete</span>
                     </button>
-                    <button th:id="@{'deleteBtn_' + ${ext.Id}}" th:name="${ext.Id}"
+                    <button th:id="@{'deleteBtn_' + ${ext.Id}}" th:name="${ext.Key}"
                             class="slds-button slds-button_icon"
                             aria-pressed="false" title="Delete">
                         <svg class="slds-button__icon slds-icon-text-error" aria-hidden="true">
@@ -129,13 +138,15 @@
 <script type="text/javascript">
 
     j$ = jQuery.noConflict();
-    var selectedId;
+    var selectedKey;
+    var selectedRow;
 
     // delete modal open
     j$('[id^=deleteBtn_]').click(function () {
         j$('#backdropDelete').addClass('slds-backdrop_open');
         j$('#modalDelete').addClass('slds-fade-in-open');
-        selectedId = j$(this).attr('name');
+        selectedKey = j$(this).attr('name');
+        selectedRow = j$(this).closest("tr");
     });
 
     // delete modal close
@@ -151,7 +162,38 @@
         j$('#modalDelete').removeClass('slds-fade-in-open');
         j$('#backdropDelete').removeClass('slds-backdrop_open');
         //deleteConfig(selectedId);
+        // post data
+        ajaxCall("/api/sdk/de-delete/" + selectedKey, "", function (response) {
+            if (response != null) {
+                console.log("it works! " + JSON.stringify(response));
+                selectedRow.remove()
+            }
+            else{
+                alert('ERROR!')
+            }
+        });
     });
+
+    /**
+     * Post to controller amd handle result
+     * @param url
+     * @param dataObject
+     * @param callback
+     */
+    function ajaxCall(url, dataObject, callback) {
+        j$.ajax({
+            url: url,
+            type: 'POST',
+            data: JSON.stringify(dataObject),
+            dataType: 'json',
+            contentType: "application/json",
+            success: callback,
+            error: function (res) { // TODO handle error
+                console.log("Ajax call error: " + JSON.stringify(res));
+                callback(null);
+            }
+        });
+    }
 </script>
 
 </body>

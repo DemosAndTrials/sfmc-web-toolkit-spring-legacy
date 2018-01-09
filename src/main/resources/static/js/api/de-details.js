@@ -53,7 +53,7 @@ j$('#deRecords').on('click', '#saveRowBtn', function () {
         dataObject[j$(this).attr('name')] = j$(this).val();
     });
     // post data
-    ajaxCall("/api/sdk/create/" + key, dataObject, function (response) {
+    ajaxCall("/api/sdk/row-create/" + key, dataObject, function (response) {
         if (response != null) {
             console.log("it works! " + JSON.stringify(response));
             // remove template row
@@ -105,8 +105,10 @@ function showPromt(isOpen) {
         j$('#confirmPromt').hide();
 }
 
+/**
+ * Delete row
+ */
 j$('#confirmPromt').on('click', '.slds-button', function () {
-
     var btn = j$(this).attr("name");
     console.log('modal clicked: ', btn);
     if (btn == 'Ok') {
@@ -114,13 +116,13 @@ j$('#confirmPromt').on('click', '.slds-button', function () {
         console.log("key: " + key);
 
         var dataObject = new Map();
-        selectedRow.find('div.slds-truncate').each(function () {
+        selectedRow.find('span.slds-truncate').each(function () {
             dataObject[this.getAttribute('name')] = this.textContent;
             console.log("row column: " + this.getAttribute('name'));
             console.log("row value: " + this.textContent);
         });
         // post data
-        ajaxCall("/api/sdk/delete/" + key, dataObject, function (response) {
+        ajaxCall("/api/sdk/row-delete/" + key, dataObject, function (response) {
             if (response != null) {
                 console.log("it works! " + JSON.stringify(response));
                 selectedRow.remove()
@@ -194,7 +196,7 @@ j$('#deRecords').on('click', '[id^=okBtn_]', function () {
         dataObject[j$(this).attr('name')] = j$(this).val();
     });
 
-    ajaxCall("/api/sdk/update/" + key, dataObject, function (response) {
+    ajaxCall("/api/sdk/row-update/" + key, dataObject, function (response) {
         console.log("it works! " + JSON.stringify(response));
         if (response != null) {
             j$(row).find('.slds-truncate, .slds-input, .slds-required, .slds-button').each(function (index, element) {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Custom Activity Demo</title>
     <link rel="icon" href="/images/fav.ico" type="image/x-icon"/>
@@ -11,12 +11,12 @@
 </head>
 <body>
 <div class="slds-shrink-none">
-    <div class="slds-page-header"><h2 class="slds-text-heading--label">Custom Activity</h2></div>
+    <div class="slds-page-header"><h2 class="slds-text-heading--label" th:text="*{config.Name}">Custom Activity</h2></div>
     <div class="slds-box">
         <div class="slds-grid slds-wrap slds-container--medium slds-container--center slds-order-1 slds-medium-order--2 slds-p-vertical--none">
             <div class="slds-col--padded slds-col-rule--right slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--8-of-12 slds-p-bottom--medium">
                 <article class="slds-text-longform">
-                    <p>
+                    <p th:text="*{config.Description}">
                         Short description here
                     </p>
                     <ul class="slds-list_dotted">

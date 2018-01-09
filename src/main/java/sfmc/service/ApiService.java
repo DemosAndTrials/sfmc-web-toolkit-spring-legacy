@@ -29,15 +29,20 @@ public class ApiService {
         return sdkRepository.getDataExtensionById(id);
     }
 
-    public ETDataExtensionRow create(ETDataExtensionRow row) {
+    public boolean deleteDataExtension(String key) {
+
+        return sdkRepository.deleteDataExtension(key);
+    }
+
+    public ETDataExtensionRow createDataExtensionRow(ETDataExtensionRow row) {
         return sdkRepository.createDataExtensionRow(row);
     }
 
-    public ETDataExtensionRow update(ETDataExtension de, ETDataExtensionRow row) {
-        return sdkRepository.updateDataExtensionRow(de, row);
+    public ETDataExtensionRow updateDataExtensionRow(ETDataExtensionRow row) {
+        return sdkRepository.updateDataExtensionRow(row);
     }
 
-    public boolean delete(ETDataExtension de, ETDataExtensionRow row) {
+    public boolean deleteDataExtensionRow(ETDataExtension de, ETDataExtensionRow row) {
         return sdkRepository.deleteDataExtensionRow(de, row);
     }
 }
