@@ -2,7 +2,6 @@ package sfmc.repository;
 
 import com.exacttarget.fuelsdk.*;
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -58,6 +57,7 @@ public class FuelSDKRepository {
             ensureClientInitialization();
             List<ETDataExtension> exts = new ArrayList<>();
             ETResponse<ETDataExtension> response = client.retrieve(ETDataExtension.class);
+            System.out.println("*** de retrieved with status: " + response.getStatus());
             for (ETDataExtension ext : response.getObjects()) {
                 exts.add(ext);
                 System.out.println("DE: " + ext);
@@ -92,6 +92,7 @@ public class FuelSDKRepository {
             filter.setExpression(expression);
 
             ETResponse<ETDataExtension> response = client.retrieve(ETDataExtension.class, filter);
+            System.out.println("*** de retrieved with status: " + response.getStatus());
             if (response.getObjects().size() > 0) {
                 ETDataExtension ext = response.getObjects().get(0);
                 ext.retrieveColumns();
@@ -110,6 +111,7 @@ public class FuelSDKRepository {
 
         try {
             ETResponse<ETDataExtension> result = client.retrieve(ETDataExtension.class, "key=" + key);
+            System.out.println("*** de retrieved with status: " + result.getStatus());
             ETDataExtension de = result.getObject();
             if (de != null) {
                 de.retrieveColumns();
@@ -134,6 +136,7 @@ public class FuelSDKRepository {
             ETDataExtension de = new ETDataExtension();
             de.setKey(key);
             ETResponse<ETDataExtension> res = client.delete(de);
+            System.out.println("*** de deleted with status: " + res.getStatus());
             if (res.getStatus() == ETResult.Status.OK)
                 return true;
         } catch (ETSdkException e) {
@@ -202,6 +205,7 @@ public class FuelSDKRepository {
         List<ETDataExtensionRow> records = new ArrayList<>();
         try {
             ETResponse<ETDataExtensionRow> res = ETDataExtension.select(client, dataExtension, filter);
+            System.out.println("*** records selected with status: " + res.getStatus());
             for (ETDataExtensionRow row : res.getObjects()) {
                 System.out.println(row);
                 records.add(row);
@@ -224,6 +228,7 @@ public class FuelSDKRepository {
         ensureClientInitialization();
         try {
             ETResponse<ETDataExtensionRow> res = client.create(record);// TODO use de.insert?!
+            System.out.println("*** record created with status: " + res.getStatus());
             return res.getObject();
         } catch (ETSdkException e) {
             if (HandleTokenExpiration(e))
@@ -243,6 +248,7 @@ public class FuelSDKRepository {
     public boolean deleteDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
         try {
             ETResponse<ETDataExtensionRow> res = de.delete(record);
+            System.out.println("*** record deleted with status: " + res.getStatus());
             if (res.getStatus() == ETResult.Status.OK)
                 return true;
         } catch (ETSdkException e) {
@@ -284,6 +290,7 @@ public class FuelSDKRepository {
 
         try {
             ETResponse<ETDataExtensionRow> res = ETDataExtensionRow.update(client, Arrays.asList(record));
+            System.out.println("*** record updated with status: " + res.getStatus());
             if (res.getStatus() == ETResult.Status.OK)
                 return res.getObject();
             return null; // TODO throw exception
@@ -304,9 +311,11 @@ public class FuelSDKRepository {
         ex.printStackTrace();
         if (!ex.getMessage().equals(REFRESH_TOKEN_NULL))
             return false;
-        System.out.println("*** Token expired ***");
+        System.out.println("*** Token expired *** " + client.getAccessToken());
         try {
-            client.requestToken();
+            String token = client.requestToken();
+            System.out.println("*** Token requested *** " + token);
+            System.out.println("*** Client's token *** " + client.getAccessToken());
             return true;
         } catch (ETSdkException e) {
             e.printStackTrace();

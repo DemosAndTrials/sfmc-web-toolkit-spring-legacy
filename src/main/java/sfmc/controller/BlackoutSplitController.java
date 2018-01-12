@@ -1,6 +1,5 @@
 package sfmc.controller;
 
-import com.exacttarget.fuelsdk.ETDataExtension;
 import com.exacttarget.fuelsdk.ETDataExtensionRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import sfmc.model.CustomActivityExecuteArgs;
+import sfmc.model.CustomActivity.CustomActivityExecuteArgs;
 import sfmc.service.BlackoutService;
 
 /**

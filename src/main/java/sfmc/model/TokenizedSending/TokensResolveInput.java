@@ -1,8 +1,16 @@
 package sfmc.model.TokenizedSending;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
 import java.util.List;
 
 public class TokensResolveInput {
+
+    private List<Token> tokens;
+    private String sendKey;
+
     public List<Token> getTokens() {
         return tokens;
     }
@@ -19,6 +27,18 @@ public class TokensResolveInput {
         this.sendKey = sendKey;
     }
 
-    private List<Token> tokens;
-    private String sendKey;
+    @Override
+    public String toString() {
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        try {
+            String json = ow.writeValueAsString(this);
+            return json;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 }

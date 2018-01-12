@@ -1,8 +1,8 @@
 package sfmc.repository;
 
-import sfmc.model.CustomActivityConfig;
-import sfmc.model.CustomActivitySplit;
-import sfmc.model.CustomActivityStep;
+import sfmc.model.CustomActivity.CustomActivityConfig;
+import sfmc.model.CustomActivity.CustomActivitySplit;
+import sfmc.model.CustomActivity.CustomActivityStep;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
