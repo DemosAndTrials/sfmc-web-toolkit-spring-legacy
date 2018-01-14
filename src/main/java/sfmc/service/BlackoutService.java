@@ -5,7 +5,7 @@ import com.exacttarget.fuelsdk.ETDataExtensionRow;
 import com.exacttarget.fuelsdk.ETSdkException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sfmc.model.CustomActivityExecuteArgs;
+import sfmc.model.CustomActivity.CustomActivityExecuteArgs;
 import sfmc.repository.FuelSDKRepository;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -38,12 +38,15 @@ public class BlackoutService {
         // check if today is holiday or weekend
         ETDataExtensionRow holiday = getHolidayRow(sourceKey);
         if (holiday != null) {
+            System.out.println("*** holiday found: " + holiday.getColumn("Name"));
             // update wait attribute
             ETDataExtensionRow contact = sdkRepository.getDataExtensionRowByEmail(destinationKey, args.getKeyValue());
             if (contact != null) {
+                System.out.println("*** contact found: " + contact.getColumn("SF_ID"));
                 contact.setDataExtensionKey(destinationKey);
                 contact.setColumn("WaitDate", holiday.getColumn("EndDate"));
                 ETDataExtensionRow result = sdkRepository.updateDataExtensionRow(contact);
+                System.out.println("*** contact WAIT_DATE update: " + contact.getColumn("WAIT_DATE"));
                 if (result != null)
                     System.out.println("*** updated contact: " + result);
                 else

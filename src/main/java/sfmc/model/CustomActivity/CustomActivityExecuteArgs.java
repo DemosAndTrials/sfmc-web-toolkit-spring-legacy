@@ -1,5 +1,8 @@
-package sfmc.model;
+package sfmc.model.CustomActivity;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -77,22 +80,17 @@ public class CustomActivityExecuteArgs {
         this.inArguments = inArguments;
     }
 
-
     @Override
     public String toString() {
-        return "{" +
-                "\"inArguments\":" +
-                "[" +
-                "{\"source_de\": \"" + inArguments.get(0).get("source_de") + "\"}," +
-                "{\"destination_de\": \"" + inArguments.get(1).get("destination_de") + "\"}" +
-                "]," +
-                "\"activityObjectID\": \"" + activityObjectID + "\"," +
-                "\"journeyId\": \"" + journeyId + "\"," +
-                "\"activityId\": \"" + activityId + "\"," +
-                "\"definitionInstanceId\": \"" + definitionInstanceId + "\"," +
-                "\"activityInstanceId\": \"" + activityInstanceId + "\"," +
-                "\"keyValue\": \"" + keyValue + "\"," +
-                "\"mode\": "+ mode +
-                "}";
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        try {
+            String json = ow.writeValueAsString(this);
+            return json;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
     }
 }

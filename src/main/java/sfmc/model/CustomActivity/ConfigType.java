@@ -1,4 +1,4 @@
-package sfmc.model;
+package sfmc.model.CustomActivity;
 
 /**
  * Custom Activity Type

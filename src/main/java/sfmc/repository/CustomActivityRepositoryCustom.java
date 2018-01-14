@@ -1,6 +1,6 @@
 package sfmc.repository;
 
-import sfmc.model.CustomActivityConfig;
+import sfmc.model.CustomActivity.CustomActivityConfig;
 
 public interface CustomActivityRepositoryCustom {
 

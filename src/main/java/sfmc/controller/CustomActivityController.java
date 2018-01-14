@@ -9,7 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import sfmc.model.CustomActivityConfig;
+import sfmc.model.CustomActivity.CustomActivityConfig;
 import sfmc.service.CustomActivityService;
 
 import javax.validation.Valid;

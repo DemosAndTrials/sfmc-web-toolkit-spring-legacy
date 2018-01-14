@@ -1,4 +1,8 @@
-package sfmc.model;
+package sfmc.model.CustomActivity;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -45,12 +49,17 @@ public class CustomActivityStep {
         return true;
     }
 
+    @Override
     public String toString() {
-        StringBuffer aBuffer = new StringBuffer("Step - ");
-        aBuffer.append(" label: ");
-        aBuffer.append(Label);
-        aBuffer.append(" vlaue: ");
-        aBuffer.append(Key);
-        return aBuffer.toString();
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        try {
+            String json = ow.writeValueAsString(this);
+            return json;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
     }
 }

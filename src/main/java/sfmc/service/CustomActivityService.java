@@ -2,8 +2,8 @@ package sfmc.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sfmc.model.ConfigType;
-import sfmc.model.CustomActivityConfig;
+import sfmc.model.CustomActivity.ConfigType;
+import sfmc.model.CustomActivity.CustomActivityConfig;
 import sfmc.repository.CustomActivityRepository;
 
 /**

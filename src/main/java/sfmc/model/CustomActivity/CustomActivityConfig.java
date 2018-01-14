@@ -1,6 +1,10 @@
-package sfmc.model;
+package sfmc.model.CustomActivity;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -182,19 +186,15 @@ public class CustomActivityConfig {
 
     @Override
     public String toString() {
-        return "Config{" +
-                "Id=" + Id +
-                ", Key='" + Key + '\'' +
-                ", Name='" + Name + '\'' +
-                ", Type='" + Type + '\'' +
-                ", Description='" + Description + '\'' +
-                ", SmallImageUrl='" + SmallImageUrl + '\'' +
-                ", BigImageUrl=" + BigImageUrl +
-                ", NumSteps=" + Steps.size() +
-                ", EditUrl='" + EditUrl + '\'' +
-                ", EditHeight='" + EditHeight + '\'' +
-                ", EditWidth='" + EditWidth + '\'' +
-                ", EndpointUrl='" + EndpointUrl + '\'' +
-                '}';
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        try {
+            String json = ow.writeValueAsString(this);
+            return json;
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
     }
 }

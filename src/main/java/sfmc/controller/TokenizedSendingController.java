@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import sfmc.model.TokenizedSending.Token;
 import sfmc.model.TokenizedSending.TokensResolveInput;
-
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -26,9 +25,9 @@ public class TokenizedSendingController {
      */
     @RequestMapping(value = "/resolve", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity resolveTokens(@RequestBody TokensResolveInput input) {
-        System.out.println("*** input: " + input);
+        System.out.println("*** Tokenizer *** | resolve input: " + input);
         String result = createTokens(input);
-        System.out.println("*** result: " + result);
+        System.out.println("*** Tokenizer *** | result: " + result);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
@@ -40,13 +39,17 @@ public class TokenizedSendingController {
      */
     @RequestMapping(value = "/get", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity getTokens(@RequestBody String input) {
-        System.out.println("*** input: " + input);
+        System.out.println("*** Tokenizer *** | get input: " + input);
         String result = "";
-        System.out.println("*** result: " + result);
+        System.out.println("*** Tokenizer *** | result: " + result);
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-
+    /**
+     * Create tokens response
+     * @param input
+     * @return
+     */
     private String createTokens(TokensResolveInput input) {
         // create json
         JsonObject value = Json.createObjectBuilder()
@@ -55,7 +58,11 @@ public class TokenizedSendingController {
         return value.toString();
     }
 
-
+    /**
+     * Resolve tokens
+     * @param tokens
+     * @return
+     */
     private JsonArrayBuilder createResolvedTokens(List<Token> tokens) {
         javax.json.JsonArrayBuilder arr = Json.createArrayBuilder();
         for (Token token : tokens) {
@@ -67,12 +74,19 @@ public class TokenizedSendingController {
         return arr;
     }
 
+    /**
+     * Get mail address
+     * @param token
+     * @return
+     */
     private String resolveToken(String token) {
         // TODO resolve token logic here.....
         if(token.equals("t1234@example.com"))
             return "user1@exacttarget.com";
         if(token.equals("t5678@example.com"))
             return "user2@gmail.com";
+        if(token.equals("0m1a2t3r4o5s6t7i8k9@gmail.com"))
+            return "matrostik@gmail.com";
         return token;
     }
 }

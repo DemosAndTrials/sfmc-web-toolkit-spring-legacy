@@ -2,7 +2,7 @@ package sfmc.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import sfmc.model.CustomActivityConfig;
+import sfmc.model.CustomActivity.CustomActivityConfig;
 
 /**
  * Custom Activity Repository
