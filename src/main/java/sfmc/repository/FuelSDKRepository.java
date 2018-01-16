@@ -170,8 +170,8 @@ public class FuelSDKRepository {
     public ETDataExtensionRow getDataExtensionRecord(String key, String today) throws ETSdkException {
         // create expression
         // property on left side, value on right side
-        ETExpression ex1 = ETExpression.parse("StartDate <= '" + today + "'");
-        ETExpression ex2 = ETExpression.parse("EndDate >= '" + today + "'");
+        ETExpression ex1 = ETExpression.parse("START_DATE <= '" + today + "'");
+        ETExpression ex2 = ETExpression.parse("END_DATE >= '" + today + "'");
         ETExpression exp = new ETExpression();
         exp.addSubexpression(ex1);
         exp.setOperator(ETExpression.Operator.AND);
