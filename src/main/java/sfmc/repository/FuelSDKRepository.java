@@ -146,11 +146,11 @@ public class FuelSDKRepository {
         return false;
     }
 
-    public ETDataExtensionRow getDataExtensionRowByEmail(String deKey, String email) {
+    public ETDataExtensionRow getDataExtensionRowBySfId(String deKey, String id) {
         ETExpression expression = new ETExpression();
-        expression.setProperty("Key");
+        expression.setProperty("SF_ID");
         expression.setOperator(ETExpression.Operator.EQUALS);
-        expression.setValue(email);
+        expression.setValue(id);
 
         ETFilter filter = new ETFilter();
         filter.setExpression(expression);
