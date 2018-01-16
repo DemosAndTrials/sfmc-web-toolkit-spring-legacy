@@ -180,8 +180,8 @@ public class BlackoutSplitController {
     @RequestMapping(value = "ui/hover")
     public String runningHover(Model model) {
         System.out.println("*** running hover ***");
-        // TODO remove hardcoded key
-        String key = "1B5E2C69-7B08-4E0D-BF21-F7A6821C6179";
+        // TODO remove hardcoded key, request payload from the ui and use ajax call to ctrl
+        String key = "4A8001EE-94DD-40BB-A55E-2D8812674F86";
         ETDataExtensionRow holiday = blackoutService.getHolidayRow(key);
         model.addAttribute("holiday", holiday);
         return "ca/blackout/runningHover";
@@ -192,8 +192,12 @@ public class BlackoutSplitController {
      * TODO display info about current holiday if any
      */
     @RequestMapping(value = "ui/modal")
-    public String runningModal() {
+    public String runningModal(Model model) {
         System.out.println("*** running modal ***");
+        // TODO remove hardcoded key, request payload from the ui and use ajax call to ctrl
+        String key = "4A8001EE-94DD-40BB-A55E-2D8812674F86";
+        ETDataExtensionRow holiday = blackoutService.getHolidayRow(key);
+        model.addAttribute("holiday", holiday);
         return "ca/blackout/runningModal";
     }
 }

@@ -38,13 +38,13 @@ public class BlackoutService {
         // check if today is holiday or weekend
         ETDataExtensionRow holiday = getHolidayRow(sourceKey);
         if (holiday != null) {
-            System.out.println("*** holiday found: " + holiday.getColumn("Name"));
+            System.out.println("*** holiday found: " + holiday.getColumn("NAME"));
             // update wait attribute
             ETDataExtensionRow contact = sdkRepository.getDataExtensionRowByEmail(destinationKey, args.getKeyValue());
             if (contact != null) {
                 System.out.println("*** contact found: " + contact.getColumn("SF_ID"));
                 contact.setDataExtensionKey(destinationKey);
-                contact.setColumn("WaitDate", holiday.getColumn("EndDate"));
+                contact.setColumn("WAIT_DATE", holiday.getColumn("END_DATE"));
                 ETDataExtensionRow result = sdkRepository.updateDataExtensionRow(contact);
                 System.out.println("*** contact WAIT_DATE update: " + contact.getColumn("WAIT_DATE"));
                 if (result != null)
@@ -55,6 +55,7 @@ public class BlackoutService {
             }
         }
         // update wait by attribute field
+        System.out.println("*** no holiday found");
         return buildSplitResult("key_path_1");
     }
 
