@@ -40,7 +40,7 @@ public class BlackoutService {
         if (holiday != null) {
             System.out.println("*** holiday found: " + holiday.getColumn("NAME"));
             // update wait attribute
-            ETDataExtensionRow contact = sdkRepository.getDataExtensionRowByEmail(destinationKey, args.getKeyValue());
+            ETDataExtensionRow contact = sdkRepository.getDataExtensionRowBySfId(destinationKey, args.getKeyValue());
             if (contact != null) {
                 System.out.println("*** contact found: " + contact.getColumn("SF_ID"));
                 contact.setDataExtensionKey(destinationKey);
