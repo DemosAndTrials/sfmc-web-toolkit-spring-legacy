@@ -18,14 +18,14 @@
          role="tabpanel" aria-labelledby="tab-default-1__item">
         <div class="slds-tabs_scoped">
             <ul class="slds-tabs_scoped__nav" role="tablist">
-                <li class="slds-tabs_scoped__item slds-is-active" title="Properties" role="presentation"><a
+                <li id="step1" class="slds-tabs_scoped__item slds-is-active" title="Properties" role="presentation"><a
                         class="slds-tabs_scoped__link" href="javascript:void(0);" role="tab" tabindex="0"
                         aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">1 Properties</a></li>
-                <li class="slds-tabs_scoped__item" title="Retention" role="presentation"><a
+                <li id="step2" class="slds-tabs_scoped__item" title="Retention" role="presentation"><a
                         class="slds-tabs_scoped__link" href="javascript:void(0);" role="tab" tabindex="-1"
                         aria-selected="false" aria-controls="tab-scoped-2" id="tab-scoped-2__item">2 Data Retention
                     Policy</a></li>
-                <li class="slds-tabs_scoped__item" title="Attributes" role="presentation"><a
+                <li id="step3" class="slds-tabs_scoped__item" title="Attributes" role="presentation"><a
                         class="slds-tabs_scoped__link" href="javascript:void(0);" role="tab" tabindex="-1"
                         aria-selected="false" aria-controls="tab-scoped-3" id="tab-scoped-3__item">3 Attributes</a></li>
             </ul>
@@ -33,23 +33,23 @@
                  aria-labelledby="tab-scoped-1__item">
                 <div class="slds-form slds-form_stacked">
                     <div class="slds-form-element">
-                        <label class="slds-form-element__label" for="input-id-01">Name</label>
+                        <label class="slds-form-element__label" for="input-id-011">Name</label>
                         <div class="slds-form-element__control">
-                            <input type="text" id="input-id-01" class="slds-input" placeholder=""
+                            <input type="text" id="input-id-011" class="slds-input" placeholder=""
                                    maxlength="50"/>
                         </div>
                     </div>
                     <div class="slds-form-element">
-                        <label class="slds-form-element__label" for="input-id-01">Key</label>
+                        <label class="slds-form-element__label" for="input-id-012">Key</label>
                         <div class="slds-form-element__control">
-                            <input type="text" id="input-id-055" class="slds-input" placeholder=""
+                            <input type="text" id="input-id-012" class="slds-input" placeholder=""
                                    maxlength="50"/>
                         </div>
                     </div>
                     <div class="slds-form-element">
-                        <label class="slds-form-element__label" for="input-id-02">Description</label>
+                        <label class="slds-form-element__label" for="input-id-013">Description</label>
                         <div class="slds-form-element__control">
-                            <textarea id="input-id-02" class="slds-textarea" placeholder=""
+                            <textarea id="input-id-013" class="slds-textarea" placeholder=""
                                       maxlength="250"></textarea>
                         </div>
                     </div>
@@ -73,18 +73,70 @@
                     </fieldset>
                     <div class="slds-form-element">
                         <br>
-                        <button id="saveBtn" class="slds-button slds-button_brand" name="action" value="next">Next
+                        <button id="nextBtnStep1" class="slds-button slds-button_brand" name="action" value="next">Next
                         </button>
                     </div>
                 </div>
             </div>
             <div id="tab-scoped-2" class="slds-tabs_scoped__content slds-hide" role="tabpanel"
                  aria-labelledby="tab-scoped-2__item">
-                2 Data Retention Policy Content
+                <div class="slds-form slds-form_stacked">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="input-id-021">Name</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="input-id-021" class="slds-input" placeholder=""
+                                   maxlength="50"/>
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="input-id-022">Key</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="input-id-022" class="slds-input" placeholder=""
+                                   maxlength="50"/>
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="input-id-023">Description</label>
+                        <div class="slds-form-element__control">
+                            <textarea id="input-id-023" class="slds-textarea" placeholder=""
+                                      maxlength="250"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="slds-form-element">
+                        <br>
+                        <button id="backBtnStep2" class="slds-button slds-button_brand" name="action" value="back">Back
+                        </button>
+                        <button id="nextBtnStep2" class="slds-button slds-button_brand" name="action" value="next">Next
+                        </button>
+                    </div>
+                </div>
             </div>
             <div id="tab-scoped-3" class="slds-tabs_scoped__content slds-hide" role="tabpanel"
                  aria-labelledby="tab-scoped-3__item">
-                3 Attributes
+                <div class="slds-form slds-form_stacked">
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="input-id-031">Name</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="input-id-031" class="slds-input" placeholder=""
+                                   maxlength="50"/>
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <label class="slds-form-element__label" for="input-id-032">Key</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" id="input-id-032" class="slds-input" placeholder=""
+                                   maxlength="50"/>
+                        </div>
+                    </div>
+                    <div class="slds-form-element">
+                        <br>
+                        <button id="backBtnStep3" class="slds-button slds-button_brand" name="action" value="back">Back
+                        </button>
+                        <button id="nextBtnStep3" class="slds-button slds-button_brand" name="action" value="save">Save
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
