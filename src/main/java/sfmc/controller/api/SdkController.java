@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sfmc.service.ApiService;
-
 import java.util.List;
 import java.util.Map;
 
@@ -129,6 +128,11 @@ public class SdkController {
         return "api/sdk/de-create";
     }
 
+    /**
+     * Delete Data Extensions
+     * @param key
+     * @return
+     */
     @PostMapping(value = "/de-delete/{key}")
     public ResponseEntity deleteDe(@PathVariable String key) {
         // delete

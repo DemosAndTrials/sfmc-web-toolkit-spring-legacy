@@ -1,4 +1,4 @@
-package sfmc.controller;
+package sfmc.controller.customActivity;
 
 import com.exacttarget.fuelsdk.ETDataExtensionRow;
 import org.springframework.beans.factory.annotation.Autowired;
