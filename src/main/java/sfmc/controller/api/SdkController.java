@@ -2,13 +2,19 @@ package sfmc.controller.api;
 
 import com.exacttarget.fuelsdk.ETDataExtension;
 import com.exacttarget.fuelsdk.ETDataExtensionRow;
+import com.exacttarget.fuelsdk.internal.DataExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import sfmc.model.CustomActivity.CustomActivityConfig;
 import sfmc.service.ApiService;
+
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -124,12 +130,30 @@ public class SdkController {
      * @return
      */
     @GetMapping(value = "/de-create")
-    public String deCreate() {
+    public String deCreate(Model model) {
+        model.addAttribute("de", new DataExtension());
+        return "api/sdk/de-create";
+    }
+
+    /**
+     * Create Data Extensions
+     *
+     * @return
+     */
+    @PostMapping(value = "/de-create")
+    public String deCreate(@RequestParam(required = false) String action, @Valid @ModelAttribute("de") DataExtension de, BindingResult bindingResult, Model model) {
+        if (action.equals("save")) {
+            if (de.getName().isEmpty()) {
+                FieldError error = new FieldError("de", "Name", "may not be empty");
+                bindingResult.addError(error);
+            }
+        }
         return "api/sdk/de-create";
     }
 
     /**
      * Delete Data Extensions
+     *
      * @param key
      * @return
      */

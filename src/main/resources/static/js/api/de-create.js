@@ -18,24 +18,7 @@ j$('.slds-tabs_scoped__item').click(function () {
 });
 
 /**
- * Move to 2n step
- */
-// j$('#nextBtnStep1').click(function () {
-//     // hide
-//     var activeLi = j$('.slds-is-active');
-//     activeLi.removeClass("slds-is-active");
-//     var activeId = activeLi.find( "a" ).attr("aria-controls");
-//     console.log(activeId);
-//     j$('#' + activeId).hide();
-//     // show
-//     j$('#step2').addClass("slds-is-active");
-//     var newId = j$('#step2').find( "a" ).attr("aria-controls");
-//     console.log(newId);
-//     j$('#' + newId).show();
-// });
-
-/**
- * Move to 2n step
+ * Move to next/prev step
  */
 j$('button.slds-button').click(function () {
     // get action
@@ -45,9 +28,12 @@ j$('button.slds-button').click(function () {
     if (action == "save") {
         // save de here
     }
-    else {
+    else { // back/next
         // hide active item
         var activeLi = j$('.slds-is-active');
+        var step = activeLi.attr("id");
+        console.log("step: " + step);
+        validateStep(step);
         activeLi.removeClass("slds-is-active");
         var activeId = activeLi.find("a").attr("aria-controls");
         console.log("activeId: " + activeId);
@@ -56,10 +42,21 @@ j$('button.slds-button').click(function () {
         // show next item
         var nextLi = action == "next" ? activeLi.next() : activeLi.prev();
         var nextId = nextLi.find("a").attr("aria-controls");
-        console.log("nextLi: " + nextLi.html());
         console.log("nextId: " + nextId);
         nextLi.addClass("slds-is-active");
         var newId = nextLi.find("a").attr("aria-controls");
         j$('#' + newId).show();
     }
 });
+
+function validateStep(step) {
+    console.log(step + " validation");
+    if (step == "step1") {
+
+    }
+    else if (step == "step2") {
+    }
+    else {
+    }
+    return true;
+}
