@@ -125,7 +125,7 @@ public class BlackoutService {
                 // configurationArguments - Contains information that relates to the configuration of the instance of this activity.
                 // All configuration arguments except publish are optional.
                 .add("configurationArguments", Json.createObjectBuilder()
-                        .add("applicationExtensionKey", "423425bd-eb3a-4af2-8877-9bc0f842d27e")
+                        .add("applicationExtensionKey", System.getenv("APPLICATION_EXTENSION_KEY"))
                         .add("save", Json.createObjectBuilder()
                                 .add("url", host + "/save"))
                         .add("publish", Json.createObjectBuilder()

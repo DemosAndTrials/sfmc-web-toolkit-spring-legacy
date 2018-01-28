@@ -17,6 +17,7 @@ import java.util.List;
 public class FuelSDKRepository {
 
     private static final String REFRESH_TOKEN_NULL = "refreshToken == null";
+    private static final String INVOKE_METHOD_ERROR = "error invoking";// "error invoking retrieve method for type class com.exacttarget.fuelsdk.ETDataExtension";
     private ETClient client;
 
 //    public FuelSDKRepository() {
@@ -309,17 +310,24 @@ public class FuelSDKRepository {
      */
     private Boolean HandleTokenExpiration(ETSdkException ex) {
         ex.printStackTrace();
-        if (!ex.getMessage().equals(REFRESH_TOKEN_NULL))
-            return false;
-        System.out.println("*** Token expired *** " + client.getAccessToken());
-        try {
-            String token = client.requestToken();
-            System.out.println("*** Token requested *** " + token);
-            System.out.println("*** Client's token *** " + client.getAccessToken());
-            return true;
-        } catch (ETSdkException e) {
-            e.printStackTrace();
+        String message = ex.getMessage();
+        if (message.equals(REFRESH_TOKEN_NULL)) {
+            System.out.println("*** Token expired *** " + client.getAccessToken());
+            try {
+                String token = client.requestToken();
+                System.out.println("*** Token requested *** " + token);
+                System.out.println("*** Client's token *** " + client.getAccessToken());
+                return true;
+            } catch (ETSdkException e) {
+                e.printStackTrace();
+            }
         }
+        else if(message.startsWith(INVOKE_METHOD_ERROR)){
+            // new client
+            initSDKClient();
+            return true;
+        }
+
         return false;
     }
 }

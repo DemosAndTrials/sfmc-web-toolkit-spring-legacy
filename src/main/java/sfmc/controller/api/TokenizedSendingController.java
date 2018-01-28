@@ -1,4 +1,4 @@
-package sfmc.controller;
+package sfmc.controller.api;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
