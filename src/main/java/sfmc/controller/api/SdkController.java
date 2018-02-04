@@ -3,6 +3,7 @@ package sfmc.controller.api;
 import com.exacttarget.fuelsdk.ETDataExtension;
 import com.exacttarget.fuelsdk.ETDataExtensionRow;
 import com.exacttarget.fuelsdk.internal.DataExtension;
+import com.exacttarget.fuelsdk.internal.DataExtensionField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -131,7 +132,14 @@ public class SdkController {
      */
     @GetMapping(value = "/de-create")
     public String deCreate(Model model) {
-        model.addAttribute("de", new DataExtension());
+        DataExtension de = new DataExtension();
+        DataExtension.Fields fields = new DataExtension.Fields();
+        DataExtensionField field = new DataExtensionField();
+        //field.setIsPrimaryKey(true);
+        field.setMaxLength(50);
+        fields.getField().add(field);
+        de.setFields(fields);
+        model.addAttribute("de", de);
         return "api/sdk/de-create";
     }
 
