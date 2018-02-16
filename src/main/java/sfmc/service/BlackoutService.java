@@ -183,6 +183,7 @@ public class BlackoutService {
                                                     .add(Json.createObjectBuilder()
                                                             .add("WaitUntilDate", Json.createObjectBuilder()
                                                                     .add("dataType", "Date")
+                                                                    .add("isNullable", "false")
                                                                     .add("direction", "out")
                                                                     .add("access", "visible")))
                                             ))))
