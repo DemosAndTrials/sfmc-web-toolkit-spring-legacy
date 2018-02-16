@@ -147,7 +147,7 @@ public class BlackoutSplitController {
         try {
             ServletUriComponentsBuilder builder = ServletUriComponentsBuilder.fromCurrentRequestUri();
             String host = builder.replacePath("").build().toUriString() + "/bll";
-            String config = blackoutService.buildSplitConfig(host);
+            String config = blackoutService.geConfig(host);
             System.out.println("*** config.json: " + config);
             return new ResponseEntity(config, HttpStatus.OK);
         } catch (Exception e) {

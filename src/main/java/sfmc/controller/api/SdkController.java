@@ -12,9 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import sfmc.model.CustomActivity.CustomActivityConfig;
 import sfmc.service.ApiService;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
