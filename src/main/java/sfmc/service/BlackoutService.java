@@ -25,13 +25,16 @@ public class BlackoutService {
     FuelSDKRepository sdkRepository;
 
     /**
+     * Check if there is weekend or holiday
      * @param args
      * @return
      */
     public String checkBlackout(CustomActivityExecuteArgs args) {
-        // check if there is weekend or holiday
+        // check if de selected
         if (args.getInArguments() == null || args.getInArguments().size() < 2)
-            return buildResult(getTodayDate());
+            return buildResponse(getTodayDate());
+
+        // extract keys
         String sourceKey = args.getInArguments().get(0).get("source_de");
         String destinationKey = args.getInArguments().get(1).get("destination_de");
 
@@ -51,14 +54,19 @@ public class BlackoutService {
                     System.out.println("*** updated contact: " + result);
                 else
                     System.out.println("*** updated contact failed ***");
-                return buildResult(holiday.getColumn("END_DATE"));
+                return buildResponse(holiday.getColumn("END_DATE"));
             }
         }
         // update wait by attribute field
         System.out.println("*** no holiday found");
-        return buildResult(getTodayDate());
+        return buildResponse(getTodayDate());
     }
 
+    /**
+     * Create datetime now string
+     *
+     * @return
+     */
     private String getTodayDate() {
         // get local time
         Date date = new Date();
@@ -68,13 +76,12 @@ public class BlackoutService {
         return df.format(date);
     }
 
+    /**
+     * Retrieve holiday data extension
+     * @param deKey
+     * @return
+     */
     public ETDataExtensionRow getHolidayRow(String deKey) {
-        // get local time
-//        Date date = new Date();
-//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        df.setTimeZone(TimeZone.getTimeZone("Israel"));
-//        System.out.println("*** current datetime: " + df.format(date));
-
         try {
             // check if today is holiday or weekend
             ETDataExtensionRow holiday = sdkRepository.getDataExtensionRecord(deKey, getTodayDate());
@@ -85,27 +92,23 @@ public class BlackoutService {
         return null;
     }
 
+    /**
+     * Get all data extensions
+     * TODO filter it by folders
+     * @return
+     */
     public List<ETDataExtension> getDataExtensionsDetails() {
         return sdkRepository.getDataExtensionsDetails();
     }
 
-    public ETDataExtension getDataExtensionDetails(String key) {
-        return sdkRepository.getDataExtensionByKey(key);
-    }
-
-    private String buildSplitResult(String path) {
-        // TODO add decision logic
-        JsonObject value = Json.createObjectBuilder()
-                .add("branchResult", path)
-                .build();
-        String result = value.toString();
-        return result;
-    }
-
-    private String buildResult(String value) {
-        // TODO add decision logic
+    /**
+     * Create activity response
+     * @param waitDate
+     * @return
+     */
+    private String buildResponse(String waitDate) {
         JsonObject json = Json.createObjectBuilder()
-                .add("WaitUntilDate", value)
+                .add("WaitUntilDate", waitDate)
                 .build();
         return json.toString();
     }
@@ -140,6 +143,9 @@ public class BlackoutService {
                     .add("arguments", Json.createObjectBuilder()
                             .add("execute", Json.createObjectBuilder()
                                     .add("inArguments", Json.createArrayBuilder())
+                                    .add("outArguments", Json.createArrayBuilder()
+                                            .add(Json.createObjectBuilder()
+                                            .add("WaitUntilDate", getTodayDate())))
                                     .add("url", host + "/execute")
                                     .add("verb", "POST")
                                     .add("body", "")
@@ -176,6 +182,8 @@ public class BlackoutService {
                                             .add("url", host + "/ui/modal"))
                                     .add("runningHover", Json.createObjectBuilder()
                                             .add("url", host + "/ui/hover"))))
+                    // Object mirrors the activity configuration from the top level of the config.json file
+                    // and specifies schema information about in and out arguments
                     .add("schema", Json.createObjectBuilder()
                             .add("arguments", Json.createObjectBuilder()
                                     .add("execute", Json.createObjectBuilder()
@@ -185,11 +193,8 @@ public class BlackoutService {
                                                                     .add("dataType", "Date")
                                                                     .add("isNullable", "false")
                                                                     .add("direction", "out")
-                                                                    .add("access", "visible")))
-                                            ))))
-
+                                                                    .add("access", "visible")))))))
                     .build();
-
             String result = value.toString();
             return result;
         } catch (Exception e) {

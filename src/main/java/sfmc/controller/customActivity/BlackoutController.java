@@ -16,7 +16,7 @@ import sfmc.service.BlackoutService;
  */
 @Controller
 @RequestMapping("/bll")
-public class BlackoutSplitController {
+public class BlackoutController {
 
     @Autowired
     BlackoutService blackoutService;
