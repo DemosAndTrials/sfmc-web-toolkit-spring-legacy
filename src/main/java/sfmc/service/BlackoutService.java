@@ -145,7 +145,7 @@ public class BlackoutService {
                                     .add("inArguments", Json.createArrayBuilder())
                                     .add("outArguments", Json.createArrayBuilder()
                                             .add(Json.createObjectBuilder()
-                                            .add("WaitUntilDate", getTodayDate())))
+                                            .add("WaitUntilDate", "Date")))
                                     .add("url", host + "/execute")
                                     .add("verb", "POST")
                                     .add("body", "")
