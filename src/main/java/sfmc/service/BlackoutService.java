@@ -190,7 +190,7 @@ public class BlackoutService {
                                             .add("outArguments", Json.createArrayBuilder()
                                                     .add(Json.createObjectBuilder()
                                                             .add("WaitUntilDate", Json.createObjectBuilder()
-                                                                    .add("dataType", "Date")
+                                                                    .add("dataType", "DateTime")
                                                                     .add("isNullable", "false")
                                                                     .add("direction", "out")
                                                                     .add("access", "visible")))))))
