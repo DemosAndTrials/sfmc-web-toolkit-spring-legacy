@@ -220,4 +220,11 @@ public class SdkController {
         System.out.println("*** test ***");
         return "api/poc/test";
     }
+
+    @GetMapping(value = "/filter")
+    public String deTest2(Model model) {
+        System.out.println("*** test filters ***");
+        List<ETDataExtensionRow> rows = apiService.testFilters();
+        return "api/poc/test";
+    }
 }

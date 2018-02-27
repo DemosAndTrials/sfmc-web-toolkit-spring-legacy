@@ -54,4 +54,13 @@ public class ApiService {
     public boolean deleteDataExtensionRow(ETDataExtension de, ETDataExtensionRow row) {
         return sdkRepository.deleteDataExtensionRow(de, row);
     }
+
+    public List<ETDataExtensionRow> testFilters() {
+        try {
+            return sdkRepository.testFilters();
+        } catch (ETSdkException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
