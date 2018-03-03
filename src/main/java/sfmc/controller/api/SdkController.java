@@ -2,6 +2,7 @@ package sfmc.controller.api;
 
 import com.exacttarget.fuelsdk.ETDataExtension;
 import com.exacttarget.fuelsdk.ETDataExtensionRow;
+import com.exacttarget.fuelsdk.ETFolder;
 import com.exacttarget.fuelsdk.internal.DataExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,9 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import sfmc.model.CustomActivity.CustomActivityConfig;
 import sfmc.service.ApiService;
-
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +30,45 @@ public class SdkController {
     ETDataExtension selectedDE;
 
     /**
+     * Data extensions general page
+     * - Folders and list of data extensions
+     *
+     * @param model
+     * @return
+     */
+    @GetMapping(value = "/de")
+    public String deFolders(Model model) {
+        // get folders
+        List<ETFolder> folders = apiService.getDataExtensionFolders();
+        model.addAttribute("data_folders", folders);
+        // get data extensions
+        ETFolder parent = folders.stream()
+                .filter((animal) -> animal.getParentFolderKey() == null)
+                .findFirst().orElse(new ETFolder());
+        model.addAttribute("data_extensions", apiService.getDataExtensionsDetails(parent.getId()));
+        model.addAttribute("selectedFolderId", parent.getId());
+        return "api/sdk/de-folders";
+    }
+
+    /**
+     * Get data extensions for specific folder
+     *
+     * @param id    - category id
+     * @param model
+     * @return
+     */
+    @GetMapping(value = "/de-folder/{id}")
+    public String deFolder(@PathVariable String id, Model model) {
+        System.out.println("*** de folder: " + id + " ***");
+        List<ETFolder> folders = apiService.getDataExtensionFolders();
+        model.addAttribute("data_folders", folders);
+        model.addAttribute("data_extensions", apiService.getDataExtensionsDetails(id));
+        model.addAttribute("selectedFolderId", id);
+        return "api/sdk/de-folders";
+    }
+
+
+    /**
      * SDK Data Extensions page
      *
      * @return
@@ -38,6 +76,12 @@ public class SdkController {
     @GetMapping(value = "/de-list")
     public String deList(Model model) {
         model.addAttribute("data_extensions", apiService.getDataExtensionsDetails());
+        return "api/sdk/de-list";
+    }
+
+    @GetMapping(value = "/de-list/{folderId}")
+    public String deListByFolder(@PathVariable String folderId, Model model) {
+        model.addAttribute("data_extensions", apiService.getDataExtensionsDetails(folderId));
         return "api/sdk/de-list";
     }
 

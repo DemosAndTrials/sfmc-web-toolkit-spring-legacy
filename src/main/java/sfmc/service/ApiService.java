@@ -2,6 +2,7 @@ package sfmc.service;
 
 import com.exacttarget.fuelsdk.ETDataExtension;
 import com.exacttarget.fuelsdk.ETDataExtensionRow;
+import com.exacttarget.fuelsdk.ETFolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sfmc.repository.FuelSDKRepository;
@@ -17,12 +18,20 @@ public class ApiService {
     @Autowired
     FuelSDKRepository sdkRepository;
 
+    public List<ETFolder> getDataExtensionFolders(){
+        return sdkRepository.getFolders("dataextension");
+    }
+
     public List<ETDataExtensionRow> getDataExtensionRecordsByKey(String key) {
         return sdkRepository.getDataExtensionRecordsByKey(key);
     }
 
     public List<ETDataExtension> getDataExtensionsDetails() {
         return sdkRepository.getDataExtensionsDetails();
+    }
+
+    public List<ETDataExtension> getDataExtensionsDetails(String folderId) {
+        return sdkRepository.getDataExtensionsDetails(folderId);
     }
 
     public ETDataExtension getDataExtensionDetails(String id) {

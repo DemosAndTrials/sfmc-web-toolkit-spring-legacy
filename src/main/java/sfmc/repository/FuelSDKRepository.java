@@ -54,8 +54,9 @@ public class FuelSDKRepository {
      * Gets list of data extensions
      */
     public List<ETDataExtension> getDataExtensionsDetails() {
+        ensureClientInitialization();
         try {
-            ensureClientInitialization();
+
             List<ETDataExtension> exts = new ArrayList<>();
             ETResponse<ETDataExtension> response = client.retrieve(ETDataExtension.class);
             System.out.println("*** de retrieved with status: " + response.getStatus());
@@ -72,6 +73,62 @@ public class FuelSDKRepository {
                 getDataExtensionsDetails();
         }
         return null;
+    }
+
+    public List<ETDataExtension> getDataExtensionsDetails(String folderId) {
+        ensureClientInitialization();
+
+        ETExpression expression = new ETExpression();
+        expression.setProperty("folderId");
+        expression.setOperator(ETExpression.Operator.EQUALS);
+        expression.setValue(folderId);
+
+        ETFilter filter = new ETFilter();
+        filter.setExpression(expression);
+        List<ETDataExtension> exts = new ArrayList<>();
+        ETResponse<ETDataExtension> response = null;
+        try {
+            response = client.retrieve(ETDataExtension.class, filter);
+        } catch (ETSdkException e) {
+            e.printStackTrace();
+        }
+        System.out.println("*** de retrieved with status: " + response.getStatus());
+        for (ETDataExtension ext : response.getObjects()) {
+            exts.add(ext);
+            System.out.println("DE: " + ext);
+        }
+        return exts;
+    }
+
+
+
+    public List<ETFolder> getFolders(String contentType){
+        ensureClientInitialization();
+        try {
+
+            ETExpression expression = new ETExpression();
+            expression.setProperty("contentType");
+            expression.setOperator(ETExpression.Operator.EQUALS);
+            expression.setValue(contentType);
+
+            ETFilter filter = new ETFilter();
+            filter.setExpression(expression);
+
+            List<ETFolder> folders = new ArrayList<>();
+            ETResponse<ETFolder> response = client.retrieve(ETFolder.class, filter);
+            System.out.println("*** folders retrieved with status: " + response.getStatus());
+            for (ETFolder folder : response.getObjects()) {
+                folders.add(folder);
+                System.out.println("folder: " + folder);
+            }
+            return folders;
+        }
+        catch (ETSdkException e) {
+            if (HandleTokenExpiration(e))
+                getDataExtensionsDetails();
+        }
+        return null;
+
     }
 
     /**
