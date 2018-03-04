@@ -2,11 +2,15 @@ package sfmc.service;
 
 import com.exacttarget.fuelsdk.ETDataExtension;
 import com.exacttarget.fuelsdk.ETDataExtensionRow;
+<<<<<<< HEAD
 import com.exacttarget.fuelsdk.ETFolder;
+=======
 import com.exacttarget.fuelsdk.ETSdkException;
+>>>>>>> complex filter test
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sfmc.repository.FuelSDKRepository;
+
 import java.util.List;
 
 /**
