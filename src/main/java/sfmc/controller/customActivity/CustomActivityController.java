@@ -94,8 +94,16 @@ public class CustomActivityController {
      */
     @RequestMapping(value = "{id}/execute", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity execute(@PathVariable String id, @RequestBody String json) {
-        System.out.println("***** 304 NOT_MODIFIED ***** ");
-        return new ResponseEntity(HttpStatus.NOT_MODIFIED);//304
+        try {
+            Thread.sleep(180000);
+            System.out.println("***** 200 ok ***** ");
+            return new ResponseEntity(HttpStatus.OK);//200
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("***** 501 Not Implemented ***** ");
+        return new ResponseEntity(HttpStatus.NOT_IMPLEMENTED);//501
 
 
 //        System.out.println("*** execute activity: " + id + "  data: " + json);
