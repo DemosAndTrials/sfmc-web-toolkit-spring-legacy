@@ -21,7 +21,19 @@
             <!--slds-m-around_small slds-m-top_medium-->
             <nav class="slds-nav-vertical slds-nav-vertical_shade" aria-label="Folders">
                 <div class="slds-nav-vertical__section">
-                    <h2 id="entity-header" class="slds-nav-vertical__title slds-text-title_caps">Folders</h2>
+                   <div>
+                       <h2 id="entity-header" class="slds-nav-vertical__title slds-text-title_caps">Folders
+                       <a class="slds-button slds-button_icon slds-float_right"
+                               aria-pressed="false" title="New">
+                           <svg class="slds-button__icon slds-icon-text-default" aria-hidden="true">
+                               <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                    xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#new"></use>
+                           </svg>
+                           <span class="slds-assistive-text">New</span>
+
+                       </a>
+                       </h2>
+                   </div>
                     <ul>
 
                         <li th:each="folder : ${data_folders}" th:id="@{'folder' + ${folder.Id}}"
