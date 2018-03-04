@@ -95,7 +95,7 @@ public class CustomActivityController {
     @RequestMapping(value = "{id}/execute", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity execute(@PathVariable String id, @RequestBody String json) {
         System.out.println("***** 500 Internal Server Error ***** ");
-        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);//500
+        return new ResponseEntity(HttpStatus.ACCEPTED);//202
 
 
 //        System.out.println("*** execute activity: " + id + "  data: " + json);
