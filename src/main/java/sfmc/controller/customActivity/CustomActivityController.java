@@ -94,16 +94,21 @@ public class CustomActivityController {
      */
     @RequestMapping(value = "{id}/execute", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity execute(@PathVariable String id, @RequestBody String json) {
-        System.out.println("*** execute activity: " + id + "  data: " + json);
-        String result = null;
-        try {
-            result = customActivityService.executeActivity(id);
-            System.out.println("*** execute activity: " + id + "  result: " + result);
-            return new ResponseEntity(result, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity(result, HttpStatus.BAD_REQUEST);
+        System.out.println("***** 500 Internal Server Error ***** ");
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);//500
+
+
+//        System.out.println("*** execute activity: " + id + "  data: " + json);
+//        String result = null;
+//        try {
+//            result = customActivityService.executeActivity(id);
+//            System.out.println("*** execute activity: " + id + "  result: " + result);
+//            return new ResponseEntity(result, HttpStatus.OK);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("***** 500 Internal Server Error ***** ");
+//        return new ResponseEntity(result, HttpStatus.INTERNAL_SERVER_ERROR);//500
     }
 
     /**
