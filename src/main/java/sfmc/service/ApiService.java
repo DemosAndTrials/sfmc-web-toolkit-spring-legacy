@@ -63,4 +63,13 @@ public class ApiService {
         }
         return null;
     }
+
+    public List<ETDataExtensionRow> testFilters1() {
+        try {
+            return sdkRepository.testFilters1();
+        } catch (ETSdkException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -222,9 +222,16 @@ public class SdkController {
     }
 
     @GetMapping(value = "/filter")
-    public String deTest2(Model model) {
+    public String deTest1(Model model) {
         System.out.println("*** test filters ***");
         List<ETDataExtensionRow> rows = apiService.testFilters();
+        return "api/poc/test";
+    }
+
+    @GetMapping(value = "/filter2")
+    public String deTest2(Model model) {
+        System.out.println("*** test filters2 ***");
+        List<ETDataExtensionRow> rows = apiService.testFilters1();
         return "api/poc/test";
     }
 }
