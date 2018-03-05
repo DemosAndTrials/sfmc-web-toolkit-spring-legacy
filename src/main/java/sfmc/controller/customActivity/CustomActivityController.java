@@ -94,6 +94,7 @@ public class CustomActivityController {
      */
     @RequestMapping(value = "{id}/execute", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity execute(@PathVariable String id, @RequestBody String json) {
+        System.out.println("*** execute activity: " + id + "  data: " + json);
         try {
             Thread.sleep(180000);
             System.out.println("***** 200 ok ***** ");
