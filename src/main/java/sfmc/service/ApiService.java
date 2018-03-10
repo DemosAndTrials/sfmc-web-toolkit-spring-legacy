@@ -7,6 +7,8 @@ import com.exacttarget.fuelsdk.ETSdkException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sfmc.repository.FuelSDKRepository;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import java.util.List;
 
 /**
@@ -20,6 +22,18 @@ public class ApiService {
 
     public List<ETFolder> getDataExtensionFolders(){
         return sdkRepository.getFolders("dataextension");
+    }
+
+    public String getDataExtensionFoldersJson(){
+        List<ETFolder> folders = sdkRepository.getFolders("dataextension");
+        JsonArrayBuilder arr = Json.createArrayBuilder();
+        for (ETFolder folder : folders) {
+            arr.add(Json.createObjectBuilder()
+                    .add("id", folder.getId())
+                    .add("name", folder.getName()));
+        }
+        String result = arr.build().toString();
+        return result;
     }
 
     public List<ETDataExtensionRow> getDataExtensionRecordsByKey(String key) {
@@ -53,6 +67,18 @@ public class ApiService {
 
     public boolean deleteDataExtensionRow(ETDataExtension de, ETDataExtensionRow row) {
         return sdkRepository.deleteDataExtensionRow(de, row);
+    }
+
+    public ETFolder createDataExtensionFolder(ETFolder folder) {
+
+        folder.setContentType("dataextension");
+        folder.setIsActive(true);
+        folder.setAllowChildren(true);
+        folder.setIsEditable(true);
+        // TODO: bug report , description is mandatory
+        // TODO: no proper error message
+        folder.setDescription(folder.getName());
+        return sdkRepository.createDataExtensionFolder(folder);
     }
 
     public List<ETDataExtensionRow> testFilters() {

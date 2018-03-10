@@ -359,6 +359,19 @@ public class FuelSDKRepository {
         return null;
     }
 
+    public ETFolder createDataExtensionFolder(ETFolder record) {
+        ensureClientInitialization();
+        try {
+            ETResponse<ETFolder> res = client.create(record);
+            System.out.println("*** record created with status: " + res.getStatus());
+            return res.getObject();
+        } catch (ETSdkException e) {
+            if (HandleTokenExpiration(e))
+                createDataExtensionFolder(record);
+        }
+        return null;
+    }
+
     /**
      * Request new token if old one already expired
      *

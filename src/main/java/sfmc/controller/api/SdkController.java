@@ -4,6 +4,8 @@ import com.exacttarget.fuelsdk.ETDataExtension;
 import com.exacttarget.fuelsdk.ETDataExtensionRow;
 import com.exacttarget.fuelsdk.ETFolder;
 import com.exacttarget.fuelsdk.internal.DataExtension;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import sfmc.model.CustomActivity.CustomActivityStep;
 import sfmc.service.ApiService;
+
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +54,7 @@ public class SdkController {
                 .findFirst().orElse(new ETFolder());
         model.addAttribute("data_extensions", apiService.getDataExtensionsDetails(parent.getId()));
         model.addAttribute("selectedFolderId", parent.getId());
+        model.addAttribute("parentFolderId", "");
         return "api/sdk/de-folders";
     }
 
@@ -64,9 +72,28 @@ public class SdkController {
         model.addAttribute("data_folders", folders);
         model.addAttribute("data_extensions", apiService.getDataExtensionsDetails(id));
         model.addAttribute("selectedFolderId", id);
+        model.addAttribute("parentFolderId", "");
         return "api/sdk/de-folders";
     }
 
+    /**
+     * Create data extension folder
+     *
+     * @param folder
+     * @return
+     */
+    @PostMapping(value = "/de-folder/", headers = "Accept=application/json")
+    public ResponseEntity createFolder(@RequestBody ETFolder folder) {
+
+        System.out.println("*** de folder: " + folder + " ***");
+        ETFolder result = apiService.createDataExtensionFolder(folder);
+        if (result != null) {
+            String json = apiService.getDataExtensionFoldersJson();
+            System.out.println("*** json: " + json + " ***");
+            return new ResponseEntity(json, HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
 
     /**
      * SDK Data Extensions page
