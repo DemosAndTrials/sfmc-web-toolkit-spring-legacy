@@ -4,8 +4,6 @@ import com.exacttarget.fuelsdk.ETDataExtension;
 import com.exacttarget.fuelsdk.ETDataExtensionRow;
 import com.exacttarget.fuelsdk.ETFolder;
 import com.exacttarget.fuelsdk.internal.DataExtension;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import sfmc.model.CustomActivity.CustomActivityStep;
 import sfmc.service.ApiService;
-
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -88,7 +81,7 @@ public class SdkController {
         System.out.println("*** de folder: " + folder + " ***");
         ETFolder result = apiService.createDataExtensionFolder(folder);
         if (result != null) {
-            String json = apiService.getDataExtensionFoldersJson();
+            String json = apiService.getDataExtensionFolderJson(result);//apiService.getDataExtensionFoldersJson();
             System.out.println("*** json: " + json + " ***");
             return new ResponseEntity(json, HttpStatus.OK);
         }
@@ -97,7 +90,7 @@ public class SdkController {
 
     /**
      * SDK Data Extensions page
-     *
+     * TODO not in use
      * @return
      */
     @GetMapping(value = "/de-list")
@@ -106,6 +99,12 @@ public class SdkController {
         return "api/sdk/de-list";
     }
 
+    /**
+     * TODO not in use
+     * @param folderId
+     * @param model
+     * @return
+     */
     @GetMapping(value = "/de-list/{folderId}")
     public String deListByFolder(@PathVariable String folderId, Model model) {
         model.addAttribute("data_extensions", apiService.getDataExtensionsDetails(folderId));
@@ -200,8 +199,9 @@ public class SdkController {
      *
      * @return
      */
-    @GetMapping(value = "/de-create")
-    public String deCreate(Model model) {
+    @GetMapping(value = "/de-create/{id}")
+    public String deCreate(@PathVariable String id, Model model) {
+        model.addAttribute("folderId", id);
         model.addAttribute("de", new DataExtension());
         return "api/sdk/de-create";
     }
@@ -211,8 +211,9 @@ public class SdkController {
      *
      * @return
      */
-    @PostMapping(value = "/de-create")
-    public String deCreate(@RequestParam(required = false) String action, @Valid @ModelAttribute("de") DataExtension de, BindingResult bindingResult, Model model) {
+    @PostMapping(value = "/de-create/{id}")
+    public String deCreate(@PathVariable String id, @RequestParam(required = false) String action, @Valid @ModelAttribute("de") DataExtension de, BindingResult bindingResult, Model model) {
+        System.out.println("*** de folder: " + id + " ***");
         if (action.equals("save")) {
             if (de.getName().isEmpty()) {
                 FieldError error = new FieldError("de", "Name", "may not be empty");

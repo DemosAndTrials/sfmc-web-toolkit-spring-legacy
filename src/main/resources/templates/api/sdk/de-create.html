@@ -16,7 +16,7 @@
 
     <div id="tab-default-1" class="slds-tabs_default__content slds-show slds-m-right_medium slds-m-left_medium"
          role="tabpanel" aria-labelledby="tab-default-1__item">
-        <form action="#" th:action="@{/api/sdk/de-create}" th:object="${de}" method="post" name="de">
+        <form action="#" th:action="@{'/api/sdk/de-create/' + ${folderId}}" th:object="${de}" method="post" name="de">
             <div class="slds-tabs_scoped">
                 <ul class="slds-tabs_scoped__nav" role="tablist">
                     <li id="step1" class="slds-tabs_scoped__item slds-is-active" title="Properties" role="presentation">

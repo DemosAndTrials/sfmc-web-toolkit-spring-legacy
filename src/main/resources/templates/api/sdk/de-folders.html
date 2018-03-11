@@ -43,9 +43,11 @@
                                        title="Description of icon when needed">
                                     <svg class="slds-icon slds-icon-text-default slds-icon_x-small slds-m-right_x-small"
                                          aria-hidden="true">
-                                        <use th:if="${folder.getId() == selectedFolderId}" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        <use th:if="${folder.getId() == selectedFolderId}"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink"
                                              xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#opened_folder"/>
-                                        <use th:if="${folder.getId() != selectedFolderId}" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        <use th:if="${folder.getId() != selectedFolderId}"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink"
                                              xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#open_folder"/>
                                     </svg>
                                     <span class="slds-assistive-text">Folder</span>
@@ -53,14 +55,13 @@
                                 <span th:text="${folder.getName()}">Name</span>
                             </a>
                         </li>
-
                     </ul>
                 </div>
             </nav>
         </div>
         <div class="slds-col slds-size_1-of-6">
             <a class="slds-button slds-button_brand slds-button_neutral slds-not-selected slds-m-around_medium slds-float_right"
-               href="/api/sdk/de-create" aria-live="assertive" id="addRecordBtn">
+               th:href="@{'/api/sdk/de-create/' + ${selectedFolderId}}" aria-live="assertive" id="addRecordBtn">
                                 <span class="slds-text-not-selected">
                                     <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
                                      <use xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -218,94 +219,25 @@
     <div id="backdropAdd" class="slds-backdrop"></div>
 </div>
 
+<div id="templateListItem" style="display: none">
+    <li class="slds-nav-vertical__item" id="folder_648905">
+        <a aria-describedby="entity-header" class="slds-nav-vertical__action" href="/api/sdk/de-folder/648905">
+		<span class="slds-icon_container slds-icon-utility-open_folder slds-line-height_reset"
+              title="Description of icon when needed">
+			<svg aria-hidden="true" class="slds-icon slds-icon-text-default slds-icon_x-small slds-m-right_x-small">
+				<use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#open_folder"
+                     xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+			</svg>
+			<span class="slds-assistive-text">Folder</span>
+		</span>
+            <span id="listItemLabel">SubSubRos1</span>
+        </a>
+    </li>
+</div>
+
 <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script src="/js/api/de-folders.js"></script>
 <script type="text/javascript">
-
-    j$ = jQuery.noConflict();
-    var selectedKey;
-    var selectedRow;
-
-    j$('[id^=addFolderBtn]').click(function () {
-        j$('#backdropAdd').addClass('slds-backdrop_open');
-        j$('#modalAdd').addClass('slds-fade-in-open');
-    });
-
-    // delete modal open
-    j$('[id^=deleteBtn_]').click(function () {
-        j$('#backdropDelete').addClass('slds-backdrop_open');
-        j$('#modalDelete').addClass('slds-fade-in-open');
-        selectedKey = j$(this).attr('name');
-        selectedRow = j$(this).closest("tr");
-    });
-
-    // modals close
-    j$("[id$='BtnClose'],[id$='BtnCancel']").click(function () {
-        j$('#modalDelete').removeClass('slds-fade-in-open');
-        j$('#backdropDelete').removeClass('slds-backdrop_open');
-        j$('#backdropAdd').removeClass('slds-backdrop_open');
-        j$('#modalAdd').removeClass('slds-fade-in-open');
-        j$('#inputFolder').val("");
-    });
-
-    // create folder
-    j$('#addBtnConfirm').click(function () {
-        j$('#modalAdd').removeClass('slds-fade-in-open');
-        j$('#backdropAdd').removeClass('slds-backdrop_open');
-        var parentId = j$('#folderSelect').val();
-        var folderName = j$('#inputFolder').val();
-        console.log("parent: " + parentId);
-        console.log("folder: " + folderName);
-        var par = {id: parentId}
-        var folder = {name: folderName, parentFolder: par};
-        // post data
-        ajaxCall("/api/sdk/de-folder/", folder, function (response) {
-            if (response != null) {
-                console.log("it works! " + JSON.stringify(response));
-            }
-            else {
-                alert('ERROR!')
-            }
-            j$('#inputFolder').val("");
-        });
-    });
-
-    // delete modal confirm action
-    j$('#deleteBtnConfirm').click(function () {
-        j$('#modalDelete').removeClass('slds-fade-in-open');
-        j$('#backdropDelete').removeClass('slds-backdrop_open');
-        //deleteConfig(selectedId);
-        // post data
-        ajaxCall("/api/sdk/de-delete/" + selectedKey, "", function (response) {
-            if (response != null) {
-                console.log("it works! " + JSON.stringify(response));
-                selectedRow.remove()
-            }
-            else {
-                alert('ERROR!')
-            }
-        });
-    });
-
-    /**
-     * Post to controller amd handle result
-     * @param url
-     * @param dataObject
-     * @param callback
-     */
-    function ajaxCall(url, dataObject, callback) {
-        j$.ajax({
-            url: url,
-            type: 'POST',
-            data: JSON.stringify(dataObject),
-            dataType: 'json',
-            contentType: "application/json",
-            success: callback,
-            error: function (res) { // TODO handle error
-                console.log("Ajax call error: " + JSON.stringify(res));
-                callback(null);
-            }
-        });
-    }
 
 </script>
 

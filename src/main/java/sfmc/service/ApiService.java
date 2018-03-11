@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import sfmc.repository.FuelSDKRepository;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ public class ApiService {
     FuelSDKRepository sdkRepository;
 
     public List<ETFolder> getDataExtensionFolders(){
+        // TODO some subfolders retrieved with parent empty, bug?
         return sdkRepository.getFolders("dataextension");
     }
 
@@ -33,6 +35,14 @@ public class ApiService {
                     .add("name", folder.getName()));
         }
         String result = arr.build().toString();
+        return result;
+    }
+
+    public String getDataExtensionFolderJson(ETFolder folder) {
+        JsonObjectBuilder obj = Json.createObjectBuilder()
+                .add("id", folder.getId())
+                .add("name", folder.getName());
+        String result = obj.build().toString();
         return result;
     }
 
@@ -78,7 +88,9 @@ public class ApiService {
         // TODO: bug report , description is mandatory
         // TODO: no proper error message
         folder.setDescription(folder.getName());
-        return sdkRepository.createDataExtensionFolder(folder);
+        ETFolder result = sdkRepository.createDataExtensionFolder(folder);
+        result.setName(folder.getName());
+        return result;
     }
 
     public List<ETDataExtensionRow> testFilters() {
