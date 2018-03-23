@@ -93,6 +93,10 @@ public class ApiService {
         return result;
     }
 
+    public ETDataExtension createDataExtension(ETDataExtension de) {
+        return sdkRepository.createDataExtension(de);
+    }
+
     public List<ETDataExtensionRow> testFilters() {
         try {
             return sdkRepository.testFilters();

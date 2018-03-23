@@ -316,6 +316,28 @@ public class FuelSDKRepository {
         return false;
     }
 
+    /**
+     * Create a Data Extension
+     * https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-apis.meta/mc-apis/creating_a_data_extension_using_web_service_api.htm
+     * @param de
+     * @return
+     */
+    public ETDataExtension createDataExtension(ETDataExtension de) {
+        ensureClientInitialization();
+        try {
+            ETResponse<ETDataExtension> res = client.create(de);// TODO use de.insert?!
+            System.out.println("*** record created with status: " + res.getStatus());
+            if(res.getStatus().equals("ERROR")){
+
+            }
+            return res.getObject();
+        } catch (ETSdkException e) {
+            if (HandleTokenExpiration(e))
+                createDataExtension(de);
+        }
+        return null;
+    }
+
 //    /**
 //     * update DE Row
 //     *

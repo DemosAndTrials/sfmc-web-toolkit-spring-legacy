@@ -3,7 +3,6 @@ package sfmc.controller.api;
 import com.exacttarget.fuelsdk.ETDataExtension;
 import com.exacttarget.fuelsdk.ETDataExtensionRow;
 import com.exacttarget.fuelsdk.ETFolder;
-import com.exacttarget.fuelsdk.internal.DataExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import sfmc.service.ApiService;
+
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -91,6 +91,7 @@ public class SdkController {
     /**
      * SDK Data Extensions page
      * TODO not in use
+     *
      * @return
      */
     @GetMapping(value = "/de-list")
@@ -101,6 +102,7 @@ public class SdkController {
 
     /**
      * TODO not in use
+     *
      * @param folderId
      * @param model
      * @return
@@ -202,7 +204,10 @@ public class SdkController {
     @GetMapping(value = "/de-create/{id}")
     public String deCreate(@PathVariable String id, Model model) {
         model.addAttribute("folderId", id);
-        model.addAttribute("de", new DataExtension());
+        ETDataExtension de = new ETDataExtension();
+        de.addColumn("");
+        //de.addColumn("", ETDataExtensionColumn.Type.EMAIL_ADDRESS);
+        model.addAttribute("de", de);
         return "api/sdk/de-create";
     }
 
@@ -211,14 +216,24 @@ public class SdkController {
      *
      * @return
      */
-    @PostMapping(value = "/de-create/{id}")
-    public String deCreate(@PathVariable String id, @RequestParam(required = false) String action, @Valid @ModelAttribute("de") DataExtension de, BindingResult bindingResult, Model model) {
-        System.out.println("*** de folder: " + id + " ***");
+    @PostMapping(value = "/de-create/{folderId}")
+    public String deCreate(@PathVariable String folderId, @RequestParam(required = false) String action, @Valid @ModelAttribute("de") ETDataExtension de, BindingResult bindingResult, Model model) {
+        System.out.println("*** de folder: " + folderId + " ***");
+        //de.setFolderId(Integer.parseInt(id));
         if (action.equals("save")) {
             if (de.getName().isEmpty()) {
                 FieldError error = new FieldError("de", "Name", "may not be empty");
                 bindingResult.addError(error);
             }
+
+            if (bindingResult.hasErrors()) {
+                return "api/sdk/de-create";
+            } else {
+                ETDataExtension result = apiService.createDataExtension(de);
+                if (result != null)
+                    return "redirect:/api/sdk/de-details/" + result.getId();
+            }
+
         }
         return "api/sdk/de-create";
     }
