@@ -296,7 +296,7 @@ public class FuelSDKRepository {
     }
 
     /**
-     * delete DE Row
+     * Delete DE Row
      * row should include primary key
      * TODO use expressions
      * @param de

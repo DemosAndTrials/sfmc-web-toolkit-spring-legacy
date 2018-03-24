@@ -16,7 +16,9 @@
         <div class="slds-context-bar__primary slds-context-bar__item_divider-right">
             <div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-no-hover slds-context-bar__item_divider-right">
                 <div class="slds-global-header__logo">
-                    <img src="/styles/slds/images/logo-noname.svg" alt="">
+                    <a href="/" title="Home">
+                        <img src="/styles/slds/images/logo-noname.svg" alt="">
+                    </a>
                 </div>
                 <span class="slds-context-bar__label-action slds-context-bar__app-name">
                      <div class="slds-truncate slds-m-left_medium">
@@ -59,19 +61,54 @@
                             <!--SDK-->
                             <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
                                 <a href="/api/sdk" role="menuitem" tabindex="-1">
-                                    <span class="slds-truncate" title="Menu Item One">SDK</span>
+                                    <span class="slds-truncate" title="SDK">SDK</span>
                                 </a>
                             </li>
                             <!--REST-->
                             <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
                                 <a href="/api/rest" role="menuitem" tabindex="-1">
-                                    <span class="slds-truncate" title="Menu Item One">REST API</span>
+                                    <span class="slds-truncate" title="REST API">REST API</span>
                                 </a>
                             </li>
                             <!--SOAP-->
                             <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
                                 <a href="/api/soap" role="menuitem" tabindex="-1">
-                                    <span class="slds-truncate" title="Menu Item Two">SOAP API</span>
+                                    <span class="slds-truncate" title="SOAP API">SOAP API</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!--Scripting languages-->
+                <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-context-bar__item_divider-right">
+                    <a href="/scripts" class="slds-context-bar__label-action" title="Scripts">
+                        <span class="slds-truncate" title="Menu Item">Scripts</span>
+                    </a>
+                    <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-context-bar__button"
+                                aria-haspopup="true" title="Open submenu">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                     xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#chevrondown"></use>
+                            </svg>
+                            <span class="slds-assistive-text">Open submenu</span>
+                        </button>
+                    </div>
+                    <div class="slds-dropdown slds-dropdown_right slds-context-bar__item_divider-right">
+                        <ul class="slds-dropdown__list" role="menu">
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/scripts/ampscript" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="AMPscript">AMPscript</span>
+                                </a>
+                            </li>
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/scripts/ssjs" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="SSJS">Server-Side JavaScript</span>
+                                </a>
+                            </li>
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/scripts/gtl" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="GTL">Guide Template Language</span>
                                 </a>
                             </li>
                         </ul>
@@ -79,7 +116,7 @@
                 </li>
                 <!--CUSTOM ACTIVITY-->
                 <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-context-bar__item_divider-right">
-                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Custom Activity">
+                    <a href="/ca" class="slds-context-bar__label-action" title="Custom Activity">
                         <span class="slds-truncate" title="Menu Item">Custom Activity</span>
                     </a>
                     <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
@@ -123,7 +160,7 @@
                 </li>
                 <!--TOOLS-->
                 <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-context-bar__item_divider-right">
-                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Tools">
+                    <a href="/tools" class="slds-context-bar__label-action" title="Tools">
                         <span class="slds-truncate" title="Menu Item">Tools</span>
                     </a>
                     <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
@@ -146,16 +183,16 @@
                             </li>
                             <!--Item Two-->
                             <!--<li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">-->
-                                <!--<a href="/tools" role="menuitem" tabindex="-1">-->
-                                    <!--<span class="slds-truncate" title="Menu Item Two">Bootstrap</span>-->
-                                <!--</a>-->
+                            <!--<a href="/tools" role="menuitem" tabindex="-1">-->
+                            <!--<span class="slds-truncate" title="Menu Item Two">Bootstrap</span>-->
+                            <!--</a>-->
                             <!--</li>-->
                         </ul>
                     </div>
                 </li>
                 <!--DEMO DESIGN-->
                 <li class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover slds-context-bar__item_divider-right">
-                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Demo">
+                    <a href="/demo" class="slds-context-bar__label-action" title="Demo">
                         <span class="slds-truncate" title="Menu Item">Demo</span>
                     </a>
                     <div class="slds-context-bar__icon-action slds-p-left_none slds-context-bar__item_divider-right">
@@ -170,16 +207,19 @@
                     </div>
                     <div class="slds-dropdown slds-dropdown_right slds-context-bar__item_divider-right">
                         <ul class="slds-dropdown__list" role="menu">
-                            <!--Item One-->
                             <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
                                 <a href="/demo/lightning" role="menuitem" tabindex="-1">
-                                    <span class="slds-truncate" title="Menu Item One">Lighting Design System </span>
+                                    <span class="slds-truncate" title="SLDS">Lighting Design System</span>
                                 </a>
                             </li>
-                            <!--Item Two-->
                             <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
                                 <a href="/demo/bootstrap" role="menuitem" tabindex="-1">
-                                    <span class="slds-truncate" title="Menu Item Two">Bootstrap</span>
+                                    <span class="slds-truncate" title="Bootstrap">Bootstrap</span>
+                                </a>
+                            </li>
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/demo/greeting?name=Guest" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Menu Item Two">Greeting</span>
                                 </a>
                             </li>
                         </ul>

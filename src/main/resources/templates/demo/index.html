@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>DEMO</title>
+    <div th:replace="fragments/header :: header-css" th:remove="tag"/>
+</head>
+<body>
+
+<section class="stage slds-grid slds-grid--vertical slds-nowrap">
+
+    <div th:replace="fragments/header :: header">.</div>
+
+    <div class="slds-shrink-none">
+        <div class="slds-page-header"><h2 class="slds-text-heading--medium">Demo</h2></div>
+    </div>
+
+    <div class="slds-box">
+        <h3 class="slds-text-heading--medium slds-m-around_small slds-m-top_none">Demos:</h3>
+        <ul class="slds-list_dotted">
+            <li>
+                <a target="_blank" class=".slds-text-link_faux"
+                   href="/demo/lightning">Lighting Design System</a>
+            </li>
+            <li>
+                <p><a target="_blank" class=".slds-text-link_faux"
+                      href="/demo/bootstrap">Bootstrap</a></p>
+            </li>
+            <li>
+                <p><a target="_blank" class=".slds-text-link_faux"
+                      href="/demo/greeting?name=Guest">Greeting</a></p>
+            </li>
+            <li>
+                <p><a target="_blank" class=".slds-text-link_faux"
+                      href="#">Link</a></p>
+            </li>
+        </ul>
+        <h3 class="slds-text-heading--medium slds-m-around_small">Documentation:</h3>
+        <ul class="slds-list_dotted">
+            <li>
+                <a target="_blank" class=".slds-text-link_faux" href="https://www.lightningdesignsystem.com/">LIGHTNING DESIGN SYSTEM</a>
+            </li>
+            <li>
+                <p><a target="_blank" class=".slds-text-link_faux" href="https://getbootstrap.com/">Bootstrap</a></p>
+            </li>
+            <li>
+                <p><a target="_blank" class=".slds-text-link_faux" href="#">Link</a></p>
+            </li>
+        </ul>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</section>
+
+<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+
+</body>
+</html>

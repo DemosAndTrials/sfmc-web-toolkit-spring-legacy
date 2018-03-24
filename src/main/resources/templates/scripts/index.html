@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Scripting languages</title>
+    <div th:replace="fragments/header :: header-css" th:remove="tag"/>
+</head>
+<body>
+
+<section class="stage slds-grid slds-grid--vertical slds-nowrap">
+
+    <div th:replace="fragments/header :: header">.</div>
+
+    <div class="slds-shrink-none">
+        <div class="slds-page-header"><h2 class="slds-text-heading--medium">Scripting languages</h2>
+        </div>
+    </div>
+
+    <div class="slds-box">
+        <h3 class="slds-text-heading--medium slds-m-around_small slds-m-top_none">Addons:</h3>
+        <ul class="slds-list_dotted">
+            <li>
+                <a class=".slds-text-link_faux"
+                   href="/scripts/ampscript">AMPscript</a>
+            </li>
+            <li>
+                <p><a class=".slds-text-link_faux"
+                      href="/scripts/ssjs">Server-Side JavaScript</a></p>
+            </li>
+            <li>
+                <p><a class=".slds-text-link_faux"
+                      href="/scripts/gtl">Guide Template Language</a></p>
+            </li>
+        </ul>
+        <h3 class="slds-text-heading--medium slds-m-around_small">Other:</h3>
+        <ul class="slds-list_dotted">
+            <li>
+                <a class=".slds-text-link_faux"
+                   href="#">Placeholder</a>
+            </li>
+            <li>
+                <p><a class=".slds-text-link_faux"
+                      href="#">Placeholder</a></p>
+            </li>
+            <li>
+                <p><a class=".slds-text-link_faux" href="#">Placeholder</a></p>
+            </li>
+        </ul>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</section>
+
+<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+
+</body>
+</html>
