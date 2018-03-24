@@ -1,4 +1,4 @@
-package sfmc.controller;
+package sfmc.controller.tools;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class ToolsController {
      *
      * @return
      */
-    @GetMapping(value = {"/", "/index"})
+    @GetMapping(value = {"" ,"/", "/index"})
     public String index() {
         return "tools/index";
     }

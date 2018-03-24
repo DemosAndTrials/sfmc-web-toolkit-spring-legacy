@@ -1,10 +1,9 @@
-package sfmc.controller;
+package sfmc.controller.demo;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.Calendar;
 
 /**
@@ -13,6 +12,16 @@ import java.util.Calendar;
 @Controller
 @RequestMapping("demo")
 public class DemoController {
+
+    /**
+     * Index page - Getting Started
+     *
+     * @return
+     */
+    @RequestMapping(value = {"" ,"/", "/index"})
+    public String index() {
+        return "demo/index";
+    }
 
     @RequestMapping("/greeting")
     public String greeting(@RequestParam(value="name", required=false, defaultValue="World") String name, Model model) {

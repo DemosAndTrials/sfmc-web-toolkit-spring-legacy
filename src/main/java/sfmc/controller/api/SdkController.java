@@ -3,7 +3,6 @@ package sfmc.controller.api;
 import com.exacttarget.fuelsdk.ETDataExtension;
 import com.exacttarget.fuelsdk.ETDataExtensionRow;
 import com.exacttarget.fuelsdk.ETFolder;
-import com.exacttarget.fuelsdk.internal.DataExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +46,7 @@ public class SdkController {
                 .findFirst().orElse(new ETFolder());
         model.addAttribute("data_extensions", apiService.getDataExtensionsDetails(parent.getId()));
         model.addAttribute("selectedFolderId", parent.getId());
+        model.addAttribute("parentFolderId", "");
         return "api/sdk/de-folders";
     }
 
@@ -64,12 +64,32 @@ public class SdkController {
         model.addAttribute("data_folders", folders);
         model.addAttribute("data_extensions", apiService.getDataExtensionsDetails(id));
         model.addAttribute("selectedFolderId", id);
+        model.addAttribute("parentFolderId", "");
         return "api/sdk/de-folders";
     }
 
+    /**
+     * Create data extension folder
+     *
+     * @param folder
+     * @return
+     */
+    @PostMapping(value = "/de-folder/", headers = "Accept=application/json")
+    public ResponseEntity createFolder(@RequestBody ETFolder folder) {
+
+        System.out.println("*** de folder: " + folder + " ***");
+        ETFolder result = apiService.createDataExtensionFolder(folder);
+        if (result != null) {
+            String json = apiService.getDataExtensionFolderJson(result);//apiService.getDataExtensionFoldersJson();
+            System.out.println("*** json: " + json + " ***");
+            return new ResponseEntity(json, HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
 
     /**
      * SDK Data Extensions page
+     * TODO not in use
      *
      * @return
      */
@@ -79,6 +99,13 @@ public class SdkController {
         return "api/sdk/de-list";
     }
 
+    /**
+     * TODO not in use
+     *
+     * @param folderId
+     * @param model
+     * @return
+     */
     @GetMapping(value = "/de-list/{folderId}")
     public String deListByFolder(@PathVariable String folderId, Model model) {
         model.addAttribute("data_extensions", apiService.getDataExtensionsDetails(folderId));
@@ -173,9 +200,13 @@ public class SdkController {
      *
      * @return
      */
-    @GetMapping(value = "/de-create")
-    public String deCreate(Model model) {
-        model.addAttribute("de", new DataExtension());
+    @GetMapping(value = "/de-create/{id}")
+    public String deCreate(@PathVariable String id, Model model) {
+        model.addAttribute("folderId", id);
+        ETDataExtension de = new ETDataExtension();
+        de.addColumn("");
+        //de.addColumn("", ETDataExtensionColumn.Type.EMAIL_ADDRESS);
+        model.addAttribute("de", de);
         return "api/sdk/de-create";
     }
 
@@ -184,13 +215,24 @@ public class SdkController {
      *
      * @return
      */
-    @PostMapping(value = "/de-create")
-    public String deCreate(@RequestParam(required = false) String action, @Valid @ModelAttribute("de") DataExtension de, BindingResult bindingResult, Model model) {
+    @PostMapping(value = "/de-create/{folderId}")
+    public String deCreate(@PathVariable String folderId, @RequestParam(required = false) String action, @Valid @ModelAttribute("de") ETDataExtension de, BindingResult bindingResult, Model model) {
+        System.out.println("*** de folder: " + folderId + " ***");
+        //de.setFolderId(Integer.parseInt(id));
         if (action.equals("save")) {
             if (de.getName().isEmpty()) {
                 FieldError error = new FieldError("de", "Name", "may not be empty");
                 bindingResult.addError(error);
             }
+
+            if (bindingResult.hasErrors()) {
+                return "api/sdk/de-create";
+            } else {
+                ETDataExtension result = apiService.createDataExtension(de);
+                if (result != null)
+                    return "redirect:/api/sdk/de-details/" + result.getId();
+            }
+
         }
         return "api/sdk/de-create";
     }
@@ -222,9 +264,16 @@ public class SdkController {
     }
 
     @GetMapping(value = "/filter")
-    public String deTest2(Model model) {
+    public String deTest1(Model model) {
         System.out.println("*** test filters ***");
         List<ETDataExtensionRow> rows = apiService.testFilters();
+        return "api/poc/test";
+    }
+
+    @GetMapping(value = "/filter2")
+    public String deTest2(Model model) {
+        System.out.println("*** test filters2 ***");
+        List<ETDataExtensionRow> rows = apiService.testFilters1();
         return "api/poc/test";
     }
 }

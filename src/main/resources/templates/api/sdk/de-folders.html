@@ -18,37 +18,50 @@
 
     <div class="slds-grid slds-wrap slds-m-around_small">
         <div class="slds-col slds-grow-none">
-            <!--slds-m-around_small slds-m-top_medium-->
+
             <nav class="slds-nav-vertical slds-nav-vertical_shade" aria-label="Folders">
                 <div class="slds-nav-vertical__section">
-                    <h2 id="entity-header" class="slds-nav-vertical__title slds-text-title_caps">Folders</h2>
-                    <ul>
+                    <div>
+                        <h2 id="entity-header" class="slds-nav-vertical__title slds-text-title_caps">Folders
+                            <a class="slds-button slds-button_icon slds-float_right" id="addFolderBtn"
+                               aria-pressed="false" title="New">
+                                <svg class="slds-button__icon slds-icon-text-default" aria-hidden="true">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                         xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#new"></use>
+                                </svg>
+                                <span class="slds-assistive-text">New</span>
+                            </a>
+                        </h2>
+                    </div>
 
-                        <li th:each="folder : ${data_folders}" th:id="@{'folder' + ${folder.Id}}"
+                    <ul id="deFolders">
+                        <li th:each="folder : ${data_folders}" th:id="@{'folder_' + ${folder.Id}}"
                             th:class="'slds-nav-vertical__item ' + ((${folder.getId()} == ${selectedFolderId}) ? 'slds-is-active' : '')">
-
                             <a class="slds-nav-vertical__action" aria-describedby="entity-header"
                                th:href="@{'/api/sdk/de-folder/' + ${folder.getId()}}">
                                  <span class="slds-icon_container slds-icon-utility-open_folder slds-line-height_reset"
                                        title="Description of icon when needed">
-              <svg class="slds-icon slds-icon-text-default slds-icon_x-small slds-m-right_x-small" aria-hidden="true">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                     xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#open_folder"/>
-              </svg>
-              <span class="slds-assistive-text">Folder</span>
-            </span>
-                               <span th:text="${folder.getName()}">Name</span>
+                                    <svg class="slds-icon slds-icon-text-default slds-icon_x-small slds-m-right_x-small"
+                                         aria-hidden="true">
+                                        <use th:if="${folder.getId() == selectedFolderId}"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink"
+                                             xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#opened_folder"/>
+                                        <use th:if="${folder.getId() != selectedFolderId}"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink"
+                                             xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#open_folder"/>
+                                    </svg>
+                                    <span class="slds-assistive-text">Folder</span>
+                                    </span>
+                                <span th:text="${folder.getName()}">Name</span>
                             </a>
-
                         </li>
-
                     </ul>
                 </div>
             </nav>
         </div>
         <div class="slds-col slds-size_1-of-6">
             <a class="slds-button slds-button_brand slds-button_neutral slds-not-selected slds-m-around_medium slds-float_right"
-               href="/api/sdk/de-create" aria-live="assertive" id="addRecordBtn">
+               th:href="@{'/api/sdk/de-create/' + ${selectedFolderId}}" aria-live="assertive" id="addRecordBtn">
                                 <span class="slds-text-not-selected">
                                     <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
                                      <use xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -139,8 +152,7 @@
         <div class="slds-modal__container">
             <header class="slds-modal__header">
                 <button id="deleteBtnClose"
-                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
-                        onclick="closeModal()">
+                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
                     <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink"
                              xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#close"></use>
@@ -161,66 +173,71 @@
     <div id="backdropDelete" class="slds-backdrop"></div>
 </div>
 
+<div name="add-modal">
+    <section id="modalAdd" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01"
+             aria-describedby="modal-content-id-1" class="slds-modal">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+                <button id="addBtnClose"
+                        class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                        title="Close">
+                    <svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                             xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">New Folder</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                <p>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="folderSelect">Select Parent Folder</label>
+                    <div class="slds-select_container">
+                        <!--th:field="*{parentFolder.getKey()}"-->
+                        <select class="slds-select" id="folderSelect" th:field="*{parentFolderId}">
+                            <option th:each="folder : ${data_folders}" th:id="@{'folder_' + ${folder.Id}}"
+                                    th:value="${folder.getId()}" th:text="${folder.getName()}">folder
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="inputFolder">Enter Folder Name</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" id="inputFolder" class="slds-input" placeholder="" maxlength="100"/>
+                    </div>
+                </div>
+                </p>
+            </div>
+            <footer class="slds-modal__footer">
+                <button id="addBtnCancel" class="slds-button slds-button_neutral">Cancel</button>
+                <button id="addBtnConfirm" class="slds-button slds-button_brand">Save</button>
+            </footer>
+        </div>
+    </section>
+    <div id="backdropAdd" class="slds-backdrop"></div>
+</div>
+
+<div id="templateListItem" style="display: none">
+    <li class="slds-nav-vertical__item" id="folder_648905">
+        <a aria-describedby="entity-header" class="slds-nav-vertical__action" href="/api/sdk/de-folder/648905">
+		<span class="slds-icon_container slds-icon-utility-open_folder slds-line-height_reset"
+              title="Description of icon when needed">
+			<svg aria-hidden="true" class="slds-icon slds-icon-text-default slds-icon_x-small slds-m-right_x-small">
+				<use xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#open_folder"
+                     xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+			</svg>
+			<span class="slds-assistive-text">Folder</span>
+		</span>
+            <span id="listItemLabel">SubSubRos1</span>
+        </a>
+    </li>
+</div>
+
 <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script src="/js/api/de-folders.js"></script>
 <script type="text/javascript">
-
-    j$ = jQuery.noConflict();
-    var selectedKey;
-    var selectedRow;
-
-    // delete modal open
-    j$('[id^=deleteBtn_]').click(function () {
-        j$('#backdropDelete').addClass('slds-backdrop_open');
-        j$('#modalDelete').addClass('slds-fade-in-open');
-        selectedKey = j$(this).attr('name');
-        selectedRow = j$(this).closest("tr");
-    });
-
-    // delete modal close
-    j$('#deleteBtnCancel,#deleteBtnClose').click(function () {
-        j$('#modalDelete').removeClass('slds-fade-in-open');
-        j$('#backdropDelete').removeClass('slds-backdrop_open');
-        j$('#backdropJson').removeClass('slds-backdrop_open');
-        j$('#modalJson').removeClass('slds-fade-in-open');
-    });
-
-    // delete modal confirm action
-    j$('#deleteBtnConfirm').click(function () {
-        j$('#modalDelete').removeClass('slds-fade-in-open');
-        j$('#backdropDelete').removeClass('slds-backdrop_open');
-        //deleteConfig(selectedId);
-        // post data
-        ajaxCall("/api/sdk/de-delete/" + selectedKey, "", function (response) {
-            if (response != null) {
-                console.log("it works! " + JSON.stringify(response));
-                selectedRow.remove()
-            }
-            else {
-                alert('ERROR!')
-            }
-        });
-    });
-
-    /**
-     * Post to controller amd handle result
-     * @param url
-     * @param dataObject
-     * @param callback
-     */
-    function ajaxCall(url, dataObject, callback) {
-        j$.ajax({
-            url: url,
-            type: 'POST',
-            data: JSON.stringify(dataObject),
-            dataType: 'json',
-            contentType: "application/json",
-            success: callback,
-            error: function (res) { // TODO handle error
-                console.log("Ajax call error: " + JSON.stringify(res));
-                callback(null);
-            }
-        });
-    }
 
 </script>
 

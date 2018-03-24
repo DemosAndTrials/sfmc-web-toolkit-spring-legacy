@@ -7,6 +7,9 @@ import com.exacttarget.fuelsdk.ETSdkException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sfmc.repository.FuelSDKRepository;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 import java.util.List;
 
 /**
@@ -19,7 +22,28 @@ public class ApiService {
     FuelSDKRepository sdkRepository;
 
     public List<ETFolder> getDataExtensionFolders(){
+        // TODO some subfolders retrieved with parent empty, bug?
         return sdkRepository.getFolders("dataextension");
+    }
+
+    public String getDataExtensionFoldersJson(){
+        List<ETFolder> folders = sdkRepository.getFolders("dataextension");
+        JsonArrayBuilder arr = Json.createArrayBuilder();
+        for (ETFolder folder : folders) {
+            arr.add(Json.createObjectBuilder()
+                    .add("id", folder.getId())
+                    .add("name", folder.getName()));
+        }
+        String result = arr.build().toString();
+        return result;
+    }
+
+    public String getDataExtensionFolderJson(ETFolder folder) {
+        JsonObjectBuilder obj = Json.createObjectBuilder()
+                .add("id", folder.getId())
+                .add("name", folder.getName());
+        String result = obj.build().toString();
+        return result;
     }
 
     public List<ETDataExtensionRow> getDataExtensionRecordsByKey(String key) {
@@ -55,9 +79,36 @@ public class ApiService {
         return sdkRepository.deleteDataExtensionRow(de, row);
     }
 
+    public ETFolder createDataExtensionFolder(ETFolder folder) {
+
+        folder.setContentType("dataextension");
+        folder.setIsActive(true);
+        folder.setAllowChildren(true);
+        folder.setIsEditable(true);
+        // TODO: bug report , description is mandatory
+        // TODO: no proper error message
+        folder.setDescription(folder.getName());
+        ETFolder result = sdkRepository.createDataExtensionFolder(folder);
+        result.setName(folder.getName());
+        return result;
+    }
+
+    public ETDataExtension createDataExtension(ETDataExtension de) {
+        return sdkRepository.createDataExtension(de);
+    }
+
     public List<ETDataExtensionRow> testFilters() {
         try {
             return sdkRepository.testFilters();
+        } catch (ETSdkException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<ETDataExtensionRow> testFilters1() {
+        try {
+            return sdkRepository.testFilters1();
         } catch (ETSdkException e) {
             e.printStackTrace();
         }

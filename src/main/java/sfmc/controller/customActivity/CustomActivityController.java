@@ -209,7 +209,7 @@ public class CustomActivityController {
      *
      * @return
      */
-    @GetMapping(value = {"/", "/index"})
+    @GetMapping(value = {"", "/", "/index"})
     public String indexConfig() {
         return "ca/index";
     }

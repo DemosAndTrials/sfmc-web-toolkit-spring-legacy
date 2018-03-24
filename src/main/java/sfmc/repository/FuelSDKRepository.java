@@ -242,7 +242,222 @@ public class FuelSDKRepository {
         return res.size() > 0 ? res.get(0) : null;
     }
 
+    /**
+     * Get records by DE Key
+     *
+     * @param key
+     */
+    public List<ETDataExtensionRow> getDataExtensionRecordsByKey(String key) {
+        return getDataExtensionRecords("key=" + key, new ETFilter());
+    }
 
+    /**
+     * Select DE records using filter
+     *
+     * @param dataExtension
+     * @param filter
+     * @return
+     */
+    private List<ETDataExtensionRow> getDataExtensionRecords(String dataExtension, ETFilter filter) {
+        ensureClientInitialization();
+        List<ETDataExtensionRow> records = new ArrayList<>();
+        try {
+            ETResponse<ETDataExtensionRow> res = ETDataExtension.select(client, dataExtension, filter);
+            System.out.println("*** records selected with status: " + res.getStatus());
+            for (ETDataExtensionRow row : res.getObjects()) {
+                System.out.println(row);
+                records.add(row);
+            }
+            return records;
+        } catch (ETSdkException e) {
+            if (HandleTokenExpiration(e))
+                getDataExtensionRecords(dataExtension, filter);
+        }
+        return records;
+    }
+
+    /**
+     * create DE Row
+     *
+     * @param record
+     * @return
+     */
+    public ETDataExtensionRow createDataExtensionRow(ETDataExtensionRow record) {
+        ensureClientInitialization();
+        try {
+            ETResponse<ETDataExtensionRow> res = client.create(record);// TODO use de.insert?!
+            System.out.println("*** record created with status: " + res.getStatus());
+            return res.getObject();
+        } catch (ETSdkException e) {
+            if (HandleTokenExpiration(e))
+                createDataExtensionRow(record);
+        }
+        return null;
+    }
+
+    /**
+     * Delete DE Row
+     * row should include primary key
+     * TODO use expressions
+     * @param de
+     * @param record
+     * @return
+     */
+    public boolean deleteDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
+        try {
+            ETResponse<ETDataExtensionRow> res = de.delete(record);
+            System.out.println("*** record deleted with status: " + res.getStatus());
+            if (res.getStatus() == ETResult.Status.OK)
+                return true;
+        } catch (ETSdkException e) {
+            if (HandleTokenExpiration(e))
+                deleteDataExtensionRow(de, record);
+        }
+        return false;
+    }
+
+    /**
+     * Create a Data Extension
+     * https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-apis.meta/mc-apis/creating_a_data_extension_using_web_service_api.htm
+     * @param de
+     * @return
+     */
+    public ETDataExtension createDataExtension(ETDataExtension de) {
+        ensureClientInitialization();
+        try {
+            ETResponse<ETDataExtension> res = client.create(de);// TODO use de.insert?!
+            System.out.println("*** record created with status: " + res.getStatus());
+            if(res.getStatus().equals("ERROR")){
+
+            }
+            return res.getObject();
+        } catch (ETSdkException e) {
+            if (HandleTokenExpiration(e))
+                createDataExtension(de);
+        }
+        return null;
+    }
+
+//    /**
+//     * update DE Row
+//     *
+//     * @param de
+//     * @param record
+//     * @return
+//     */
+//    public ETDataExtensionRow updateDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
+//        ensureClientInitialization();
+//        try {
+//            ETResponse<ETDataExtensionRow> res = de.update(record);
+//            if (res.getStatus() == ETResult.Status.OK)
+//                return res.getObject();
+//            return null; // TODO throw exception
+//        } catch (ETSdkException e) {
+//            if (HandleTokenExpiration(e))
+//                updateDataExtensionRow(de, record);
+//        }
+//        return null;
+//    }
+
+    /**
+     * update DE row
+     * row should include de key
+     *
+     * @param record
+     * @return
+     */
+    public ETDataExtensionRow updateDataExtensionRow(ETDataExtensionRow record) {
+
+        try {
+            ETResponse<ETDataExtensionRow> res = ETDataExtensionRow.update(client, Arrays.asList(record));
+            System.out.println("*** record updated with status: " + res.getStatus());
+            if (res.getStatus() == ETResult.Status.OK)
+                return res.getObject();
+            return null; // TODO throw exception
+        } catch (ETSdkException e) {
+            if (HandleTokenExpiration(e))
+                updateDataExtensionRow(record);
+        }
+        return null;
+    }
+
+    public ETFolder createDataExtensionFolder(ETFolder record) {
+        ensureClientInitialization();
+        try {
+            ETResponse<ETFolder> res = client.create(record);
+            System.out.println("*** record created with status: " + res.getStatus());
+            return res.getObject();
+        } catch (ETSdkException e) {
+            if (HandleTokenExpiration(e))
+                createDataExtensionFolder(record);
+        }
+        return null;
+    }
+
+    /**
+     * Request new token if old one already expired
+     *
+     * @param ex
+     * @return
+     */
+    private Boolean HandleTokenExpiration(ETSdkException ex) {
+        ex.printStackTrace();
+        String message = ex.getMessage();
+        if (message.equals(REFRESH_TOKEN_NULL)) {
+            System.out.println("*** Token expired *** " + client.getAccessToken());
+            try {
+                String token = client.requestToken();
+                System.out.println("*** Token requested *** " + token);
+                System.out.println("*** Client's token *** " + client.getAccessToken());
+                return true;
+            } catch (ETSdkException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(message.startsWith(INVOKE_METHOD_ERROR)){
+            // new client
+            initSDKClient();
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Test complex filter
+     * retrieve de records by id and time
+     * @return
+     * @throws ETSdkException
+     */
+    public List<ETDataExtensionRow> testFilters1() throws ETSdkException {
+        String key = "SendLog";
+        String from = "2018-02-04 10:00:00"; // yyyy-MM-dd HH:mm:ss
+        String to = "2018-03-24 10:00:00"; // yyyy-MM-dd HH:mm:ss
+
+        ETExpression exp1 = new ETExpression();
+        exp1.addSubexpression(ETExpression.parse("SENDDATE >= '" + from + "'"));
+        exp1.setOperator(ETExpression.Operator.AND);
+        exp1.addSubexpression(ETExpression.parse("SENDDATE <= '" + to + "'"));
+
+        ETExpression exp = new ETExpression();
+        exp.addSubexpression(exp1);
+        exp.setOperator(ETExpression.Operator.AND);
+        exp.addSubexpression(ETExpression.parse("SFID = '450500'"));
+
+        ETFilter filter = new ETFilter();
+        filter.setExpression(exp);
+
+        List<ETDataExtensionRow> res = getDataExtensionRecords("key=" + key, filter);
+        return res.size() > 0 ? res : null;
+    }
+
+    /**
+     * Test complex filter
+     * retrieve de records by ids
+     * TODO dynamic filter from array of ids
+     * @return
+     * @throws ETSdkException
+     */
     public List<ETDataExtensionRow> testFilters() throws ETSdkException {
         String key = "DADB5CDB-3191-4E5A-AF7D-EF72D08E0179";
         // create expression
@@ -333,151 +548,5 @@ public class FuelSDKRepository {
         // get record
         List<ETDataExtensionRow> res = getDataExtensionRecords("key=" + key, filter);
         return res.size() > 0 ? res : null;
-    }
-
-    /**
-     * Get records by DE Key
-     *
-     * @param key
-     */
-    public List<ETDataExtensionRow> getDataExtensionRecordsByKey(String key) {
-        return getDataExtensionRecords("key=" + key, new ETFilter());
-    }
-
-    /**
-     * Select DE records using filter
-     *
-     * @param dataExtension
-     * @param filter
-     * @return
-     */
-    private List<ETDataExtensionRow> getDataExtensionRecords(String dataExtension, ETFilter filter) {
-        ensureClientInitialization();
-        List<ETDataExtensionRow> records = new ArrayList<>();
-        try {
-            ETResponse<ETDataExtensionRow> res = ETDataExtension.select(client, dataExtension, filter);
-            System.out.println("*** records selected with status: " + res.getStatus());
-            for (ETDataExtensionRow row : res.getObjects()) {
-                System.out.println(row);
-                records.add(row);
-            }
-            return records;
-        } catch (ETSdkException e) {
-            if (HandleTokenExpiration(e))
-                getDataExtensionRecords(dataExtension, filter);
-        }
-        return records;
-    }
-
-    /**
-     * create DE Row
-     *
-     * @param record
-     * @return
-     */
-    public ETDataExtensionRow createDataExtensionRow(ETDataExtensionRow record) {
-        ensureClientInitialization();
-        try {
-            ETResponse<ETDataExtensionRow> res = client.create(record);// TODO use de.insert?!
-            System.out.println("*** record created with status: " + res.getStatus());
-            return res.getObject();
-        } catch (ETSdkException e) {
-            if (HandleTokenExpiration(e))
-                createDataExtensionRow(record);
-        }
-        return null;
-    }
-
-    /**
-     * delete DE Row
-     * row should include primary key
-     * TODO use expressions
-     * @param de
-     * @param record
-     * @return
-     */
-    public boolean deleteDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
-        try {
-            ETResponse<ETDataExtensionRow> res = de.delete(record);
-            System.out.println("*** record deleted with status: " + res.getStatus());
-            if (res.getStatus() == ETResult.Status.OK)
-                return true;
-        } catch (ETSdkException e) {
-            if (HandleTokenExpiration(e))
-                deleteDataExtensionRow(de, record);
-        }
-        return false;
-    }
-
-//    /**
-//     * update DE Row
-//     *
-//     * @param de
-//     * @param record
-//     * @return
-//     */
-//    public ETDataExtensionRow updateDataExtensionRow(ETDataExtension de, ETDataExtensionRow record) {
-//        ensureClientInitialization();
-//        try {
-//            ETResponse<ETDataExtensionRow> res = de.update(record);
-//            if (res.getStatus() == ETResult.Status.OK)
-//                return res.getObject();
-//            return null; // TODO throw exception
-//        } catch (ETSdkException e) {
-//            if (HandleTokenExpiration(e))
-//                updateDataExtensionRow(de, record);
-//        }
-//        return null;
-//    }
-
-    /**
-     * update DE row
-     * row should include de key
-     *
-     * @param record
-     * @return
-     */
-    public ETDataExtensionRow updateDataExtensionRow(ETDataExtensionRow record) {
-
-        try {
-            ETResponse<ETDataExtensionRow> res = ETDataExtensionRow.update(client, Arrays.asList(record));
-            System.out.println("*** record updated with status: " + res.getStatus());
-            if (res.getStatus() == ETResult.Status.OK)
-                return res.getObject();
-            return null; // TODO throw exception
-        } catch (ETSdkException e) {
-            if (HandleTokenExpiration(e))
-                updateDataExtensionRow(record);
-        }
-        return null;
-    }
-
-    /**
-     * Request new token if old one already expired
-     *
-     * @param ex
-     * @return
-     */
-    private Boolean HandleTokenExpiration(ETSdkException ex) {
-        ex.printStackTrace();
-        String message = ex.getMessage();
-        if (message.equals(REFRESH_TOKEN_NULL)) {
-            System.out.println("*** Token expired *** " + client.getAccessToken());
-            try {
-                String token = client.requestToken();
-                System.out.println("*** Token requested *** " + token);
-                System.out.println("*** Client's token *** " + client.getAccessToken());
-                return true;
-            } catch (ETSdkException e) {
-                e.printStackTrace();
-            }
-        }
-        else if(message.startsWith(INVOKE_METHOD_ERROR)){
-            // new client
-            initSDKClient();
-            return true;
-        }
-
-        return false;
     }
 }
