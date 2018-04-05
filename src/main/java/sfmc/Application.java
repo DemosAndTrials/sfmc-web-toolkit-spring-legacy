@@ -1,4 +1,4 @@
-package sfmc.config;
+package sfmc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan(basePackages = { "sfmc.controller","sfmc.model", "sfmc.repository","sfmc.service", "sfmc.util"}) // define packages for scan
+@ComponentScan(basePackages = { "sfmc.controller","sfmc.model", "sfmc.repository","sfmc.service", "sfmc.util", "sfmc.configuration"}) // define packages for scan
 @EntityScan(basePackages = { "sfmc.model" })
 @EnableJpaRepositories(basePackages = {"sfmc.repository"})
 public class Application {

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="header-css">
 
     <link rel="icon" href="/images/fav.ico" type="image/x-icon"/>
 
     <!-- this is header-css -->
-    <link rel='stylesheet prefetch'
-          href='/styles/slds/styles/salesforce-lightning-design-system.min.css'/>
+    <!--<link rel='stylesheet prefetch'-->
+    <!--href='/styles/slds/styles/salesforce-lightning-design-system.min.css'/>-->
+    <link rel='stylesheet'
+          href='/webjars/salesforce-lightning-design-system/2.5.2/styles/salesforce-lightning-design-system.min.css'>
 </head>
 <body>
 <div th:fragment="header">
@@ -15,11 +17,13 @@
     <div class="slds-context-bar">
         <div class="slds-context-bar__primary slds-context-bar__item_divider-right">
             <div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-no-hover slds-context-bar__item_divider-right">
-                <div class="slds-global-header__logo">
-                    <a href="/" title="Home">
-                        <img src="/styles/slds/images/logo-noname.svg" alt="">
-                    </a>
-                </div>
+                <!--<div class="slds-global-header__logo">-->
+                <!--<a href="/" title="Home">-->
+                <!--<img src="/styles/slds/images/logo-noname.svg?width=128&height=128" alt="" height="128">-->
+                <!--</a>-->
+                <!--</div>-->
+                <div class="slds-global-header__logo"
+                     style="width:48px;background-image: url('/styles/slds/images/logo-noname.svg?width=128&height=128')"></div>
                 <span class="slds-context-bar__label-action slds-context-bar__app-name">
                      <div class="slds-truncate slds-m-left_medium">
                         SFMC Examples
@@ -233,8 +237,30 @@
                 </li>
 
             </ul>
-
         </nav>
+
+        <ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center">
+
+            <li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small">
+                <div sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}">Sign in</a>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <a th:href="@{/logout}">Logout (<span sec:authentication="name"/></a>)
+                </div>
+            </li>
+            <li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small">
+
+                <div sec:authorize="isAuthenticated()">
+                    <button class="slds-button" title="person name" aria-haspopup="true">
+                        <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
+                            <img alt="Person name" src="/styles/slds/images/avatar2.jpg" title="User avatar"/>
+                        </span>
+                    </button>
+                </div>
+            </li>
+        </ul>
+
     </div>
 
 </div>

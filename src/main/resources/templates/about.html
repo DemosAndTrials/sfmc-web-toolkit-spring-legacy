@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>About</title>
     <div th:replace="fragments/header :: header-css" th:remove="tag"/>
@@ -11,6 +12,18 @@
     <div th:replace="fragments/header :: header">.</div>
     <div class="slds-shrink-none">
         <div class="slds-page-header"><h2 class="slds-text-heading--medium">About</h2></div>
+    </div>
+    <div sec:authentication="name">
+        The value of the "name" property of the authentication object should appear here.
+    </div>
+    <div sec:authorize="isAuthenticated()">
+        This content is only shown to authenticated users.
+    </div>
+    <div sec:authorize="hasAuthority('ADMIN')">
+        This content is only shown to administrators.
+    </div>
+    <div sec:authorize="hasAuthority('USER')">
+        This content is only shown to users.
     </div>
 
     <div th:replace="fragments/footer :: footer"></div>

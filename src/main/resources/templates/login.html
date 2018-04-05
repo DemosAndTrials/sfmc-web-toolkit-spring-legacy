@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Login</title>
+    <div th:replace="fragments/header :: header-css" th:remove="tag"/>
+</head>
+
+<body>
+<section class="stage slds-grid slds-grid--vertical slds-nowrap">
+
+    <!--<div th:replace="fragments/header :: header">.</div>-->
+    <div class="slds-shrink-none">
+        <div class="slds-page-header"><h2 class="slds-text-heading--medium">Login</h2></div>
+    </div>
+
+    <div class=" slds-grid slds-grid_align-center">
+        <img th:src="@{/styles/slds/images/logo-noname.svg}" style="height: 96px" class="slds-grid_align-center slds-m-around_small" alt="Logo"/>
+    </div>
+
+    <div class="slds-form slds-form_stacked slds-grid slds-grid_align-center">
+        <div class="slds-card slds-col slds-size_1-of-4">
+
+            <form th:action="@{/login}" method="POST" class="slds-m-around_small">
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="email">Username</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" id="email" name="email" class="slds-input" th:placeholder="Username"/>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="password">Password</label>
+                    <div class="slds-form-element__control">
+                        <input type="password" id="password" name="password" class="slds-input" th:placeholder="Password"/>
+                    </div>
+                </div>
+
+                <div align="center" th:if="${param.error}">
+                    <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
+                </div>
+                <div class="slds-form-element">
+                    <button class="slds-button slds-button_brand" name="Submit" value="Login" type="Submit"
+                            th:text="Login"></button>
+                </div>
+                <hr class="slds-m-around_x-small">
+                <a th:href="@{/registration}">Registration</a>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+
+</body>
+</html>
