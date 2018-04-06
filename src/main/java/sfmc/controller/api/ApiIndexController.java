@@ -22,7 +22,6 @@ public class ApiIndexController {
      */
     @GetMapping(value = {"", "/", "/index"})
     public String index() {
-        apiService.getDataExtensionsDetails();
         return "api/index";
     }
 

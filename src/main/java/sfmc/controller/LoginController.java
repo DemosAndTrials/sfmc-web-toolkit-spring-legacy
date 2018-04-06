@@ -64,6 +64,13 @@ public class LoginController {
         return modelAndView;
     }
 
+    @RequestMapping(value = {"user/settings"}, method = RequestMethod.GET)
+    public ModelAndView settings(Authentication auth) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("user/settings");
+        return modelAndView;
+    }
+
     @RequestMapping(value = {"/admin/index", "/admin"}, method = RequestMethod.GET)
     public ModelAndView admin() {
         ModelAndView modelAndView = new ModelAndView();
