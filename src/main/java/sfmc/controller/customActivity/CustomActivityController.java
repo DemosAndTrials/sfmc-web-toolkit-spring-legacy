@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sfmc.model.CustomActivity.CustomActivityConfig;
 import sfmc.service.CustomActivityService;
-
 import javax.validation.Valid;
 
 /**
  * Custom Activity Controller
+ *
+ * - jwt emcoding
  */
 @Controller
 @RequestMapping("/ca")
@@ -94,7 +95,8 @@ public class CustomActivityController {
      */
     @RequestMapping(value = "{id}/execute", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity execute(@PathVariable String id, @RequestBody String json) {
-        System.out.println("*** execute activity: " + id + "  data: " + json);
+        System.out.println("*** execute activity: " + id + "   data: " + json);
+        customActivityService.jwtDecode(json);
         String result = null;
         try {
             result = customActivityService.executeActivity(id);
@@ -124,6 +126,7 @@ public class CustomActivityController {
     @RequestMapping(value = "{id}/save", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity save(@PathVariable String id, @RequestBody String json) {
         System.out.println("*** save activity: " + id + "  data: " + json);
+        customActivityService.jwtDecode(json);
         return new ResponseEntity("OK", HttpStatus.OK);
     }
 
@@ -145,6 +148,7 @@ public class CustomActivityController {
     @RequestMapping(value = "{id}/publish", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity publish(@PathVariable String id, @RequestBody String json) {
         System.out.println("*** publish activity: " + id + "  data: " + json);
+        customActivityService.jwtDecode(json);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -165,6 +169,7 @@ public class CustomActivityController {
     @RequestMapping(value = "{id}/validate", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity validate(@PathVariable String id, @RequestBody String json) {
         System.out.println("*** validate activity: " + id + "  data: " + json);
+        customActivityService.jwtDecode(json);
         // TODO validation
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -178,6 +183,7 @@ public class CustomActivityController {
     @RequestMapping(value = "{id}/stop", method = RequestMethod.POST, headers = "Accept=application/json")
     public ResponseEntity stop(@PathVariable String id, @RequestBody String json) {
         System.out.println("*** stop activity: " + id + "  data: " + json);
+        customActivityService.jwtDecode(json);
         return new ResponseEntity(HttpStatus.OK);
     }
 
