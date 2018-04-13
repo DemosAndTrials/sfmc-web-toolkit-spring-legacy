@@ -50,6 +50,8 @@ public class CustomActivityConfig {
     @NotEmpty
     String EndpointUrl;
 
+    Boolean useJwt;
+
     @ElementCollection
     @CollectionTable(name = "CustomActivityStep", joinColumns = {@JoinColumn(name = "config_id")})
     private List<CustomActivityStep> Steps = new ArrayList<>();
@@ -144,6 +146,14 @@ public class CustomActivityConfig {
 
     public void setEndpointUrl(String endpointUrl) {
         EndpointUrl = endpointUrl;
+    }
+
+    public Boolean getUseJwt() {
+        return useJwt;
+    }
+
+    public void setUseJwt(Boolean useJwt) {
+        this.useJwt = useJwt;
     }
 
     public List<CustomActivityStep> getSteps() {

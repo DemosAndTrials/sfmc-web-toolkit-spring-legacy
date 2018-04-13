@@ -1,10 +1,18 @@
 package sfmc.service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sfmc.model.CustomActivity.ConfigType;
 import sfmc.model.CustomActivity.CustomActivityConfig;
 import sfmc.repository.CustomActivityRepository;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Custom Activity Service
@@ -66,6 +74,39 @@ public class CustomActivityService {
     }
 
     /**
+     * Decode Jwt Token
+     *
+     * @return
+     */
+    public String jwtDecode(String token) {
+        String key = System.getenv("JWT_SECRET");
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(key);
+
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .build(); //Reusable verifier instance
+            DecodedJWT jwt = verifier.verify(token);
+
+            Base64 base64Url = new Base64(true);
+            // JWT Header
+            String header = new String(base64Url.decode(jwt.getHeader()));
+            // JWT Body
+            String body = new String(base64Url.decode(jwt.getPayload()));
+
+            System.out.println("*** jwt header: " + header);
+            System.out.println("*** jwt body: " + body);
+            return body;
+        } catch (UnsupportedEncodingException e) {
+            //UTF-8 encoding not supported
+            e.printStackTrace();
+        } catch (JWTVerificationException e) {
+            //Invalid signature/claims
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * Save config into db
      *
      * @param config
@@ -97,7 +138,7 @@ public class CustomActivityService {
         if (isNew) {
             Integer id = savedConfig.getId();
             savedConfig.setEndpointUrl(savedConfig.getEndpointUrl() + "/" + id.toString());
-            if(savedConfig.getEditUrl().contains("ca/ui"))
+            if (savedConfig.getEditUrl().contains("ca/ui"))
                 savedConfig.setEditUrl(savedConfig.getEndpointUrl() + "/ui/edit");
 
             savedConfig = customActivityRepository.save(savedConfig);
