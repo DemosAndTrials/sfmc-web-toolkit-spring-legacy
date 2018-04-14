@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import sfmc.model.CustomActivity.ConfigType;
 import sfmc.model.CustomActivity.CustomActivityConfig;
 import sfmc.repository.CustomActivityRepository;
-
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -54,10 +53,15 @@ public class CustomActivityService {
      * @param id
      * @return
      */
-    public String executeActivity(String id) throws Exception {
+    public String executeActivity(String id, String body) throws Exception {
         try {
             CustomActivityConfig config = getConfigById(id);
             System.out.println("*** execute activity: " + config.toString());
+
+            if(config.getUseJwt()){
+                jwtDecode(body);
+            }
+
             ConfigType cType = ConfigType.valueOf(config.getType().toUpperCase());
             switch (cType) {
                 case REST:
@@ -74,11 +78,29 @@ public class CustomActivityService {
     }
 
     /**
+     *
+     * @param id
+     * @param body
+     */
+    public void configurationActivity(String id, String body){
+        try {
+        CustomActivityConfig config = getConfigById(id);
+        System.out.println("*** activity: " + config.toString());
+
+        if(config.getUseJwt()){
+            jwtDecode(body);
+        }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
      * Decode Jwt Token
      *
      * @return
      */
-    public String jwtDecode(String token) {
+    private String jwtDecode(String token) {
         String key = System.getenv("JWT_SECRET");
         try {
             Algorithm algorithm = Algorithm.HMAC256(key);
