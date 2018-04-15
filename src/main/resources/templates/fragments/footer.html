@@ -9,6 +9,33 @@
     <footer>
         <p class="slds-text-align_right slds-m-around_medium" th:text="'&copy; 2017-2018 Ros Haitovich'"/>
     </footer>
+
+    <script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        j$ = jQuery.noConflict();
+
+        j$(document).click(function(event) {
+            console.log("document click: " + event.target.id);
+            if (event.target.id == 'userAvatar') {
+                // open user's menu
+                if (j$('#userMenu').hasClass("slds-hide")){
+                    j$('#userMenu').removeClass('slds-hide');
+                    j$('#userMenu').focus();
+                }
+                else {// close user's menu
+                    j$('#userMenu').addClass('slds-hide');
+                }
+            }
+            else if(!j$(event.target).closest('#userMenu').length) {
+                // close user's menu
+                if(!j$('#userMenu').hasClass("slds-hide")) {
+                    j$('#userMenu').addClass('slds-hide');
+                }
+            }
+        });
+
+    </script>
+
 </div>
 </body>
 </html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration Form</title>
+    <div th:replace="fragments/header :: header-css" th:remove="tag"/>
+</head>
+<body>
+
+<section class="stage slds-grid slds-grid--vertical slds-nowrap">
+    <div class="slds-shrink-none">
+        <div class="slds-page-header"><h2 class="slds-text-heading--medium">Registration</h2></div>
+    </div>
+
+    <div class="slds-grid slds-grid_align-center">
+        <img th:src="@{/styles/slds/images/logo-noname.svg}" style="height: 96px" class="slds-grid_align-center slds-m-around_small" alt="Logo"/>
+    </div>
+
+    <div class="slds-form slds-form_stacked slds-grid slds-grid_align-center">
+        <div class="slds-card slds-col slds-size_1-of-4">
+
+            <form autocomplete="off" action="#" th:action="@{/registration}"
+                  th:object="${user}" method="post" class="slds-m-around_small"
+                  role="form">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="name">First name</label>
+                    <div class="slds-form-element__control">
+                        <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                               class="validation-message"></label>
+                        <input type="text" id="name" th:field="*{name}" placeholder="Name"
+                               class="slds-input"/>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="lastname">Last name</label>
+                    <div class="slds-form-element__control">
+                        <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                               class="validation-message"></label>
+                        <input type="text" id="lastname" th:field="*{lastName}"
+                               placeholder="Last Name" class="slds-input"/>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="email">Email</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" id="email" th:field="*{email}" placeholder="Email"
+                               class="slds-input"/>
+                        <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="password">Password</label>
+                    <div class="slds-form-element__control">
+                        <input type="password" id="password" th:field="*{password}"
+                               placeholder="Password" class="slds-input"/> <label
+                            th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <button type="submit" class="slds-button slds-button_brand">Register</button>
+                </div>
+
+                <!--<span th:utext="${successMessage}"></span>-->
+                <hr class="slds-m-around_x-small">
+                <a th:href="@{/login}">Login</a>
+
+            </form>
+
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
