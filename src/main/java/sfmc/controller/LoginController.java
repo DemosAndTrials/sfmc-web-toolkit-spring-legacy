@@ -66,6 +66,7 @@ public class LoginController {
 
     @RequestMapping(value = {"user/settings"}, method = RequestMethod.GET)
     public ModelAndView settings(Authentication auth) {
+        System.out.println("*** user: " + auth.getName());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("user/settings");
         return modelAndView;
