@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="header-css">
 
     <link rel="icon" href="/images/fav.ico" type="image/x-icon"/>
-
-    <!-- this is header-css -->
-    <link rel='stylesheet prefetch'
-          href='/styles/slds/styles/salesforce-lightning-design-system.min.css'/>
-</head>
+    <link rel='stylesheet'
+          href='/webjars/salesforce-lightning-design-system/2.5.2/styles/salesforce-lightning-design-system.min.css'>
 <body>
 <div th:fragment="header">
 
 
-    <div class="slds-context-bar">
+    <div class="slds-context-bar" onclick="close()">
         <div class="slds-context-bar__primary slds-context-bar__item_divider-right">
             <div class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-no-hover slds-context-bar__item_divider-right">
-                <div class="slds-global-header__logo">
-                    <a href="/" title="Home">
-                        <img src="/styles/slds/images/logo-noname.svg" alt="">
-                    </a>
-                </div>
+                <!--<div class="slds-global-header__logo">-->
+                <!--<a href="/" title="Home">-->
+                <!--<img src="/styles/slds/images/logo-noname.svg?width=128&height=128" alt="" height="128">-->
+                <!--</a>-->
+                <!--</div>-->
+                <div class="slds-global-header__logo"
+                     style="width:48px;background-image: url('/styles/slds/images/logo-noname.svg?width=128&height=128')"></div>
                 <span class="slds-context-bar__label-action slds-context-bar__app-name">
                      <div class="slds-truncate slds-m-left_medium">
                         SFMC Examples
@@ -233,10 +232,67 @@
                 </li>
 
             </ul>
-
         </nav>
+
+        <ul class="slds-global-header__item slds-grid slds-grid_vertical-align-center">
+
+            <li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small">
+                <div sec:authorize="!isAuthenticated()">
+                    <a th:href="@{/login}">Sign in</a>
+                </div>
+            </li>
+            <li class="slds-dropdown-trigger slds-dropdown-trigger_click slds-m-left_x-small">
+
+                <div id="userIcon" sec:authorize="isAuthenticated()">
+                    <button id="userButton" class="slds-button" title="person name" aria-haspopup="true">
+                        <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
+                            <img id="userAvatar" alt="Person name" src="/styles/slds/images/avatar1.jpg"
+                                 title="User avatar"/>
+                        </span>
+                    </button>
+                    <!--Profile Card-->
+                    <section id="userMenu" class="slds-popover slds-nubbin_top-right slds-dynamic-menu slds-hide"
+                             role="dialog"
+                             aria-label="My Favourites" aria-describedby="dialog-body-id-2"
+                             style="position: absolute; left: -280px; top: 50px;">
+                        <div class="slds-popover__body slds-p-horizontal_none slds-m-around_x-small"
+                             id="dialog-body-id-2">
+                            <div class="slds-media">
+                                <div class="slds-media__figure">
+                                    <span class="slds-avatar slds-avatar_circle slds-avatar_large">
+                                        <img alt="Person name" src="/styles/slds/images/avatar1.jpg"
+                                             title="User avatar"/>
+                                    </span>
+                                </div>
+                                <div class="slds-media__body">
+                                    <h2 class="slds-text -title_caps slds-m-bottom_x-small" role="presentation">
+                                        <span sec:authentication="name"/>
+                                    </h2>
+                                    <p class="slds-m-bottom_x-small">
+                                        <span sec:authentication="name"/>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <footer class="slds-popover__footer">
+                            <p>
+                            <span sec:authorize="hasAuthority('ADMIN')">
+                                <a id="userFooterAdmin" th:href="@{/admin}" class="slds-m-right_small">Admin</a>
+                            </span>
+                            <a id="userFooterSettings" th:href="@{/user/settings}" class="slds-m-right_small">Settings</a>
+                            <a id="userFooterLogout" th:href="@{/logout}">Logout</a>
+                            </p>
+                        </footer>
+                    </section>
+
+                </div>
+            </li>
+        </ul>
+
     </div>
 
 </div>
+
 </body>
 </html>
