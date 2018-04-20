@@ -23,9 +23,122 @@
         This content is only shown to users.
     </div>
 
+
+    <div id="tab-default-1" class="slds-tabs_default__content slds-show slds-m-right_medium slds-m-left_medium"
+         role="tabpanel" aria-labelledby="tab-default-1__item">
+        <div class="slds-tabs_scoped">
+            <ul class="slds-tabs_scoped__nav" role="tablist">
+                <li id="step1" class="slds-tabs_scoped__item slds-is-active" title="Properties" role="presentation">
+                    <a class="slds-tabs_scoped__link" href="javascript:void(0);" role="tab" tabindex="0"
+                       aria-selected="true" aria-controls="tab-scoped-1" id="tab-scoped-1__item">User Settings</a>
+                </li>
+                <li id="step2" class="slds-tabs_scoped__item" title="Retention" role="presentation"><a
+                        class="slds-tabs_scoped__link" href="javascript:void(0);" role="tab" tabindex="-1"
+                        aria-selected="false" aria-controls="tab-scoped-2" id="tab-scoped-2__item">API Keys</a>
+                </li>
+            </ul>
+            <!--User Settings-->
+            <div id="tab-scoped-1" class="slds-tabs_scoped__content slds-show" role="tabpanel"
+                 aria-labelledby="tab-scoped-1__item">
+                <div class="slds-form slds-form_stacked">
+                    <div class="slds-card slds-col slds-size_1-of-4">
+                        <!--<span class="slds-m-around_x-small">User Settings</span>-->
+                        <!--<hr class="slds-m-around_x-small">-->
+                        <form autocomplete="off" action="#" th:action="@{/user/settings}"
+                              th:object="${user}" method="post" class="slds-m-around_small"
+                              role="form">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="name">First name</label>
+                                <div class="slds-form-element__control">
+                                    <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                           class="validation-message"></label>
+                                    <input type="text" id="name" th:field="*{name}"
+                                           class="slds-input"/>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="lastname">Last name</label>
+                                <div class="slds-form-element__control">
+                                    <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                           class="validation-message"></label>
+                                    <input type="text" id="lastname" th:field="*{lastName}"
+                                           class="slds-input"/>
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="email">Email</label>
+                                <div class="slds-form-element__control">
+                                    <input type="text" id="email" th:field="*{email}"
+                                           class="slds-input"/>
+                                    <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                                           class="validation-message"></label>
+                                </div>
+                            </div>
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="password">Password</label>
+                                <div class="slds-form-element__control">
+                                    <input type="password" id="password" th:field="*{password}"
+                                           class="slds-input"/> <label
+                                        th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                                        class="validation-message"></label>
+                                </div>
+                            </div>
+                            <input type="hidden" th:field="*{id}"/>
+                            <div class="slds-form-element">
+                                <button type="submit" class="slds-button slds-button_brand slds-m-top_x-small">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--API Keys-->
+            <div id="tab-scoped-2" class="slds-tabs_scoped__content slds-hide" role="tabpanel"
+                 aria-labelledby="tab-scoped-2__item">
+                <div class="slds-form slds-form_stacked">
+                    <div class="slds-card slds-col slds-size_1-of-4">
+                        <!--<span class="slds-m-around_x-small">User Settings</span>-->
+                        <!--<hr class="slds-m-around_x-small">-->
+                        <form autocomplete="off" action="#" th:action="@{/user/api}"
+                              th:object="${apiSet}" method="post" class="slds-m-around_small"
+                              role="form">
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="name">clientId</label>
+                                <div class="slds-form-element__control">
+                                    <label th:if="${#fields.hasErrors('clientId')}" th:errors="*{clientId}"
+                                           class="validation-message"></label>
+                                    <input type="text" id="clientId" th:field="*{clientId}"
+                                           class="slds-input"/>
+                                </div>
+                            </div>
+
+                            <div class="slds-form-element">
+                                <label class="slds-form-element__label" for="lastname">clientSecret</label>
+                                <div class="slds-form-element__control">
+                                    <label th:if="${#fields.hasErrors('clientSecret')}" th:errors="*{clientSecret}"
+                                           class="validation-message"></label>
+                                    <input type="text" id="clientSecret" th:field="*{clientSecret}"
+                                           class="slds-input"/>
+                                </div>
+                            </div>
+                            <input type="hidden" th:field="*{id}"/>
+                            <input type="hidden" th:field="*{userId}"/>
+                            <div class="slds-form-element">
+                                <button type="submit" class="slds-button slds-button_brand slds-m-top_x-small">Save</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <div th:replace="fragments/footer :: footer"></div>
 </section>
 
+<script src="/js/user/settings.js"></script>
 <script type="text/javascript">
 </script>
 

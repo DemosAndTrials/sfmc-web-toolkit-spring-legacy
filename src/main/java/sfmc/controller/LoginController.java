@@ -1,7 +1,6 @@
 package sfmc.controller;
 
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,7 +27,6 @@ public class LoginController {
             modelAndView.setViewName("login");
         return modelAndView;
     }
-
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registration(Authentication auth) {
@@ -64,14 +62,6 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"user/settings"}, method = RequestMethod.GET)
-    public ModelAndView settings(Authentication auth) {
-        System.out.println("*** user: " + auth.getName());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("user/settings");
-        return modelAndView;
-    }
-
     @RequestMapping(value = {"/admin/index", "/admin"}, method = RequestMethod.GET)
     public ModelAndView admin() {
         ModelAndView modelAndView = new ModelAndView();
@@ -82,6 +72,5 @@ public class LoginController {
         modelAndView.setViewName("admin/index");
         return modelAndView;
     }
-
 
 }
