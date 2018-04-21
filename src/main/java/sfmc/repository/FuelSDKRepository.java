@@ -19,21 +19,28 @@ public class FuelSDKRepository {
     private static final String REFRESH_TOKEN_NULL = "refreshToken == null";
     private static final String INVOKE_METHOD_ERROR = "error invoking";// "error invoking retrieve method for type class com.exacttarget.fuelsdk.ETDataExtension";
     private ETClient client;
-
-//    public FuelSDKRepository() {
-//        initSDKClient();
-//    }
+    private ETConfiguration config;
 
     /**
-     * Instantiates an sdk client
+     * Check if client initialized
+     * @return
      */
-    private void initSDKClient() {
+    public Boolean isInitiated() {
+        if (client == null)
+            return false;
+        return true;
+    }
+
+    /**
+     * SDK Client Initialization
+     *
+     * @param clientId
+     * @param clientSecret
+     */
+    public void initSDKClient(String clientId, String clientSecret) {
         ETConfiguration configuration = new ETConfiguration();
-        // get config from heroku
-        configuration.set("clientId", System.getenv("CLIENT_ID"));
-        configuration.set("clientSecret", System.getenv("CLIENT_SECRET"));
-        //configuration.set("accessType", System.getenv("ACCESS_TYPE"));
-        //configuration.set("requestLegacyToken", "false");
+        configuration.set("clientId", clientId);
+        configuration.set("clientSecret", clientSecret);
 
         try {
             client = new ETClient(configuration);
@@ -43,20 +50,29 @@ public class FuelSDKRepository {
     }
 
     /**
-     * Check if client initiated
+     * Instantiates an sdk client
      */
-    private void ensureClientInitialization() {
-        if (client == null)
-            initSDKClient();
+    private void reinitSDKClient() {
+        if (config == null) {
+            config = new ETConfiguration();
+            // get config from heroku
+            config.set("clientId", System.getenv("CLIENT_ID"));
+            config.set("clientSecret", System.getenv("CLIENT_SECRET"));
+            //configuration.set("accessType", System.getenv("ACCESS_TYPE"));
+            //configuration.set("requestLegacyToken", "false");
+        }
+        try {
+            client = new ETClient(config);
+        } catch (ETSdkException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Gets list of data extensions
      */
     public List<ETDataExtension> getDataExtensionsDetails() {
-        ensureClientInitialization();
         try {
-
             List<ETDataExtension> exts = new ArrayList<>();
             ETResponse<ETDataExtension> response = client.retrieve(ETDataExtension.class);
             System.out.println("*** de retrieved with status: " + response.getStatus());
@@ -76,7 +92,6 @@ public class FuelSDKRepository {
     }
 
     public List<ETDataExtension> getDataExtensionsDetails(String folderId) {
-        ensureClientInitialization();
 
         ETExpression expression = new ETExpression();
         expression.setProperty("folderId");
@@ -101,11 +116,8 @@ public class FuelSDKRepository {
     }
 
 
-
-    public List<ETFolder> getFolders(String contentType){
-        ensureClientInitialization();
+    public List<ETFolder> getFolders(String contentType) {
         try {
-
             ETExpression expression = new ETExpression();
             expression.setProperty("contentType");
             expression.setOperator(ETExpression.Operator.EQUALS);
@@ -122,8 +134,7 @@ public class FuelSDKRepository {
                 System.out.println("folder: " + folder);
             }
             return folders;
-        }
-        catch (ETSdkException e) {
+        } catch (ETSdkException e) {
             if (HandleTokenExpiration(e))
                 getDataExtensionsDetails();
         }
@@ -138,8 +149,6 @@ public class FuelSDKRepository {
      * @return
      */
     public ETDataExtension getDataExtensionById(String id) {
-
-        ensureClientInitialization();
         try {
             ETExpression expression = new ETExpression();
             expression.setProperty("id");
@@ -165,8 +174,6 @@ public class FuelSDKRepository {
     }
 
     public ETDataExtension getDataExtensionByKey(String key) {
-        ensureClientInitialization();
-
         try {
             ETResponse<ETDataExtension> result = client.retrieve(ETDataExtension.class, "key=" + key);
             System.out.println("*** de retrieved with status: " + result.getStatus());
@@ -189,7 +196,6 @@ public class FuelSDKRepository {
      * @return
      */
     public boolean deleteDataExtension(String key) {
-        ensureClientInitialization();
         try {
             ETDataExtension de = new ETDataExtension();
             de.setKey(key);
@@ -259,7 +265,6 @@ public class FuelSDKRepository {
      * @return
      */
     private List<ETDataExtensionRow> getDataExtensionRecords(String dataExtension, ETFilter filter) {
-        ensureClientInitialization();
         List<ETDataExtensionRow> records = new ArrayList<>();
         try {
             ETResponse<ETDataExtensionRow> res = ETDataExtension.select(client, dataExtension, filter);
@@ -283,7 +288,6 @@ public class FuelSDKRepository {
      * @return
      */
     public ETDataExtensionRow createDataExtensionRow(ETDataExtensionRow record) {
-        ensureClientInitialization();
         try {
             ETResponse<ETDataExtensionRow> res = client.create(record);// TODO use de.insert?!
             System.out.println("*** record created with status: " + res.getStatus());
@@ -299,6 +303,7 @@ public class FuelSDKRepository {
      * Delete DE Row
      * row should include primary key
      * TODO use expressions
+     *
      * @param de
      * @param record
      * @return
@@ -319,15 +324,15 @@ public class FuelSDKRepository {
     /**
      * Create a Data Extension
      * https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-apis.meta/mc-apis/creating_a_data_extension_using_web_service_api.htm
+     *
      * @param de
      * @return
      */
     public ETDataExtension createDataExtension(ETDataExtension de) {
-        ensureClientInitialization();
         try {
             ETResponse<ETDataExtension> res = client.create(de);// TODO use de.insert?!
             System.out.println("*** record created with status: " + res.getStatus());
-            if(res.getStatus().equals("ERROR")){
+            if (res.getStatus().equals("ERROR")) {
 
             }
             return res.getObject();
@@ -367,7 +372,6 @@ public class FuelSDKRepository {
      * @return
      */
     public ETDataExtensionRow updateDataExtensionRow(ETDataExtensionRow record) {
-
         try {
             ETResponse<ETDataExtensionRow> res = ETDataExtensionRow.update(client, Arrays.asList(record));
             System.out.println("*** record updated with status: " + res.getStatus());
@@ -382,7 +386,6 @@ public class FuelSDKRepository {
     }
 
     public ETFolder createDataExtensionFolder(ETFolder record) {
-        ensureClientInitialization();
         try {
             ETResponse<ETFolder> res = client.create(record);
             System.out.println("*** record created with status: " + res.getStatus());
@@ -413,10 +416,9 @@ public class FuelSDKRepository {
             } catch (ETSdkException e) {
                 e.printStackTrace();
             }
-        }
-        else if(message.startsWith(INVOKE_METHOD_ERROR)){
+        } else if (message.startsWith(INVOKE_METHOD_ERROR)) {
             // new client
-            initSDKClient();
+            reinitSDKClient();
             return true;
         }
 
@@ -426,6 +428,7 @@ public class FuelSDKRepository {
     /**
      * Test complex filter
      * retrieve de records by id and time
+     *
      * @return
      * @throws ETSdkException
      */
@@ -455,6 +458,7 @@ public class FuelSDKRepository {
      * Test complex filter
      * retrieve de records by ids
      * TODO dynamic filter from array of ids
+     *
      * @return
      * @throws ETSdkException
      */
@@ -533,7 +537,6 @@ public class FuelSDKRepository {
         expR.addSubexpression(exp3);
         expR.setOperator(ETExpression.Operator.OR);
         expR.addSubexpression(exp4);
-
 
 
         // final join
