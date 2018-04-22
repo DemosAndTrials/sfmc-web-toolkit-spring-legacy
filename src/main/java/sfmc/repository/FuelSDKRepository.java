@@ -12,6 +12,9 @@ import java.util.List;
  * https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-sdks.meta/mc-sdks/index-sdk.htm
  * http://salesforce-marketingcloud.github.io/FuelSDK-Java/index.html?overview-summary.html
  * http://salesforce-marketingcloud.github.io/FuelSDK-Java/
+ *
+ * Supported Operations for Objects and Methods
+ * https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-apis.meta/mc-apis/supported_operations_for_objects_and_methods.htm
  */
 @Repository
 public class FuelSDKRepository {
@@ -91,6 +94,11 @@ public class FuelSDKRepository {
         return null;
     }
 
+    /**
+     * Get Data Extensions Details
+     * @param folderId
+     * @return
+     */
     public List<ETDataExtension> getDataExtensionsDetails(String folderId) {
 
         ETExpression expression = new ETExpression();
@@ -115,7 +123,11 @@ public class FuelSDKRepository {
         return exts;
     }
 
-
+    /**
+     * Get folders
+     * @param contentType
+     * @return
+     */
     public List<ETFolder> getFolders(String contentType) {
         try {
             ETExpression expression = new ETExpression();
@@ -173,6 +185,11 @@ public class FuelSDKRepository {
         return null;
     }
 
+    /**
+     *
+     * @param key
+     * @return
+     */
     public ETDataExtension getDataExtensionByKey(String key) {
         try {
             ETResponse<ETDataExtension> result = client.retrieve(ETDataExtension.class, "key=" + key);
@@ -210,6 +227,12 @@ public class FuelSDKRepository {
         return false;
     }
 
+    /**
+     *
+     * @param deKey
+     * @param id
+     * @return
+     */
     public ETDataExtensionRow getDataExtensionRowBySfId(String deKey, String id) {
         ETExpression expression = new ETExpression();
         expression.setProperty("SF_ID");
