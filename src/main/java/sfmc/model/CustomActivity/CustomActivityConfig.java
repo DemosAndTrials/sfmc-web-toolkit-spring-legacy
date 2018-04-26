@@ -38,6 +38,10 @@ public class CustomActivityConfig {
 
     String BigImageUrl;
 
+    Boolean isConfigured;
+
+    Boolean configOnDrop;
+
     @NotEmpty
     String EditUrl;
 
@@ -114,6 +118,22 @@ public class CustomActivityConfig {
 
     public void setBigImageUrl(String bigImageUrl) {
         BigImageUrl = bigImageUrl;
+    }
+
+    public Boolean getIsConfigured() {
+        return isConfigured;
+    }
+
+    public void setIsConfigured(Boolean configured) {
+        isConfigured = configured;
+    }
+
+    public Boolean getConfigOnDrop() {
+        return configOnDrop;
+    }
+
+    public void setConfigOnDrop(Boolean configOnDrop) {
+        this.configOnDrop = configOnDrop;
     }
 
     public String getEditUrl() {

@@ -30,7 +30,8 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                             .add("icon", config.getBigImageUrl())
                             .add("iconSmall", config.getSmallImageUrl())
                             .add("category", "message")
-                            .add("isConfigured", false))
+                            .add("isConfigured", config.getIsConfigured())
+                            .add("configOnDrop", config.getConfigOnDrop()))
                     // type - String property representing the type of activity. This value must include one of the Marketing Cloud-provided types
                     .add("type", "REST")
                     // lang - Used to define i18n (internationalization) strings, such as the name and description as used within the application.
@@ -110,7 +111,8 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                             .add("icon", config.getBigImageUrl())
                             .add("iconSmall", config.getSmallImageUrl())
                             .add("category", "message")
-                            .add("isConfigured", false))
+                            .add("isConfigured", config.getIsConfigured())
+                            .add("configOnDrop", config.getConfigOnDrop()))
                     // type - String property representing the type of activity. This value must include one of the Marketing Cloud-provided types
                     .add("type", "RESTDECISION")
                     // lang - Used to define i18n (internationalization) strings, such as the name and description as used within the application.
