@@ -103,8 +103,8 @@ public class CustomActivityController {
         Enumeration<String> names = request.getHeaderNames();
         while (names.hasMoreElements()) {
             String name = names.nextElement();
-            String value = request.getHeader("name");
-            System.out.println("*** header: " + name + " : " + value);
+            String header = request.getHeader(name);
+            System.out.println("*** header: " + name + " : " + header);
         }
 
         String result = null;
