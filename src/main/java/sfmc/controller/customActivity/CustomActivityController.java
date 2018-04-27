@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sfmc.model.CustomActivity.CustomActivityConfig;
 import sfmc.service.CustomActivityService;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Enumeration;
 
 /**
  * Custom Activity Controller
- *
+ * <p>
  * - jwt encoding
  */
 @Controller
@@ -25,9 +28,9 @@ public class CustomActivityController {
     @Autowired
     CustomActivityService customActivityService;
 
-     /*
-    * Config UI operations
-    */
+    /*
+     * Config UI operations
+     */
 
     /**
      * Custom Activity UI
@@ -67,9 +70,9 @@ public class CustomActivityController {
         return "ca/ui/runningModal";
     }
 
-     /*
-    * Config Endpoints
-    */
+    /*
+     * Config Endpoints
+     */
 
     /**
      * execute - The API calls this method for each contact processed by the journey.
@@ -94,8 +97,16 @@ public class CustomActivityController {
      * @return
      */
     @RequestMapping(value = "{id}/execute", method = RequestMethod.POST, headers = "Accept=application/json")
-    public ResponseEntity execute(@PathVariable String id, @RequestBody String json) { // HttpServletRequest request,
+    public ResponseEntity execute(@PathVariable String id, @RequestBody String json, HttpServletRequest request) { // HttpServletRequest request,
         System.out.println("*** execute activity: " + id + "   data: " + json);
+
+        Enumeration<String> names = request.getHeaderNames();
+        while (names.hasMoreElements()) {
+            String name = names.nextElement();
+            String value = request.getHeader("name");
+            System.out.println("*** header: " + name + " : " + value);
+        }
+
         String result = null;
         try {
             result = customActivityService.executeActivity(id, json);
@@ -206,8 +217,8 @@ public class CustomActivityController {
     }
 
     /*
-    * Config CRUD operations
-    */
+     * Config CRUD operations
+     */
 
     /**
      * Index page - Getting Started
