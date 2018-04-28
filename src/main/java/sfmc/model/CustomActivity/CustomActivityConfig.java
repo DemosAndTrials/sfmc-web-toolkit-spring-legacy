@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import java.util.UUID;
 
 /**
  * Custom Activity Config object
+ * https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/custom-activity-config.htm
  */
 @Entity
 public class CustomActivityConfig {
@@ -38,9 +38,9 @@ public class CustomActivityConfig {
 
     String BigImageUrl;
 
-    Boolean isConfigured;
+    Boolean IsConfigured;
 
-    Boolean configOnDrop;
+    Boolean ConfigOnDrop;
 
     @NotEmpty
     String EditUrl;
@@ -54,7 +54,7 @@ public class CustomActivityConfig {
     @NotEmpty
     String EndpointUrl;
 
-    Boolean useJwt;
+    Boolean UseJwt;
 
     @ElementCollection
     @CollectionTable(name = "CustomActivityStep", joinColumns = {@JoinColumn(name = "config_id")})
@@ -120,20 +120,20 @@ public class CustomActivityConfig {
         BigImageUrl = bigImageUrl;
     }
 
-    public Boolean getIsConfigured() {
-        return isConfigured;
+    public Boolean getConfigured() {
+        return IsConfigured;
     }
 
-    public void setIsConfigured(Boolean configured) {
-        isConfigured = configured;
+    public void setConfigured(Boolean configured) {
+        IsConfigured = configured;
     }
 
     public Boolean getConfigOnDrop() {
-        return configOnDrop;
+        return ConfigOnDrop;
     }
 
     public void setConfigOnDrop(Boolean configOnDrop) {
-        this.configOnDrop = configOnDrop;
+        this.ConfigOnDrop = configOnDrop;
     }
 
     public String getEditUrl() {
@@ -169,11 +169,11 @@ public class CustomActivityConfig {
     }
 
     public Boolean getUseJwt() {
-        return useJwt;
+        return UseJwt;
     }
 
     public void setUseJwt(Boolean useJwt) {
-        this.useJwt = useJwt;
+        this.UseJwt = useJwt;
     }
 
     public List<CustomActivityStep> getSteps() {
