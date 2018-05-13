@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add AMPscript Example</title>
+    <div th:replace="fragments/header :: header-css" th:remove="tag"/>
+</head>
+<body>
+
+<section class="stage slds-grid slds-grid--vertical slds-nowrap">
+    <div th:replace="fragments/header :: header">.</div>
+    <div class="slds-shrink-none">
+        <div class="slds-page-header"><h2 class="slds-text-heading--medium">Add AMPscript Example</h2></div>
+    </div>
+
+    <div class="slds-form slds-form_stacked slds-grid slds-grid_align-center slds-m-around_small">
+        <div class="slds-card slds-col slds-size_2-of-4">
+            <form autocomplete="off" action="#" th:action="@{/scripts/ampscript/create}"
+                  th:object="${script}" method="post" class="slds-m-around_small"
+                  role="form">
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="name">Name</label>
+                    <div class="slds-form-element__control">
+                        <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                               class="slds-text-color_error"></label>
+                        <input id="name" type="text" th:field="*{name}" class="slds-input"/>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="description">Description</label>
+                    <div class="slds-form-element__control">
+                        <label th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                               class="slds-text-color_error"></label>
+                        <input id="description" type="text" th:field="*{description}"
+                               class="slds-input"/>
+                    </div>
+                </div>
+                <div class="slds-form-element">
+                    <label class="slds-form-element__label" for="description">Content</label>
+                    <div class="slds-form-element__control">
+                        <label th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
+                               class="slds-text-color_error"></label>
+                        <textarea id="content" th:field="*{content}" class="slds-textarea"></textarea>
+                    </div>
+                </div>
+
+                <div class="slds-form-element">
+                    <button type="submit" class="slds-button slds-button_brand">Save</button>
+                </div>
+
+                <!--<span th:utext="${successMessage}"></span>-->
+                <hr class="slds-m-around_x-small">
+                <!--<a th:href="@{/login}">Login</a>-->
+            </form>
+        </div>
+    </div>
+
+</section>
+
+</body>
+</html>
