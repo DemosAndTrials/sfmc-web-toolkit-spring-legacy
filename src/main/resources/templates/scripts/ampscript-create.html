@@ -10,7 +10,24 @@
 <section class="stage slds-grid slds-grid--vertical slds-nowrap">
     <div th:replace="fragments/header :: header">.</div>
     <div class="slds-shrink-none">
-        <div class="slds-page-header"><h2 class="slds-text-heading--medium">Add AMPscript Example</h2></div>
+        <div class="slds-page-header">
+            <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread">
+                <div class="slds-col">
+                    <h2 class="slds-text-heading--medium">Add AMPscript Example</h2>
+                </div>
+                <div class="slds-col">
+                    <a href="/scripts/ampscript" class="slds-button slds-button_brand">
+                        <span class="slds-text-not-selected">
+                                    <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                          xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#list"></use>
+                                </svg>Browse</span>
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
     </div>
 
     <div class="slds-form slds-form_stacked slds-grid slds-grid_align-center slds-m-around_small">
@@ -56,6 +73,11 @@
     </div>
 
 </section>
+
+<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script src="/js/scripts/ampscript-create"></script>
+<script type="text/javascript">
+</script>
 
 </body>
 </html>

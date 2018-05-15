@@ -41,9 +41,13 @@ public class ScriptController {
      * @return
      */
     @GetMapping(value = "/ampscript")
-    public String ampscript() {
+    public ModelAndView ampscript() {
         System.out.println("***************ampscript****************");
-        return "scripts/ampscript";
+        Iterable<ScriptItem> items = scriptService.getScripts();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("scripts/ampscript-list");
+        modelAndView.addObject("scripts", items);
+        return modelAndView;
     }
 
     @RequestMapping(value = "/ampscript/create", method = RequestMethod.GET)
@@ -51,7 +55,7 @@ public class ScriptController {
         ModelAndView modelAndView = new ModelAndView();
         ScriptItem script = new ScriptItem();
         modelAndView.addObject("script", script);
-        modelAndView.setViewName("scripts/script-create");
+        modelAndView.setViewName("scripts/ampscript-create");
         return modelAndView;
     }
 
@@ -59,7 +63,7 @@ public class ScriptController {
     public ModelAndView createNewScript(@Valid @ModelAttribute("script") ScriptItem script, BindingResult bindingResult, Authentication auth) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("scripts/script-create");
+            modelAndView.setViewName("scripts/ampscript-create");
         } else {
             // save here
             User user = userService.findUserByEmail(auth.getName());
@@ -67,8 +71,8 @@ public class ScriptController {
                 script.setUserId(user.getId());
             script.setType(0);
             ScriptItem s = scriptService.createScript(script);
-            // return new ModelAndView("redirect:/abc.htm")
-            modelAndView.setViewName("scripts/ampscript");
+            return new ModelAndView("redirect:scripts/ampscript-list");
+            //modelAndView.setViewName("scripts/ampscript");
         }
         return modelAndView;
     }

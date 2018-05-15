@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>AMPscript</title>
+    <div th:replace="fragments/header :: header-css" th:remove="tag"/>
+</head>
+<body>
+
+<section class="stage slds-grid slds-grid--vertical slds-nowrap">
+
+    <div th:replace="fragments/header :: header">.</div>
+    <div class="slds-shrink-none">
+        <div class="slds-page-header">
+            <div class="slds-grid slds-grid_vertical-align-center slds-grid_align-spread">
+                <div class="slds-col">
+                    <h2 class="slds-text-heading--medium">AMPscript</h2>
+                </div>
+                <div class="slds-col">
+                    <a href="/scripts/ampscript/create" class="slds-button slds-button_brand">
+                        <span class="slds-text-not-selected">
+                                    <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                     <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                          xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#add"></use>
+                                </svg>Add</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slds-form slds-form_stacked slds-grid slds-grid_align-center slds-m-around_small">
+        <table class="slds-table slds-table_bordered slds-table_striped">
+            <thead>
+            <tr class="slds-text-title_caps">
+                <th scope="col" style="width: 25px">
+                    <div class="slds-truncate" title="Id">Id</div>
+                </th>
+                <th scope="col" class="">
+                    <div class="slds-truncate" title="Name">Name</div>
+                </th>
+                <th scope="col" class="">
+                    <div class="slds-truncate" title="Description">Description</div>
+                </th>
+                <th scope="col" style="width: 10%">
+                    <div class="slds-truncate" title="Added by">Added By</div>
+                </th>
+                <th scope="col" style="width: 50px">
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${scripts}" th:id="@{'scriptItem_' + ${item.Id}}">
+                <th scope="row" data-label="Id" class="">
+                    <div class="slds-truncate" title="Id">
+                        <a th:href="@{'/ca/create/' + ${item.id}}"
+                           th:text="${item.id}">Id</a>
+                    </div>
+                </th>
+                <th scope="row" data-label="Name" class="">
+                    <div class="slds-truncate" th:text="${item.name}">Name</div>
+                </th>
+                <th scope="row" data-label="description" class="">
+                    <div class="slds-truncate" th:text="${item.description}">description</div>
+                </th>
+                <th scope="row" data-label="userId" class="">
+                    <div class="slds-truncate" th:text="${item.userId}">userId</div>
+                </th>
+                <td data-label="Delete" class="">
+                    <button th:id="@{'deleteBtn_' + ${item.id}}" th:name="${item.id}"
+                            class="slds-button slds-button_icon slds-button_icon-border slds-button_icon-error"
+                            aria-pressed="false" title="Delete">
+                        <svg class="slds-button__icon" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#delete"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Delete</span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div th:replace="fragments/footer :: footer"></div>
+</section>
+
+<script src="/webjars/jquery/1.9.1/jquery.min.js"></script>
+<script src="/js/scripts/ampscript-list"></script>
+<script type="text/javascript">
+</script>
+
+</body>
+</html>
