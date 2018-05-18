@@ -26,16 +26,46 @@ public class ScriptService {
         return list;
     }
 
+    /**
+     * Get script item by id
+     *
+     * @return
+     */
+    public ScriptItem getScript(String id) {
+        try {
+            ScriptItem item = scriptsRepository.findOne(Integer.parseInt(id));
+            return item;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     /**
-     * Save config into db
+     * Save script into db
      *
      * @param item
-     * @return config
+     * @return script
      */
     public ScriptItem createScript(ScriptItem item) {
         // save
         ScriptItem savedItem = scriptsRepository.save(item);
         return savedItem;
+    }
+
+    /**
+     * delete
+     *
+     * @param id
+     * @return
+     */
+    public boolean deleteScriptById(String id) {
+        try {
+            scriptsRepository.delete(Integer.parseInt(id));
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
