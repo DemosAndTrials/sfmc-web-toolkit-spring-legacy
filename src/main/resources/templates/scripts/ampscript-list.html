@@ -56,13 +56,14 @@
             <tr th:each="item : ${scripts}" th:id="@{'scriptItem_' + ${item.Id}}">
                 <th scope="row" data-label="Id" class="">
                     <div class="slds-truncate" title="Id">
-                        <a th:href="@{'/ca/create/' + ${item.id}}"
+                        <a th:href="@{'/scripts/ampscript/create/' + ${item.id}}"
                            th:text="${item.id}">Id</a>
                     </div>
                     <div th:id="@{'scriptContent_' + ${item.Id}}" style="display: none" th:text="${item.content}"></div>
                 </th>
                 <td scope="row" data-label="Name" class="">
-                    <div class="slds-truncate" th:text="${item.name}">Name</div>
+                    <a th:href="@{'/scripts/ampscript/create/' + ${item.id}}"
+                       th:text="${item.name}">Name</a>
                 </td>
                 <td scope="row" data-label="description" class="">
                     <div class="slds-truncate" th:text="${item.description}">description</div>
@@ -72,7 +73,6 @@
                 </td>
                 <td scope="row" data-label="view" class="">
                     <div class="slds-truncate" title="View">
-                        <!--<a th:id="@{'viewBtn_' + ${item.id}}" href="#" th:name="${item.id}">View</a>-->
                         <button th:id="@{'viewBtn_' + ${item.id}}" th:name="${item.id}"
                                 class="slds-button slds-button_icon slds-button_icon-brand" title="View">
                             <svg class="slds-button__icon" aria-hidden="true">

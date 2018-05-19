@@ -35,6 +35,7 @@
             <form autocomplete="off" action="#" th:action="@{/scripts/ampscript/create}"
                   th:object="${script}" method="post" class="slds-m-around_small"
                   role="form">
+                <input type="hidden" id="input-00" th:field="*{id}">
                 <div class="slds-form-element">
                     <label class="slds-form-element__label" for="name">Name</label>
                     <div class="slds-form-element__control">

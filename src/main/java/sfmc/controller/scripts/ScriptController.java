@@ -57,6 +57,22 @@ public class ScriptController {
         return modelAndView;
     }
 
+    /**
+     * Edit script
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/ampscript/create/{id}", method = RequestMethod.GET)
+    public ModelAndView editConfig(@PathVariable String id) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("scripts/ampscript-create");
+        System.out.println("*** update config: " + id);
+        ScriptItem script = scriptService.getScript(id);
+        modelAndView.addObject("script", script != null ? script : new ScriptItem());
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/ampscript/create", method = RequestMethod.POST)
     public ModelAndView createNewScript(@Valid @ModelAttribute("script") ScriptItem script, BindingResult bindingResult, Authentication auth) {
         ModelAndView modelAndView = new ModelAndView();
