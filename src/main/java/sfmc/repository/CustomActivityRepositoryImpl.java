@@ -3,7 +3,6 @@ package sfmc.repository;
 import sfmc.model.CustomActivity.CustomActivityConfig;
 import sfmc.model.CustomActivity.CustomActivitySplit;
 import sfmc.model.CustomActivity.CustomActivityStep;
-
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
@@ -30,7 +29,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                             .add("icon", config.getBigImageUrl())
                             .add("iconSmall", config.getSmallImageUrl())
                             .add("category", "message")
-                            .add("isConfigured", config.getIsConfigured())
+                            .add("isConfigured", config.getConfigured())
                             .add("configOnDrop", config.getConfigOnDrop()))
                     // type - String property representing the type of activity. This value must include one of the Marketing Cloud-provided types
                     .add("type", "REST")
@@ -111,7 +110,7 @@ public class CustomActivityRepositoryImpl implements CustomActivityRepositoryCus
                             .add("icon", config.getBigImageUrl())
                             .add("iconSmall", config.getSmallImageUrl())
                             .add("category", "message")
-                            .add("isConfigured", config.getIsConfigured())
+                            .add("isConfigured", config.getConfigured())
                             .add("configOnDrop", config.getConfigOnDrop()))
                     // type - String property representing the type of activity. This value must include one of the Marketing Cloud-provided types
                     .add("type", "RESTDECISION")

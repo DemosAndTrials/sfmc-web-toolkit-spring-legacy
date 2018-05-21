@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import sfmc.service.ApiService;
+
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +125,7 @@ public class SdkController {
         System.out.println("*** de details: " + id + " ***");
         selectedDE = apiService.getDataExtensionDetails(id);
         model.addAttribute("ext", selectedDE);
+        model.addAttribute("canDeleteRow", apiService.isPrimaryKeyExist(selectedDE));
         List<ETDataExtensionRow> rows = apiService.getDataExtensionRecordsByKey(selectedDE.getKey());
         model.addAttribute("records", rows);
         return "api/sdk/de-details";
