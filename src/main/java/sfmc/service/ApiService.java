@@ -1,9 +1,6 @@
 package sfmc.service;
 
-import com.exacttarget.fuelsdk.ETDataExtension;
-import com.exacttarget.fuelsdk.ETDataExtensionRow;
-import com.exacttarget.fuelsdk.ETFolder;
-import com.exacttarget.fuelsdk.ETSdkException;
+import com.exacttarget.fuelsdk.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -14,6 +11,7 @@ import sfmc.model.Authentication.User;
 import sfmc.repository.ApiIntegrationSetRepository;
 import sfmc.repository.FuelSDKRepository;
 import sfmc.repository.UserRepository;
+
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
@@ -36,18 +34,18 @@ public class ApiService {
     @Autowired
     private ApiIntegrationSetRepository apiIntegrationSetRepository;
 
-    public List<ETFolder> getDataExtensionFolders(){
+    public List<ETFolder> getDataExtensionFolders() {
         initSDK();
         // TODO some subfolders retrieved with parent empty, bug?
         return sdkRepository.getFolders("dataextension");
     }
 
     private void initSDK() {
-        if(!sdkRepository.isInitiated()){
+        if (!sdkRepository.isInitiated()) {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
             User user = userRepository.findByEmail(auth.getName());
             ApiIntegrationSet apiSet = apiIntegrationSetRepository.findByUserId(user.getId());
-            if(apiSet != null) {
+            if (apiSet != null) {
                 sdkRepository.initSDKClient(apiSet.getClientId(), apiSet.getClientSecret());
                 System.out.println("*** ClientId: " + apiSet.getClientId() + " ***");
                 System.out.println("*** ClientSecret: " + apiSet.getClientSecret() + " ***");
@@ -55,7 +53,7 @@ public class ApiService {
         }
     }
 
-    public String getDataExtensionFoldersJson(){
+    public String getDataExtensionFoldersJson() {
         initSDK();
         //
         List<ETFolder> folders = sdkRepository.getFolders("dataextension");
@@ -99,6 +97,11 @@ public class ApiService {
         initSDK();
         //
         return sdkRepository.getDataExtensionById(id);
+    }
+
+    public Boolean isPrimaryKeyExist(ETDataExtension de) {
+        ETDataExtensionColumn res = de.getColumns().stream().filter((col) -> col.getIsPrimaryKey() == true).findFirst().orElse(null);
+        return res != null;
     }
 
     public boolean deleteDataExtension(String key) {

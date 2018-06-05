@@ -60,16 +60,22 @@
             </nav>
         </div>
         <div class="slds-col slds-size_1-of-6">
-            <a class="slds-button slds-button_brand slds-button_neutral slds-not-selected slds-m-around_medium slds-float_right"
-               th:href="@{'/api/sdk/de-create/' + ${selectedFolderId}}" aria-live="assertive" id="addRecordBtn">
+
+            <table class="slds-table slds-table_bordered slds-table_striped slds-border_left slds-border_right">
+                <thead>
+                <tr>
+                    <th scope="col" class="" th:colspan="6">
+                        <a class="slds-button slds-button_brand slds-button_neutral slds-not-selected slds-m-around_x-small slds-float_right"
+                           th:href="@{'/api/sdk/de-create/' + ${selectedFolderId}}" aria-live="assertive"
+                           id="addRecordBtn">
                                 <span class="slds-text-not-selected">
                                     <svg class="slds-button__icon_stateful slds-button__icon_left" aria-hidden="true">
                                      <use xmlns:xlink="http://www.w3.org/1999/xlink"
                                           xlink:href="/styles/slds/icons/action-sprite/svg/symbols.svg#new"></use>
                                 </svg>Create</span>
-            </a>
-            <table class="slds-table slds-table_bordered slds-table_striped slds-border_left slds-border_right">
-                <thead>
+                        </a>
+                    </th>
+                </tr>
                 <tr class="slds-text-title_caps">
                     <th scope="col" class="">
                         <div class="slds-truncate" title="Name">Name</div>
