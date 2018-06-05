@@ -252,7 +252,11 @@ define(['postmonger'], function (Postmonger) {
                 var field = schema[i];
                 var index = field.key.lastIndexOf('.');
                 var name = field.key.substring(index + 1);
-                formArg[name] = "{{" + field.key + "}}";
+                // save only event data source fields
+                // {"key":"Event.APIEvent-ed211fdf-2260-8057-21b1-a1488f701f6a.offerId","type":"Text",
+                // "length":50,"default":null,"isNullable":null,"isPrimaryKey":null}
+                if (field.key.indexOf("APIEvent") !== -1)
+                    formArg[name] = "{{" + field.key + "}}";
             }
             // must be set to true for the journey to recognize
             // the activity as fully configured (required for activation)
