@@ -12,6 +12,7 @@ import sfmc.model.Authentication.User;
 import sfmc.model.Scripts.ScriptItem;
 import sfmc.service.ScriptService;
 import sfmc.service.UserService;
+
 import javax.validation.Valid;
 
 @Controller
@@ -30,30 +31,43 @@ public class ScriptController {
      * @return
      */
     @GetMapping(value = {"", "/", "/index"})
-    public String index() {
-        return "scripts/index";
+    public ModelAndView index() {
+        return getScriptListModel();
     }
 
     /**
-     * AMPscript page
+     * Create script example
      *
      * @return
      */
-    @GetMapping(value = "/ampscript")
-    public ModelAndView ampscript() {
-        Iterable<ScriptItem> items = scriptService.getScripts();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("scripts/ampscript-list");
-        modelAndView.addObject("scripts", items);
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/ampscript/create", method = RequestMethod.GET)
-    public ModelAndView registration() {
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView scriptCreate() {
         ModelAndView modelAndView = new ModelAndView();
         ScriptItem script = new ScriptItem();
         modelAndView.addObject("script", script);
-        modelAndView.setViewName("scripts/ampscript-create");
+        modelAndView.setViewName("scripts/script-create");
+        return modelAndView;
+    }
+
+    /**
+     * Create script example
+     *
+     * @return
+     */
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public ModelAndView scriptCreate(@Valid @ModelAttribute("script") ScriptItem script, BindingResult bindingResult, Authentication auth) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("scripts/script-create");
+        } else {
+            // save script here
+            User user = userService.findUserByEmail(auth.getName());
+            if (user != null)
+                script.setUserId(user.getId());
+
+            ScriptItem s = scriptService.createScript(script);
+            return new ModelAndView("redirect:/scripts/list");
+        }
         return modelAndView;
     }
 
@@ -63,57 +77,59 @@ public class ScriptController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/ampscript/create/{id}", method = RequestMethod.GET)
-    public ModelAndView editConfig(@PathVariable String id) {
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public ModelAndView scriptEdit(@PathVariable String id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("scripts/ampscript-create");
+        modelAndView.setViewName("scripts/script-create");
         System.out.println("*** update config: " + id);
         ScriptItem script = scriptService.getScript(id);
         modelAndView.addObject("script", script != null ? script : new ScriptItem());
         return modelAndView;
     }
 
-    @RequestMapping(value = "/ampscript/create", method = RequestMethod.POST)
-    public ModelAndView createNewScript(@Valid @ModelAttribute("script") ScriptItem script, BindingResult bindingResult, Authentication auth) {
-        ModelAndView modelAndView = new ModelAndView();
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("scripts/ampscript-create");
-        } else {
-            // save here
-            User user = userService.findUserByEmail(auth.getName());
-            if (user != null)
-                script.setUserId(user.getId());
-            script.setType(0);
-            ScriptItem s = scriptService.createScript(script);
-            return new ModelAndView("redirect:/scripts/ampscript");
-        }
-        return modelAndView;
-    }
-
-    @RequestMapping(value = "/ampscript/getScript/{id}")
-    public ResponseEntity getScript(@PathVariable String id) {
-        try {
-            ScriptItem result = scriptService.getScript(id);
-            return new ResponseEntity(result.getContent(), HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity(HttpStatus.BAD_REQUEST);
-    }
-
     /**
-     * delete ampscript item using jquery
+     * Delete script item using jquery
      *
      * @param id
      * @return
      */
-    @PostMapping(value = "/ampscript/delete/{id}")
-    public ResponseEntity deleteConfig(@PathVariable String id) {
+    @PostMapping(value = "/delete/{id}")
+    public ResponseEntity deleteScript(@PathVariable String id) {
         return new ResponseEntity(scriptService.deleteScriptById(id), HttpStatus.OK);
     }
 
     /**
-     * Server-Side JavaScript (SSJS) Page
+     * AMPscript page
+     *
+     * @return
+     */
+    @GetMapping(value = "/list")
+    public ModelAndView scriptList() {
+        return getScriptListModel();
+    }
+
+    private ModelAndView getScriptListModel() {
+        Iterable<ScriptItem> items = scriptService.getScripts();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("scripts/script-list");
+        modelAndView.addObject("scripts", items);
+        return modelAndView;
+    }
+
+    /**
+     * AMPscript docs page
+     *
+     * @return
+     */
+    @GetMapping(value = "/ampscript")
+    public ModelAndView ampscript() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("scripts/ampscript");
+        return modelAndView;
+    }
+
+    /**
+     * Server-Side JavaScript (SSJS) docs Page
      *
      * @return
      */
@@ -125,7 +141,7 @@ public class ScriptController {
     }
 
     /**
-     * Guide Template Language (GTL) Page
+     * Guide Template Language (GTL) docs Page
      *
      * @return
      */
@@ -134,6 +150,18 @@ public class ScriptController {
         System.out.println("*******************************");
 
         return "scripts/gtl";
+    }
+
+    // TODO check if needed
+    @RequestMapping(value = "/ampscript/getScript/{id}")
+    public ResponseEntity getScript(@PathVariable String id) {
+        try {
+            ScriptItem result = scriptService.getScript(id);
+            return new ResponseEntity(result.getContent(), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -12,11 +12,11 @@ j$('[id^=viewBtn_]').click(function () {
     var data = j$("#scriptContent_" + itemId).text();
     // TODO bring json here
     // insert json
-    j$("#modalContentPreview").html(data);//JSON.stringify(data, null, '\t')
+    j$("#modalContentPreview").html(data.trim());//JSON.stringify(data, null, '\t')
     // highlight json
     j$('pre code').each(function (i, block) {
         hljs.highlightBlock(block);
-        console.log('script: ' + block);
+        //console.log('script: ' + block);
     });
     // show modal
     j$('#backdropPreview').addClass('slds-backdrop_open');
@@ -41,7 +41,7 @@ j$('#deleteBtnConfirm').click(function () {
 
 // post to controller
 function deleteItem(id) {
-    j$.post("/scripts/ampscript/delete/" + id, function (result) {
+    j$.post("/scripts/delete/" + id, function (result) {
         if (result == true)
             j$('#scriptItem_' + id).remove();
     }).fail(function (response) {
