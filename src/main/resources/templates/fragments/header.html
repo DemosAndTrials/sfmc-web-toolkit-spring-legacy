@@ -96,6 +96,27 @@
                     <div class="slds-dropdown slds-dropdown_right slds-context-bar__item_divider-right">
                         <ul class="slds-dropdown__list" role="menu">
                             <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/scripts/list" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Browse examples">
+                                        <svg class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-right_x-small"
+                                             aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                 xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#list"/>
+                                </svg>Browse examples</span>
+                                </a>
+                            </li>
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
+                                <a href="/scripts/create" role="menuitem" tabindex="-1">
+                                    <span class="slds-truncate" title="Add example">
+                                        <svg class="slds-icon slds-icon_x-small slds-icon-text-default slds-m-right_x-small"
+                                             aria-hidden="true">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                 xlink:href="/styles/slds/icons/utility-sprite/svg/symbols.svg#add"/>
+                                </svg>Add example</span>
+                                </a>
+                            </li>
+                            <hr class="slds-m-around_xxx-small">
+                            <li class="slds-dropdown__item slds-context-bar__item_divider-right" role="presentation">
                                 <a href="/scripts/ampscript" role="menuitem" tabindex="-1">
                                     <span class="slds-truncate" title="AMPscript">AMPscript</span>
                                 </a>
@@ -247,7 +268,7 @@
                     <button id="userButton" class="slds-button" title="person name" aria-haspopup="true">
                         <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
                             <img id="userAvatar" alt="Person name" src="/styles/slds/images/avatar1.jpg"
-                                 title="User avatar"/>
+                                 title="Avatar"/>
                         </span>
                     </button>
                     <!--Profile Card-->
@@ -280,8 +301,8 @@
                             <span sec:authorize="hasAuthority('ADMIN')">
                                 <a id="userFooterAdmin" th:href="@{/admin}" class="slds-m-right_small">Admin</a>
                             </span>
-                            <a id="userFooterSettings" th:href="@{/user/settings}" class="slds-m-right_small">Settings</a>
-                            <a id="userFooterLogout" th:href="@{/logout}">Logout</a>
+                                <a id="userFooterSettings" th:href="@{/user/settings}" class="slds-m-right_small">Settings</a>
+                                <a id="userFooterLogout" th:href="@{/logout}">Logout</a>
                             </p>
                         </footer>
                     </section>

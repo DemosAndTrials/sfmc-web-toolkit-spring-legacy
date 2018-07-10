@@ -20,7 +20,7 @@ public class ScriptItem {
     @NotEmpty(message = "*Please provide description")
     private String description;
 
-    @Column(name = "content")
+    @Column(name = "content", length = 10485760)
     @NotEmpty(message = "*Please provide script content")
     private String content;
 
