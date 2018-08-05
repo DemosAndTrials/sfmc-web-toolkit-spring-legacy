@@ -33,7 +33,7 @@ public class ScriptService {
      */
     public ScriptItem getScript(String id) {
         try {
-            ScriptItem item = scriptsRepository.findOne(Integer.parseInt(id));
+            ScriptItem item = scriptsRepository.findById(Integer.parseInt(id)).orElse(null);
             return item;
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class ScriptService {
      */
     public boolean deleteScriptById(String id) {
         try {
-            scriptsRepository.delete(Integer.parseInt(id));
+            scriptsRepository.deleteById(Integer.parseInt(id));
             return true;
         } catch (Exception e) {
             e.printStackTrace();

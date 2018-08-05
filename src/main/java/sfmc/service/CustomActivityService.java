@@ -186,7 +186,7 @@ public class CustomActivityService {
      */
     public CustomActivityConfig getConfigById(String idStr) {
         int id = Integer.parseInt(idStr);
-        return customActivityRepository.findOne(id);
+        return customActivityRepository.findById(id).orElseGet(null);
     }
 
     /**
@@ -198,7 +198,7 @@ public class CustomActivityService {
     public boolean deleteConfigById(String idStr) {
         try {
             int id = Integer.parseInt(idStr);
-            customActivityRepository.delete(id);
+            customActivityRepository.deleteById(id);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
